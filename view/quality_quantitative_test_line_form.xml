@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--The COPYRIGHT file at the top level of this repository
+contains the full copyright notices and license terms. -->
+<form string="Quantitative Test Line">
+    <group col="6" colspan="4" id="name">
+        <label name="name"/>
+        <field name="name"/>
+        <label name="test"/>
+        <field name="test"/>
+    </group>
+    <label name="proof"/>
+    <field name="proof"/>
+    <label name="method"/>
+    <field name="method"/>
+    <group string="Test Value" col="6" colspan="4" id="value">
+        <label name="value"/>
+        <field name="value"/>
+        <label name="unit"/>
+        <field name="unit"/>
+        <label name="success"/>
+        <field name="success"/>
+    </group>
+    <group string="Interval" colspan="4" col="8" id="range">
+        <label name="min_value"/>
+        <field name="min_value"/>
+        <label name="max_value"/>
+        <field name="max_value"/>
+        <label name="unit"/>
+        <field name="unit"/>
+        <label name="unit_digits"/>
+        <field name="unit_digits"/>
+    </group>
+    <separator name="external_description" colspan="2"/>
+    <separator name="internal_description" colspan="2"/>
+    <field name="external_description" colspan="2"/>
+    <field name="internal_description" colspan="2"/>
+</form>

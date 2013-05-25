@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--The COPYRIGHT file at the top level of this repository
+contains the full copyright notices and license terms. -->
+<form string="Quantitative Template Line">
+    <group col="6" colspan="4" id="name">
+        <label name="name"/>
+        <field name="name"/>
+        <label name="active"/>
+        <field name="active"/>
+    </group>
+    <label name="proof"/>
+    <field name="proof"/>
+    <label name="method"/>
+    <field name="method"/>
+    <label name="template"/>
+    <field name="template"/>
+    <group string="Range Values" col="8" colspan="4" id="quantitative_values">
+        <label name="min_value"/>
+        <field name="min_value"/>
+        <label name="max_value"/>
+        <field name="max_value"/>
+        <label name="unit"/>
+        <field name="unit"/>
+        <label name="unit_digits"/>
+        <field name="unit_digits"/>
+    </group>
+    <separator name="external_description" colspan="2"/>
+    <separator name="internal_description" colspan="2"/>
+    <field name="external_description" colspan="2"/>
+    <field name="internal_description" colspan="2"/>
+</form>

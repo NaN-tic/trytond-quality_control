@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--The COPYRIGHT file at the top level of this repository
+contains the full copyright notices and license terms. -->
+<form string="Quality Test">
+    <group col="6" colspan="4" id="essential_data">
+        <label name="number"/>
+        <field name="number"/>
+        <label name="active"/>
+        <field name="active"/>
+        <label name="test_date"/>
+        <field name="test_date"/>
+    </group>
+    <label name="document"/>
+    <field name="document"/>
+    <label name="company"/>
+    <field name="company"/>
+    <group col="3" colspan="4" id="template_data">
+        <label name="template"/>
+        <field name="template"/> 
+        <button string="Set Template" name="set_template" 
+            confirm="Set this template?"/>
+    </group>
+    <notebook colspan="4">
+        <page string="Qualitative" id="qualitative">
+            <field name="qualitative_lines" colspan="4"/>
+        </page>
+        <page string="Quantitative" id="quantitative">
+            <field name="quantitative_lines" colspan="4"/>
+        </page>
+        <page string="Notes" id="notes">
+            <separator name="external_description" colspan="2"/>
+            <separator name="internal_description" colspan="2"/>
+            <field name="external_description" colspan="2"
+                    spell="Eval('party_lang')"/>
+            <field name="internal_description" colspan="2"
+                spell="Eval('party_lang')"/>
+        </page>
+
+    </notebook>
+    <group col="7" colspan="4" id="state">
+        <label name="state"/>
+        <field name="state"/>
+        <label name="success"/>
+        <field name="success"/>
+        <group col="3" colspan="3" id="buttons">
+            <button name="confirmed" string="Confirm"/>
+            <button name="manager_validate" string="Validate"/>
+            <button string="Reset to Draft" name="draft" icon="tryton-clear"/>
+        </group>
+    </group>
+</form>

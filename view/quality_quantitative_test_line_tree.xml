@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--The COPYRIGHT file at the top level of this repository
+contains the full copyright notices and license terms. -->
+<tree string="Quantitative Test Line" editable="bottom">
+    <field name="test_state"/>
+    <field name="name"/>
+    <field name="proof"/>
+    <field name="method"/>
+    <field name="value"/>
+    <field name="unit"/>
+    <field name="success"/>
+    <field name="min_value"/>
+    <field name="max_value"/>
+    <field name="unit_range"/>
+    <field name="unit_digits"/>
+    <field name="test"/>
+</tree>

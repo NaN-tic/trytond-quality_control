@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--The COPYRIGHT file at the top level of this repository
+contains the full copyright notices and license terms. -->
+<form string="Qualitative Template Line">
+    <group col="6" colspan="4" id="name">
+        <label name="name"/>
+        <field name="name"/>
+        <label name="active"/>
+        <field name="active"/>
+        <label name="template"/>
+        <field name="template"/>
+    </group>
+    <label name="proof"/>
+    <field name="proof"/>
+    <label name="method"/>
+    <field name="method"/>
+    <label name="valid_value"/>
+    <field name="valid_value"/>
+    <newline/>
+    <separator name="external_description" colspan="2"/>
+    <separator name="internal_description" colspan="2"/>
+    <field name="external_description" colspan="2"/>
+    <field name="internal_description" colspan="2"/>
+</form>

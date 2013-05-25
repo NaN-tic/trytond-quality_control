@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tryton>
+    <data>
+        <record model="ir.ui.view" id="quality_configuration_form_view">
+            <field name="model">quality.configuration</field>
+            <field name="type">form</field>
+            <field name="name">quality_configuration_form</field>
+        </record>
+        
+        <record model="ir.ui.view" id="quality_configuration_tree_view">
+            <field name="model">quality.configuration</field>
+            <field name="type">tree</field>
+            <field name="name">quality_configuration_tree</field>
+        </record>
+        
+        <record model="ir.action.act_window" id="act_quality_configuration">
+            <field name="name">Quality configuration</field>
+            <field name="res_model">quality.configuration</field>
+            <field name="search_value"></field>
+            <!-- <field name="domain">[]</field> -->
+            <!-- <field name="context">{}</field> -->
+        </record>
+        
+        <record model="ir.action.act_window.view" id="act_quality_configuration_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="quality_configuration_tree_view"/>
+            <field name="act_window" ref="act_quality_configuration"/>
+        </record>
+        
+        <record model="ir.action.act_window.view" id="act_quality_configuration_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="quality_configuration_form_view"/>
+            <field name="act_window" ref="act_quality_configuration"/>
+        </record>
+        
+        <record model="ir.model.access" id="access_quality_configuration">
+            <field name="model" search="[('model', '=', 'quality.configuration')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        
+        <record model="ir.model.access" id="access_quality_configuration_admin">
+            <field name="model" search="[('model', '=', 'quality.configuration')]"/>
+            <field name="group" ref="group_quality_control_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+        
+        <record model="ir.ui.view" id="quality_configuration_line_form_view">
+            <field name="model">quality.configuration.line</field>
+            <field name="type">form</field>
+            <field name="name">quality_configuration_line_form</field>
+        </record>
+        
+        <record model="ir.ui.view" id="quality_configuration_line_tree_view">
+            <field name="model">quality.configuration.line</field>
+            <field name="type">tree</field>
+            <field name="name">quality_configuration_line_tree</field>
+        </record>
+        
+        <record model="ir.action.act_window" id="act_quality_configuration_line">
+            <field name="name">Quality Configuration line</field>
+            <field name="res_model">quality.configuration.line</field>
+            <field name="search_value"></field>
+            <!-- <field name="domain">[]</field> -->
+            <!-- <field name="context">{}</field> -->
+        </record>
+        
+        <record model="ir.action.act_window.view" id="act_quality_configuration_line_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="quality_configuration_line_tree_view"/>
+            <field name="act_window" ref="act_quality_configuration_line"/>
+        </record>
+        
+        <record model="ir.action.act_window.view" id="act_quality_configuration_line_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="quality_configuration_line_form_view"/>
+            <field name="act_window" ref="act_quality_configuration_line"/>
+        </record>
+        
+        <record model="ir.model.access" id="access_quality_configuration_line">
+            <field name="model" search="[('model', '=', 'quality.configuration.line')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        
+        <record model="ir.model.access" id="access_quality_configuration_line_admin">
+            <field name="model" search="[('model', '=', 'quality.configuration.line')]"/>
+            <field name="group" ref="group_quality_control_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+        
+
+        <menuitem action="act_quality_configuration" id="menu_quality_configuration" 
+            parent="menu_quality_control_configuration" sequence="1" 
+            name="Quality Configuration"/>
+    </data>
+</tryton>

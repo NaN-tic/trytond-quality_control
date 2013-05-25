@@ -1,0 +1,823 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:quality.configuration,allowed_documents:"
+msgid "Documents"
+msgstr "Documentos"
+
+msgctxt "field:quality.configuration,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:quality.configuration,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:quality.configuration,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:quality.configuration,name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.configuration,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.configuration,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:quality.configuration,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:quality.configuration.line,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:quality.configuration.line,configuration:"
+msgid "Configuration"
+msgstr "Configuración"
+
+msgctxt "field:quality.configuration.line,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:quality.configuration.line,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:quality.configuration.line,document:"
+msgid "Document"
+msgstr "Documento"
+
+msgctxt "field:quality.configuration.line,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:quality.configuration.line,quality_sequence:"
+msgid "Quality Sequence"
+msgstr "Secuencia de calidad"
+
+msgctxt "field:quality.configuration.line,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.configuration.line,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:quality.configuration.line,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:quality.proof,active:"
+msgid "Active"
+msgstr "Activo"
+
+msgctxt "field:quality.proof,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:quality.proof,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:quality.proof,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:quality.proof,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:quality.proof,methods:"
+msgid "Methods"
+msgstr "Métodos"
+
+msgctxt "field:quality.proof,name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.proof,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.proof,type:"
+msgid "Type"
+msgstr "Tipo"
+
+msgctxt "field:quality.proof,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:quality.proof,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:quality.proof.method,active:"
+msgid "Active"
+msgstr "Activo"
+
+msgctxt "field:quality.proof.method,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:quality.proof.method,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:quality.proof.method,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:quality.proof.method,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:quality.proof.method,name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.proof.method,possible_values:"
+msgid "Possible Values"
+msgstr "Valores posibles"
+
+msgctxt "field:quality.proof.method,proof:"
+msgid "Proof"
+msgstr "Prueba"
+
+msgctxt "field:quality.proof.method,proof_type:"
+msgid "Proof Type"
+msgstr "Tipo de prueba"
+
+msgctxt "field:quality.proof.method,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.proof.method,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:quality.proof.method,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:quality.qualitative.template.line,active:"
+msgid "Active"
+msgstr "Activo"
+
+msgctxt "field:quality.qualitative.template.line,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:quality.qualitative.template.line,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:quality.qualitative.template.line,external_description:"
+msgid "External Description"
+msgstr "Descripción externa"
+
+msgctxt "field:quality.qualitative.template.line,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:quality.qualitative.template.line,internal_description:"
+msgid "Internal Description"
+msgstr "Descripción interna"
+
+msgctxt "field:quality.qualitative.template.line,method:"
+msgid "Method"
+msgstr "Método"
+
+msgctxt "field:quality.qualitative.template.line,name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.qualitative.template.line,proof:"
+msgid "Proof"
+msgstr "Prueba"
+
+msgctxt "field:quality.qualitative.template.line,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.qualitative.template.line,sequence:"
+msgid "Sequence"
+msgstr "Secuencia"
+
+msgctxt "field:quality.qualitative.template.line,template:"
+msgid "Template"
+msgstr "Plantilla"
+
+msgctxt "field:quality.qualitative.template.line,valid_value:"
+msgid "Valid Value"
+msgstr "Valor Válido"
+
+msgctxt "field:quality.qualitative.template.line,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:quality.qualitative.template.line,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:quality.qualitative.test.line,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:quality.qualitative.test.line,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:quality.qualitative.test.line,external_description:"
+msgid "External Description"
+msgstr "Descripción externa"
+
+msgctxt "field:quality.qualitative.test.line,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:quality.qualitative.test.line,internal_description:"
+msgid "Internal Description"
+msgstr "Descripción interna"
+
+msgctxt "field:quality.qualitative.test.line,method:"
+msgid "Method"
+msgstr "Método"
+
+msgctxt "field:quality.qualitative.test.line,name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.qualitative.test.line,proof:"
+msgid "Proof"
+msgstr "Prueba"
+
+msgctxt "field:quality.qualitative.test.line,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.qualitative.test.line,sequence:"
+msgid "Sequence"
+msgstr "Secuencia"
+
+msgctxt "field:quality.qualitative.test.line,success:"
+msgid "Success"
+msgstr "Vàlido"
+
+msgctxt "field:quality.qualitative.test.line,template_line:"
+msgid "Template Line"
+msgstr "Línea de plantilla"
+
+msgctxt "field:quality.qualitative.test.line,test:"
+msgid "Test"
+msgstr "Test"
+
+msgctxt "field:quality.qualitative.test.line,test_value:"
+msgid "Test Value"
+msgstr "Estado del test"
+
+msgctxt "field:quality.qualitative.test.line,value:"
+msgid "Value"
+msgstr "Valor"
+
+msgctxt "field:quality.qualitative.test.line,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:quality.qualitative.test.line,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:quality.qualitative.value,active:"
+msgid "Active"
+msgstr "Activo"
+
+msgctxt "field:quality.qualitative.value,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:quality.qualitative.value,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:quality.qualitative.value,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:quality.qualitative.value,method:"
+msgid "Method"
+msgstr "Método"
+
+msgctxt "field:quality.qualitative.value,name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.qualitative.value,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.qualitative.value,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:quality.qualitative.value,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:quality.quantitative.template.line,active:"
+msgid "Active"
+msgstr "Activo"
+
+msgctxt "field:quality.quantitative.template.line,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:quality.quantitative.template.line,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:quality.quantitative.template.line,external_description:"
+msgid "External Description"
+msgstr "Descripción externa"
+
+msgctxt "field:quality.quantitative.template.line,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:quality.quantitative.template.line,internal_description:"
+msgid "Internal Description"
+msgstr "Descripción interna"
+
+msgctxt "field:quality.quantitative.template.line,max_value:"
+msgid "Max Value"
+msgstr "Valor máximo"
+
+msgctxt "field:quality.quantitative.template.line,method:"
+msgid "Method"
+msgstr "Método"
+
+msgctxt "field:quality.quantitative.template.line,min_value:"
+msgid "Min Value"
+msgstr "Valor mínimo"
+
+msgctxt "field:quality.quantitative.template.line,name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.quantitative.template.line,proof:"
+msgid "Proof"
+msgstr "Prueba"
+
+msgctxt "field:quality.quantitative.template.line,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.quantitative.template.line,sequence:"
+msgid "Sequence"
+msgstr "Secuencia"
+
+msgctxt "field:quality.quantitative.template.line,template:"
+msgid "Template"
+msgstr "Plantilla"
+
+msgctxt "field:quality.quantitative.template.line,unit:"
+msgid "Unit"
+msgstr "Unidad"
+
+msgctxt "field:quality.quantitative.template.line,unit_digits:"
+msgid "Unit Digits"
+msgstr "Decimales de la unidad"
+
+msgctxt "field:quality.quantitative.template.line,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:quality.quantitative.template.line,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:quality.quantitative.test.line,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:quality.quantitative.test.line,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:quality.quantitative.test.line,external_description:"
+msgid "External Description"
+msgstr "Descripción externa"
+
+msgctxt "field:quality.quantitative.test.line,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:quality.quantitative.test.line,internal_description:"
+msgid "Internal Description"
+msgstr "Descripción interna"
+
+msgctxt "field:quality.quantitative.test.line,max_value:"
+msgid "Max Value"
+msgstr "Valor máximo"
+
+msgctxt "field:quality.quantitative.test.line,method:"
+msgid "Method"
+msgstr "Método"
+
+msgctxt "field:quality.quantitative.test.line,min_value:"
+msgid "Min Value"
+msgstr "Valor mínimo"
+
+msgctxt "field:quality.quantitative.test.line,name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.quantitative.test.line,proof:"
+msgid "Proof"
+msgstr "Prueba"
+
+msgctxt "field:quality.quantitative.test.line,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.quantitative.test.line,sequence:"
+msgid "Sequence"
+msgstr "Secuencia"
+
+msgctxt "field:quality.quantitative.test.line,success:"
+msgid "Success"
+msgstr "Vàlido"
+
+msgctxt "field:quality.quantitative.test.line,template_line:"
+msgid "Template Line"
+msgstr "Línea de plantilla"
+
+msgctxt "field:quality.quantitative.test.line,test:"
+msgid "Test"
+msgstr "Test"
+
+msgctxt "field:quality.quantitative.test.line,test_state:"
+msgid "Test State"
+msgstr "Estado del test"
+
+msgctxt "field:quality.quantitative.test.line,unit:"
+msgid "Unit"
+msgstr "Unidad"
+
+msgctxt "field:quality.quantitative.test.line,unit_digits:"
+msgid "Unit Digits"
+msgstr "Decimales de la unidad"
+
+msgctxt "field:quality.quantitative.test.line,unit_range:"
+msgid "Unit Range"
+msgstr "Unidad del rango"
+
+msgctxt "field:quality.quantitative.test.line,value:"
+msgid "Value"
+msgstr "Valor"
+
+msgctxt "field:quality.quantitative.test.line,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:quality.quantitative.test.line,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:quality.template,active:"
+msgid "Active"
+msgstr "Activo"
+
+msgctxt "field:quality.template,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:quality.template,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:quality.template,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:quality.template,document:"
+msgid "Document"
+msgstr "Documento"
+
+msgctxt "field:quality.template,external_description:"
+msgid "External Description"
+msgstr "Descripción externa"
+
+msgctxt "field:quality.template,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:quality.template,internal_description:"
+msgid "Internal Description"
+msgstr "Descripción interna"
+
+msgctxt "field:quality.template,name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.template,qualitative_lines:"
+msgid "Qualitative Lines"
+msgstr "Línias cualitativas"
+
+msgctxt "field:quality.template,quantitative_lines:"
+msgid "Quantitative Lines"
+msgstr "Líneas cuantitativas"
+
+msgctxt "field:quality.template,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.template,test:"
+msgid "Quality Test"
+msgstr "Test de calidad"
+
+msgctxt "field:quality.template,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:quality.template,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:quality.test,active:"
+msgid "Active"
+msgstr "Activo"
+
+msgctxt "field:quality.test,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:quality.test,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:quality.test,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:quality.test,document:"
+msgid "Document"
+msgstr "Documento"
+
+msgctxt "field:quality.test,external_description:"
+msgid "External Description"
+msgstr "Descripción externa"
+
+msgctxt "field:quality.test,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:quality.test,internal_description:"
+msgid "Internal Description"
+msgstr "Descripción interna"
+
+msgctxt "field:quality.test,number:"
+msgid "Number"
+msgstr "Número"
+
+msgctxt "field:quality.test,qualitative_lines:"
+msgid "Qualitative Lines"
+msgstr "Línias cualitativas"
+
+msgctxt "field:quality.test,quantitative_lines:"
+msgid "Quantitative Lines"
+msgstr "Líneas cuantitativas"
+
+msgctxt "field:quality.test,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.test,state:"
+msgid "State"
+msgstr "Estado"
+
+msgctxt "field:quality.test,success:"
+msgid "Success"
+msgstr "Vàlido"
+
+msgctxt "field:quality.test,template:"
+msgid "Template"
+msgstr "Plantilla"
+
+msgctxt "field:quality.test,test_date:"
+msgid "Date"
+msgstr "Fecha"
+
+msgctxt "field:quality.test,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:quality.test,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "model:ir.action,name:act_quality_configuration"
+msgid "Quality configuration"
+msgstr "Configuració de calidad"
+
+msgctxt "model:ir.action,name:act_quality_configuration_line"
+msgid "Quality Configuration line"
+msgstr "Línea de configuración "
+
+msgctxt "model:ir.action,name:act_quality_proof"
+msgid "Quality Proof"
+msgstr "Prueba de calidad"
+
+msgctxt "model:ir.action,name:act_quality_proof_method"
+msgid "Quality Proof Method"
+msgstr "Método de prueba de calidad"
+
+msgctxt "model:ir.action,name:act_quality_qualitative_template_line"
+msgid "Quality Qualitative Template Line"
+msgstr "Línea cualitativa de la plantilla calidad"
+
+msgctxt "model:ir.action,name:act_quality_qualitative_test_line"
+msgid "Quality Qualitative Line"
+msgstr "Línea cualitativa de calidad"
+
+msgctxt "model:ir.action,name:act_quality_qualitative_value"
+msgid "Quality Value"
+msgstr "Valor de calidad"
+
+msgctxt "model:ir.action,name:act_quality_quantitative_template_line"
+msgid "Quality Quantitative Template Line"
+msgstr "Línea cuantitativa de la plantilla calidad"
+
+msgctxt "model:ir.action,name:act_quality_quantitative_test_line"
+msgid "Quality Quantitative Line"
+msgstr "Línea cuantitativa de calidad"
+
+msgctxt "model:ir.action,name:act_quality_template"
+msgid "Quality Template"
+msgstr "Plantilla de calidad"
+
+msgctxt "model:ir.action,name:act_quality_test"
+msgid "Quality Test"
+msgstr "Test de calidad"
+
+msgctxt "model:ir.sequence,name:sequence_party"
+msgid "Quality Control"
+msgstr "Control de calidad"
+
+msgctxt "model:ir.sequence.type,name:sequence_type_quality"
+msgid "Quality Control"
+msgstr "Control de calidad"
+
+msgctxt "model:ir.ui.menu,name:menu_quality_configuration"
+msgid "Quality Configuration"
+msgstr "Configuració de calidad"
+
+msgctxt "model:ir.ui.menu,name:menu_quality_control"
+msgid "Quality Control"
+msgstr "Control de calidad"
+
+msgctxt "model:ir.ui.menu,name:menu_quality_control_configuration"
+msgid "Configuration"
+msgstr "Configuración"
+
+msgctxt "model:ir.ui.menu,name:menu_quality_proof"
+msgid "Proofs"
+msgstr "Pruebas"
+
+msgctxt "model:ir.ui.menu,name:menu_quality_proof_method"
+msgid "Methods"
+msgstr "Métodos"
+
+msgctxt "model:ir.ui.menu,name:menu_quality_qualitative_template_line"
+msgid "Qualitative Lines"
+msgstr "Línias cualitativas"
+
+msgctxt "model:ir.ui.menu,name:menu_quality_qualitative_test_line"
+msgid "Qualitative Lines"
+msgstr "Línias cualitativas"
+
+msgctxt "model:ir.ui.menu,name:menu_quality_qualitative_value"
+msgid "Values"
+msgstr "Valores"
+
+msgctxt "model:ir.ui.menu,name:menu_quality_quantitative_template_line"
+msgid "Quantitative Lines"
+msgstr "Líneas cuantitativas"
+
+msgctxt "model:ir.ui.menu,name:menu_quality_quantitative_test_line"
+msgid "Quantitative Lines"
+msgstr "Líneas cuantitativas"
+
+msgctxt "model:ir.ui.menu,name:menu_quality_template"
+msgid "Templates"
+msgstr "Plantillas"
+
+msgctxt "model:ir.ui.menu,name:menu_quality_test"
+msgid "Tests"
+msgstr "Tests"
+
+msgctxt "model:quality.configuration,name:"
+msgid "Quality configuration"
+msgstr "Configuració de calidad"
+
+msgctxt "model:quality.configuration.line,name:"
+msgid "Quality Configuration Model"
+msgstr "Modelo"
+
+msgctxt "model:quality.proof,name:"
+msgid "Quality Proof"
+msgstr "Prueba de calidad"
+
+msgctxt "model:quality.proof.method,name:"
+msgid "Quality Proof Method"
+msgstr "Método de prueba de calidad"
+
+msgctxt "model:quality.qualitative.template.line,name:"
+msgid "Quality Qualitative Template Line"
+msgstr "Línea cualitativa de la plantilla calidad"
+
+msgctxt "model:quality.qualitative.test.line,name:"
+msgid "Quality Qualitative Line"
+msgstr "Línea cualitativa de calidad"
+
+msgctxt "model:quality.qualitative.value,name:"
+msgid "Quality Value"
+msgstr "Valor de calidad"
+
+msgctxt "model:quality.quantitative.template.line,name:"
+msgid "Quality Quantitative Template Line"
+msgstr "Línea cuantitativa de la plantilla calidad"
+
+msgctxt "model:quality.quantitative.test.line,name:"
+msgid "Quality Quantitative Line"
+msgstr "Línea cuantitativa de calidad"
+
+msgctxt "model:quality.template,name:"
+msgid "Quality Template"
+msgstr "Plantilla de calidad"
+
+msgctxt "model:quality.test,name:"
+msgid "Quality Test"
+msgstr "Test de calidad"
+
+msgctxt "model:res.group,name:group_quality_control"
+msgid "Quality_control"
+msgstr "Control de calidad"
+
+msgctxt "model:res.group,name:group_quality_control_admin"
+msgid "Quality_control Administration"
+msgstr "Aministración de control de calidad"
+
+msgctxt "selection:quality.proof,type:"
+msgid "Qualitative"
+msgstr "Cualitativo"
+
+msgctxt "selection:quality.proof,type:"
+msgid "Quantitative"
+msgstr "cuantitativa"
+
+msgctxt "selection:quality.proof.method,proof_type:"
+msgid "Qualitative"
+msgstr "Cualitativo"
+
+msgctxt "selection:quality.proof.method,proof_type:"
+msgid "Quantitative"
+msgstr "cuantitativa"
+
+msgctxt "selection:quality.quantitative.test.line,test_state:"
+msgid "Confirmed"
+msgstr "Confirmado"
+
+msgctxt "selection:quality.quantitative.test.line,test_state:"
+msgid "Draft"
+msgstr "Borrador"
+
+msgctxt "selection:quality.quantitative.test.line,test_state:"
+msgid "Failed"
+msgstr "Fallido"
+
+msgctxt "selection:quality.quantitative.test.line,test_state:"
+msgid "Successful"
+msgstr "Correcto"
+
+msgctxt "selection:quality.test,state:"
+msgid "Confirmed"
+msgstr "Confirmado"
+
+msgctxt "selection:quality.test,state:"
+msgid "Draft"
+msgstr "Borrador"
+
+msgctxt "selection:quality.test,state:"
+msgid "Failed"
+msgstr "Fallido"
+
+msgctxt "selection:quality.test,state:"
+msgid "Successful"
+msgstr "Correcto"

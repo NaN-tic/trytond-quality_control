@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--The COPYRIGHT file at the top level of this repository
+contains the full copyright notices and license terms. -->
+<tree string="Qualitative Test Line" editable="bottom">
+    <field name="name"/>
+    <field name="proof"/>
+    <field name="method"/>
+    <field name="value"/>
+    <field name="success"/>
+    <field name="test"/>
+</tree>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--The COPYRIGHT file at the top level of this repository
+contains the full copyright notices and license terms. -->
+<form string="Quality Proof Methods" col="6">
+    <label name="name"/>
+    <field name="name"/>
+    <label name="company"/>
+    <field name="company"/>
+    <label name="active"/>
+    <field name="active"/>
+    <label name="proof_type"/>
+    <field name="proof_type"/>
+    <label name="proof"/>
+    <field name="proof"/>
+    <field name="possible_values" colspan="6"/>
+</form>

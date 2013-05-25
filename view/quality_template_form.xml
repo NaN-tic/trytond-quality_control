@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--The COPYRIGHT file at the top level of this repository
+contains the full copyright notices and license terms. -->
+<form string="Quality Template">
+    <label name="name"/>
+    <field name="name"/>
+    <label name="active"/>
+    <field name="active"/>
+    <label name="company"/>
+    <field name="company"/>
+    <label name="document"/>
+    <field name="document"/>
+    <notebook colspan="4">
+        <page string="Qualitative" id="qualitative">
+            <field name="qualitative_lines" colspan="4"/>
+        </page>
+        <page string="Quantitative" id="quantitative">
+            <field name="quantitative_lines"/>
+        </page>
+        <page string="Notes" id="notes">
+            <separator name="external_description" colspan="2"/>
+            <separator name="internal_description" colspan="2"/>
+            <field name="external_description" colspan="2"/>
+            <field name="internal_description" colspan="2"/>
+        </page>
+    </notebook>
+</form>

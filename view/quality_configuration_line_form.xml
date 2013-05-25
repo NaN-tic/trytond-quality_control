@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--The COPYRIGHT file at the top level of this repository
+contains the full copyright notices and license terms. -->
+<form string="Quality Documents">
+    <label name="document"/>
+    <field name="document"/>
+    <label name="company"/>
+    <field name="company"/>
+    <label name="quality_sequence"/>
+    <field name="quality_sequence"/>
+</form>

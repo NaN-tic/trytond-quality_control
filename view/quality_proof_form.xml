@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--The COPYRIGHT file at the top level of this repository
+contains the full copyright notices and license terms. -->
+<form string="Proof">
+    <label name="name"/>
+    <field name="name"/>
+    <label name="type"/>
+    <field name="type"/>
+    <label name="company"/>
+    <field name="company"/>
+    <label name="active"/>
+    <field name="active"/>
+    <field name="methods" colspan="4"/>
+</form>
