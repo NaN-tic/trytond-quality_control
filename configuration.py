@@ -1,7 +1,5 @@
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
-
-
 from trytond.model import ModelView, ModelSQL, fields, ModelSingleton
 from trytond.transaction import Transaction
 
@@ -12,9 +10,8 @@ class Configuration(ModelSingleton, ModelSQL, ModelView):
     'Quality configuration'
     __name__ = 'quality.configuration'
 
-    name = fields.Char('Name', required=True)
     allowed_documents = fields.One2Many('quality.configuration.line',
-        'configuration', 'Documents')
+        'configuration', 'Documents with Quality Control')
 
 
 class ConfigurationLine(ModelSQL, ModelView):

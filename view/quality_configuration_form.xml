@@ -2,7 +2,5 @@
 <!--The COPYRIGHT file at the top level of this repository
 contains the full copyright notices and license terms. -->
 <form string="Quality Configuration">
-    <label name="name"/>
-    <field name="name"/>
     <field name="allowed_documents" colspan="4"/>
 </form>
