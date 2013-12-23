@@ -12,6 +12,14 @@ contains the full copyright notices and license terms. -->
     <field name="proof"/>
     <label name="method"/>
     <field name="method"/>
+    <group string="Range" colspan="4" col="6" id="range">
+        <label name="unit_range"/>
+        <field name="unit_range"/>
+        <label name="min_value"/>
+        <field name="min_value"/>
+        <label name="max_value"/>
+        <field name="max_value"/>
+    </group>
     <group string="Test Value" col="6" colspan="4" id="value">
         <label name="value"/>
         <field name="value"/>
@@ -19,16 +27,6 @@ contains the full copyright notices and license terms. -->
         <field name="unit"/>
         <label name="success"/>
         <field name="success"/>
-    </group>
-    <group string="Interval" colspan="4" col="8" id="range">
-        <label name="min_value"/>
-        <field name="min_value"/>
-        <label name="max_value"/>
-        <field name="max_value"/>
-        <label name="unit"/>
-        <field name="unit"/>
-        <label name="unit_digits"/>
-        <field name="unit_digits"/>
     </group>
     <separator name="external_description" colspan="2"/>
     <separator name="internal_description" colspan="2"/>

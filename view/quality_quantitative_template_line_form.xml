@@ -14,15 +14,13 @@ contains the full copyright notices and license terms. -->
     <field name="method"/>
     <label name="template"/>
     <field name="template"/>
-    <group string="Range Values" col="8" colspan="4" id="quantitative_values">
+    <group string="Range Values" col="6" colspan="4" id="quantitative_values">
+        <label name="unit"/>
+        <field name="unit"/>
         <label name="min_value"/>
         <field name="min_value"/>
         <label name="max_value"/>
         <field name="max_value"/>
-        <label name="unit"/>
-        <field name="unit"/>
-        <label name="unit_digits"/>
-        <field name="unit_digits"/>
     </group>
     <separator name="external_description" colspan="2"/>
     <separator name="internal_description" colspan="2"/>

@@ -3,7 +3,7 @@
 
 import datetime
 from trytond.model import Workflow, ModelView, ModelSQL, fields
-from trytond.pyson import Eval, Bool, Equal, Not, Or
+from trytond.pyson import Bool, Equal, Eval, If, Not, Or
 from trytond.transaction import Transaction
 from trytond.pool import Pool, PoolMeta
 
@@ -40,7 +40,9 @@ class Proof(ModelSQL, ModelView):
         select=True)
     type = fields.Selection(_PROOF_TYPES, 'Type', required=True)
     methods = fields.One2Many('quality.proof.method', 'proof', 'Methods',
-        required=True)
+        required=True, domain=[
+            ('proof_type', '=', Eval('type')),
+            ], depends=['type'])
 
     @staticmethod
     def default_active():
@@ -64,16 +66,24 @@ class ProofMethod(ModelSQL, ModelView):
         select=True)
     proof = fields.Many2One('quality.proof', 'Proof', required=True)
     proof_type = fields.Function(fields.Selection(_PROOF_TYPES, 'Proof Type',
-        on_change_with=['proof']), 'on_change_with_proof_type')
+            on_change_with=['_parent_proof.type']),
+        'on_change_with_proof_type', searcher='search_proof_type')
     possible_values = fields.One2Many('quality.qualitative.value', 'method',
         'Possible Values',
         states={
-            'readonly': Equal(Eval('proof_type'), 'quantitative'),
-            'required': Equal(Eval('proof_type'), 'qualitative'),
-            }, depends=['proof', 'proof_type'])
+            'readonly': Equal(Eval('_parent_proof', {}).get('type', ''),
+                'quantitative'),
+            'required': Equal(Eval('_parent_proof', {}).get('type', ''),
+                'qualitative'),
+            }, depends=['proof'])
 
     def on_change_with_proof_type(self, name=None):
+        print "self: %s, self.proof: %s" % (self, self.proof)
         return self.proof and self.proof.type
+
+    @classmethod
+    def search_proof_type(cls, name, clause):
+        return [('proof.type', ) + tuple(clause[1:])]
 
     @staticmethod
     def default_active():
@@ -145,12 +155,17 @@ class QualitativeTemplateLine(ModelSQL, ModelView):
         ondelete='CASCADE', select=True, required=True)
     name = fields.Char('Name', required=True, translate=True, select=True)
     active = fields.Boolean('Active', select=True)
-    proof = fields.Many2One('quality.proof', 'Proof', required=True)
+    proof = fields.Many2One('quality.proof', 'Proof', required=True, domain=[
+            ('type', '=', 'qualitative'),
+            ])
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
-        domain=[('proof', '=', Eval('proof'))], depends=['proof'])
+        domain=[
+            ('proof', '=', Eval('proof')),
+            ], depends=['proof'])
     valid_value = fields.Many2One('quality.qualitative.value', 'Valid Value',
-        required=True, domain=[('method', '=', Eval('method'))],
-        depends=['method'])
+        required=True, domain=[
+            ('method', '=', Eval('method')),
+            ], depends=['method'])
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
 
@@ -168,9 +183,13 @@ class QuantitativeTemplateLine(ModelSQL, ModelView):
         ondelete='CASCADE', select=True, required=True)
     name = fields.Char('Name', required=True, translate=True, select=True)
     active = fields.Boolean('Active', select=True)
-    proof = fields.Many2One('quality.proof', 'Proof', required=True)
+    proof = fields.Many2One('quality.proof', 'Proof', required=True, domain=[
+            ('type', '=', 'quantitative'),
+            ])
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
-        domain=[('proof', '=', Eval('proof'))], depends=['proof'])
+        domain=[
+            ('proof', '=', Eval('proof')),
+            ], depends=['proof'])
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
     min_value = fields.Float('Min Value', digits=(16, Eval('unit_digits', 2)),
@@ -362,21 +381,31 @@ class QualitativeTestLine(ModelSQL, ModelView):
     template_line = fields.Many2One('quality.qualitative.template.line',
         'Template Line')
     name = fields.Char('Name', required=True, translate=True, select=True)
-    proof = fields.Many2One('quality.proof', 'Proof',
+    proof = fields.Many2One('quality.proof', 'Proof', required=True, domain=[
+            ('type', '=', 'qualitative'),
+            ],
         states={
             'readonly': Bool(Eval('template_line')),
-            }, required=True, depends=['template_line'])
-    method = fields.Many2One('quality.proof.method', 'Method',
+            }, depends=['template_line'])
+    method = fields.Many2One('quality.proof.method', 'Method', required=True,
+        domain=[
+            ('proof', '=', Eval('proof')),
+            ],
         states={
             'readonly': Bool(Eval('template_line')),
-            }, required=True, depends=['template_line'])
+            }, depends=['proof', 'template_line'])
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
     test_value = fields.Many2One('quality.qualitative.value', 'Test Value',
+        required=True, domain=[
+            ('method', '=', Eval('method')),
+            ],
         states={
             'readonly': Bool(Eval('template_line')),
-            }, required=True, depends=['template_line'])
-    value = fields.Many2One('quality.qualitative.value', 'Value')
+            }, depends=['method', 'template_line'])
+    value = fields.Many2One('quality.qualitative.value', 'Value', domain=[
+            ('method', '=', Eval('method')),
+            ], depends=['method'])
     success = fields.Function(fields.Boolean('Success'), 'get_success')
 
     def on_change_with_unit_digits(self, name=None):
@@ -410,33 +439,80 @@ class QuantitativeTestLine(ModelSQL, ModelView):
     test_state = fields.Function(fields.Selection(_TEST_STATE, 'Test State'),
         'get_test_state')
     template_line = fields.Many2One('quality.quantitative.template.line',
-        'Template Line')
-    name = fields.Char('Name', required=True, translate=True, select=True)
-    proof = fields.Many2One('quality.proof', 'Proof', required=True)
-    method = fields.Many2One('quality.proof.method', 'Method', required=True)
+        'Template Line', readonly=True)
+    name = fields.Char('Name', required=True, translate=True, select=True,
+        states={
+            'readonly': Bool(Eval('template_line', 0)),
+            }, depends=['template_line'])
+    proof = fields.Many2One('quality.proof', 'Proof', required=True, domain=[
+            ('type', '=', 'quantitative'),
+            ],
+        states={
+            'readonly': Bool(Eval('template_line', 0)),
+            }, depends=['template_line'])
+    method = fields.Many2One('quality.proof.method', 'Method', required=True,
+        domain=[
+            ('proof', '=', Eval('proof')),
+            ],
+        states={
+            'readonly': Bool(Eval('template_line', 0)),
+            }, depends=['proof', 'template_line'])
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
-    min_value = fields.Float('Min Value', digits=(16, Eval('unit_digits', 2)),
-        states = {
-            'readonly': Bool(Eval('template_line')),
-            }, required=True, depends=['template_line', 'unit_digits'])
-    max_value = fields.Float('Max Value', digits=(16, Eval('unit_digits', 2)),
-        states = {
-                'readonly': Bool(Eval('template_line')),
-            }, required=True, depends=['unit_digits'])
-    unit_range = fields.Many2One('product.uom', 'Unit Range',
+    unit_range = fields.Many2One('product.uom', 'Unit Range', required=True,
         states={
-                'readonly': Bool(Eval('template_line')),
-            }, required=True)
-    unit_digits = fields.Function(fields.Integer('Unit Digits',
-        on_change_with=['unit']), 'on_change_with_unit_digits')
+            'readonly': Bool(Eval('template_line', 0)),
+            }, depends=['template_line'])
+    unit_range_digits = fields.Function(fields.Integer('Unit Range Digits',
+            on_change_with=['unit_range']),
+        'on_change_with_unit_range_digits')
+    unit_range_category = fields.Function(
+        fields.Many2One('product.uom.category', 'Unit Range Category',
+            on_change_with=['unit_range']),
+        'on_change_with_unit_range_category')
+    min_value = fields.Float('Min Value',
+        digits=(16, Eval('unit_range_digits', 2)), required=True, states={
+            'readonly': Bool(Eval('template_line', 0)),
+            }, depends=['unit_range_digits', 'template_line'])
+    max_value = fields.Float('Max Value',
+        digits=(16, Eval('unit_range_digits', 2)), required=True, states={
+                'readonly': Bool(Eval('template_line', 0)),
+            }, depends=['unit_range_digits', 'template_line'])
     value = fields.Float('Value', digits=(16, Eval('unit_digits', 2)),
         depends=['unit_digits', 'test_state'])
-    unit = fields.Many2One('product.uom', 'Unit',
+    unit = fields.Many2One('product.uom', 'Unit', domain=[
+            If(Bool(Eval('unit_range_category')),
+                ('category', '=', Eval('unit_range_category')),
+                ('category', '!=', -1)),
+            ],
         states={
             'required': Bool(Eval('value')),
-        })
+        }, depends=['unit_range_category', 'value'])
+    unit_digits = fields.Function(fields.Integer('Unit Digits',
+            on_change_with=['unit']),
+        'on_change_with_unit_digits')
     success = fields.Function(fields.Boolean('Success'), 'get_success')
+
+    @classmethod
+    def get_test_state(self, lines, name):
+        res = {}
+        for line in lines:
+            res[line.id] = line.test.state
+        return res
+
+    def on_change_with_unit_range_digits(self, name=None):
+        if not self.unit_range:
+            return 2
+        return self.unit_range.digits
+
+    def on_change_with_unit_range_category(self, name=None):
+        if self.unit_range:
+            return self.unit_range.category.id
+
+    def on_change_with_unit_digits(self, name=None):
+        if not self.unit:
+            return 2
+        return self.unit.digits
 
     @classmethod
     def get_success(self, lines, name):
@@ -451,19 +527,8 @@ class QuantitativeTestLine(ModelSQL, ModelView):
                 res[line.id] = True
         return res
 
-    @classmethod
-    def get_test_state(self, lines, name):
-        res = {}
-        for line in lines:
-            res[line.id] = line.test.state
-        return res
-
-    def on_change_with_unit_digits(self, name=None):
-        if not self.unit:
-            return 2
-        return self.unit.digits
-
     def set_template_line_vals(self, template_line):
+        self.template_line = template_line
         self.name = template_line.name
         self.proof = template_line.proof
         self.method = template_line.method
@@ -472,3 +537,4 @@ class QuantitativeTestLine(ModelSQL, ModelView):
         self.min_value = template_line.min_value
         self.max_value = template_line.max_value
         self.unit_range = template_line.unit
+        self.unit = template_line.unit
