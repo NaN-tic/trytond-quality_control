@@ -5,6 +5,7 @@ contains the full copyright notices and license terms. -->
     <field name="name"/>
     <field name="proof"/>
     <field name="method"/>
+    <field name="test_value"/>
     <field name="value"/>
     <field name="success"/>
     <field name="test"/>

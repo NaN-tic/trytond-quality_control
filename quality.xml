@@ -363,6 +363,14 @@
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
+        <record model="ir.model.access" id="access_quality_test_quality">
+            <field name="model" search="[('model', '=', 'quality.test')]"/>
+            <field name="group" ref="group_quality_control"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
         <record model="ir.model.access" id="access_quality_test_admin">
             <field name="model" search="[('model', '=', 'quality.test')]"/>
             <field name="group" ref="group_quality_control_admin"/>
@@ -405,6 +413,14 @@
             <field name="model" search="[('model', '=', 'quality.qualitative.test.line')]"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_quality_qualitative_test_line_quality">
+            <field name="model" search="[('model', '=', 'quality.qualitative.test.line')]"/>
+            <field name="group" ref="group_quality_control"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
@@ -453,6 +469,14 @@
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
+        <record model="ir.model.access" id="access_quality_quantitative_test_line_quality">
+            <field name="model" search="[('model', '=', 'quality.quantitative.test.line')]"/>
+            <field name="group" ref="group_quality_control"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
         <record model="ir.model.access" id="access_quality_quantitative_test_line_admin">
             <field name="model" search="[('model', '=', 'quality.quantitative.test.line')]"/>
             <field name="group" ref="group_quality_control_admin"/>
@@ -474,12 +498,12 @@
             <field name="group" ref="res.group_admin"/>
         </record>
         <record model="ir.sequence.type-res.group"
-            id="sequence_type_party_group_quality_admin">
+            id="sequence_type_quality_group_quality_admin">
             <field name="sequence_type" ref="sequence_type_quality"/>
-            <field name="group" ref="group_quality_control_admin"/>
+            <field name="group" ref="group_quality_control"/>
         </record>
 
-        <record model="ir.sequence" id="sequence_party">
+        <record model="ir.sequence" id="sequence_quality">
             <field name="name">Quality Control</field>
             <field name="code">quality.test</field>
         </record>
@@ -490,9 +514,9 @@
             <field name="model" search="[('model', '=', 'quality.test')]"/>
         </record>
         <record model="ir.model.button-res.group"
-            id="quality_draft_button_group_quality">
+            id="quality_draft_button_group_quality_admin">
             <field name="button" ref="quality_draft_button"/>
-            <field name="group" ref="quality_control.group_quality_control"/>
+            <field name="group" ref="quality_control.group_quality_control_admin"/>
         </record>
 
         <record model="ir.model.button" id="quality_confirm_button">
@@ -505,14 +529,14 @@
             <field name="group" ref="quality_control.group_quality_control"/>
         </record>
 
-        <record model="ir.model.button" id="quality_validate_button">
-            <field name="name">validate</field>
+        <record model="ir.model.button" id="quality_manager_validate_button">
+            <field name="name">manager_validate</field>
             <field name="model" search="[('model', '=', 'quality.test')]"/>
         </record>
         <record model="ir.model.button-res.group"
-            id="quality_validate_button_group_quality">
-            <field name="button" ref="quality_confirm_button"/>
-            <field name="group" ref="quality_control.group_quality_control"/>
+            id="quality_manager_validate_button_group_quality_admin">
+            <field name="button" ref="quality_manager_validate_button"/>
+            <field name="group" ref="quality_control.group_quality_control_admin"/>
         </record>
 
         <record model="ir.model.button" id="quality_cancel_button">
@@ -530,18 +554,26 @@
             <field name="model" search="[('model', '=', 'quality.test')]"/>
         </record>
         <record model="ir.model.button-res.group"
-            id="quality_set_template_button_group_quality">
+            id="quality_set_template_button_group_quality_admin">
             <field name="button" ref="quality_set_template_button"/>
-            <field name="group" ref="quality_control.group_quality_control"/>
+            <field name="group" ref="quality_control.group_quality_control_admin"/>
         </record>
 
         <!-- Menus -->
         <menuitem id="menu_quality_control" name="Quality Control"
             sequence="1" />
+        <record model="ir.ui.menu-res.group" id="menu_quality_group_quality">
+            <field name="menu" ref="menu_quality_control"/>
+            <field name="group" ref="group_quality_control"/>
+        </record>
 
         <menuitem name="Configuration" parent="menu_quality_control"
             id="menu_configuration"
             sequence="0" icon="tryton-preferences"/>
+        <record model="ir.ui.menu-res.group" id="menu_quality_configuration_group_quality_admin">
+            <field name="menu" ref="menu_configuration"/>
+            <field name="group" ref="group_quality_control_admin"/>
+        </record>
         <menuitem action="act_quality_proof" id="menu_quality_proof"
             parent="menu_configuration" sequence="1" name="Proofs"/>
         <menuitem action="act_quality_proof_method"

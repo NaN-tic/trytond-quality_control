@@ -219,17 +219,18 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         states={'required': Not(Equal(Eval('state'), 'draft'))})
     active = fields.Boolean('Active', select=True)
     company = fields.Many2One('company.company', 'Company', required=True,
-        select=True)
+        select=True, states=_STATES, depends=['state'])
     document = fields.Reference('Document', selection='get_model',
-        required=True)
-    test_date = fields.DateTime('Date')
+        required=True, states=_STATES, depends=['state'])
+    test_date = fields.DateTime('Date', states=_STATES, depends=['state'])
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
     quantitative_lines = fields.One2Many('quality.quantitative.test.line',
         'test', 'Quantitative Lines', states=_STATES, depends=['state'])
     qualitative_lines = fields.One2Many('quality.qualitative.test.line',
         'test', 'Qualitative Lines', states=_STATES, depends=['state'])
-    template = fields.Many2One('quality.template', 'Template')
+    template = fields.Many2One('quality.template', 'Template', states=_STATES,
+        depends=['state'])
     success = fields.Function(fields.Boolean('Success'), 'get_success')
     state = fields.Selection(_TEST_STATE, 'State',
         readonly=True, required=True)

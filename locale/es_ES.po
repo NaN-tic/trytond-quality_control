@@ -280,7 +280,7 @@ msgstr "Test"
 
 msgctxt "field:quality.qualitative.test.line,test_value:"
 msgid "Test Value"
-msgstr "Estado del test"
+msgstr "Valor válido"
 
 msgctxt "field:quality.qualitative.test.line,value:"
 msgid "Value"
