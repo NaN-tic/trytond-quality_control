@@ -4,6 +4,4 @@ contains the full copyright notices and license terms. -->
 <tree string="Quality Proof Methods">
     <field name="name"/>
     <field name="proof"/>
-     <field name="proof_type"/>
-     <field name="company"/>
 </tree>

@@ -40,9 +40,7 @@ class Proof(ModelSQL, ModelView):
         select=True)
     type = fields.Selection(_PROOF_TYPES, 'Type', required=True)
     methods = fields.One2Many('quality.proof.method', 'proof', 'Methods',
-        required=True, domain=[
-            ('proof_type', '=', Eval('type')),
-            ], depends=['type'])
+        required=True)
 
     @staticmethod
     def default_active():
@@ -62,36 +60,19 @@ class ProofMethod(ModelSQL, ModelView):
     name = fields.Char('Name', required=True, translate=True,
         select=True)
     active = fields.Boolean('Active', select=True)
-    company = fields.Many2One('company.company', 'Company', required=True,
-        select=True)
     proof = fields.Many2One('quality.proof', 'Proof', required=True)
-    proof_type = fields.Function(fields.Selection(_PROOF_TYPES, 'Proof Type',
-            on_change_with=['_parent_proof.type']),
-        'on_change_with_proof_type', searcher='search_proof_type')
     possible_values = fields.One2Many('quality.qualitative.value', 'method',
         'Possible Values',
         states={
-            'readonly': Equal(Eval('_parent_proof', {}).get('type', ''),
-                'quantitative'),
+            'invisible': ~Equal(Eval('_parent_proof', {}).get('type', ''),
+                'qualitative'),
             'required': Equal(Eval('_parent_proof', {}).get('type', ''),
                 'qualitative'),
             }, depends=['proof'])
 
-    def on_change_with_proof_type(self, name=None):
-        print "self: %s, self.proof: %s" % (self, self.proof)
-        return self.proof and self.proof.type
-
-    @classmethod
-    def search_proof_type(cls, name, clause):
-        return [('proof.type', ) + tuple(clause[1:])]
-
     @staticmethod
     def default_active():
         return True
-
-    @staticmethod
-    def default_company():
-        return Transaction().context.get('company')
 
 
 class QualitativeValue(ModelSQL, ModelView):
@@ -117,8 +98,7 @@ class Template(ModelSQL, ModelView):
     active = fields.Boolean('Active', select=True)
     company = fields.Many2One('company.company', 'Company', required=True,
         select=True)
-    document = fields.Reference('Document', selection='get_model',
-        required=True)
+    document = fields.Reference('Document', selection='get_model')
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
     quantitative_lines = fields.One2Many('quality.quantitative.template.line',
