@@ -578,10 +578,7 @@
             parent="menu_configuration" sequence="1" name="Proofs"/>
         <menuitem action="act_quality_proof_method"
             id="menu_quality_proof_method"
-            parent="menu_configuration" sequence="1" name="Methods"/>
-        <menuitem action="act_quality_qualitative_value"
-            id="menu_quality_qualitative_value"
-            parent="menu_configuration" sequence="1" name="Values"/>
+            parent="menu_quality_proof" sequence="1" name="Methods"/>
 
         <menuitem action="act_quality_template" id="menu_quality_template"
             parent="menu_quality_control" sequence="1" name="Templates"/>
