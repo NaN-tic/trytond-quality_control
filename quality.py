@@ -113,7 +113,7 @@ class Template(ModelSQL, ModelView):
         ConfigLine = pool.get('quality.configuration.line')
 
         lines = ConfigLine.search([])
-        res = [(None, '')]
+        res = [('', '')]
         for line in lines:
             res.append((line.document.model, line.document.name))
         return res
@@ -221,7 +221,7 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         ConfigLines = pool.get('quality.configuration.line')
 
         lines = ConfigLines.search([])
-        res = [(None, '')]
+        res = [('', '')]
         for line in lines:
             res.append((line.document.model, line.document.name))
         return res
