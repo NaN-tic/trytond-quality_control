@@ -177,13 +177,14 @@ class QuantitativeTemplateLine(ModelSQL, ModelView):
     max_value = fields.Float('Max Value', digits=(16, Eval('unit_digits', 2)),
         required=True, depends=['unit_digits'])
     unit = fields.Many2One('product.uom', 'Unit', required=True)
-    unit_digits = fields.Function(fields.Integer('Unit Digits',
-        on_change_with=['unit']), 'on_change_with_unit_digits')
+    unit_digits = fields.Function(fields.Integer('Unit Digits'),
+        'on_change_with_unit_digits')
 
     @staticmethod
     def default_active():
         return True
 
+    @fields.depends('unit')
     def on_change_with_unit_digits(self, name=None):
         if not self.unit:
             return 2
@@ -389,11 +390,6 @@ class QualitativeTestLine(ModelSQL, ModelView):
             ], depends=['method'])
     success = fields.Function(fields.Boolean('Success'), 'get_success')
 
-    def on_change_with_unit_digits(self, name=None):
-        if not self.unit:
-            return 2
-        return self.unit.digits
-
     def get_success(self, name=None):
         if self.value == self.test_value:
             return True
@@ -444,33 +440,36 @@ class QuantitativeTestLine(ModelSQL, ModelView):
         states={
             'readonly': Bool(Eval('template_line', 0)),
             }, depends=['template_line'])
-    unit_range_digits = fields.Function(fields.Integer('Unit Range Digits',
-            on_change_with=['unit_range']),
+    unit_range_digits = fields.Function(fields.Integer('Unit Range Digits'),
         'on_change_with_unit_range_digits')
     unit_range_category = fields.Function(
-        fields.Many2One('product.uom.category', 'Unit Range Category',
-            on_change_with=['unit_range']),
+        fields.Many2One('product.uom.category', 'Unit Range Category'),
         'on_change_with_unit_range_category')
     min_value = fields.Float('Min Value',
-        digits=(16, Eval('unit_range_digits', 2)), required=True, states={
+        digits=(16, Eval('unit_range_digits', 2)), required=True,
+        states={
             'readonly': Bool(Eval('template_line', 0)),
-            }, depends=['unit_range_digits', 'template_line'])
+            },
+        depends=['unit_range_digits', 'template_line'])
     max_value = fields.Float('Max Value',
-        digits=(16, Eval('unit_range_digits', 2)), required=True, states={
+        digits=(16, Eval('unit_range_digits', 2)), required=True,
+        states={
                 'readonly': Bool(Eval('template_line', 0)),
-            }, depends=['unit_range_digits', 'template_line'])
+            },
+        depends=['unit_range_digits', 'template_line'])
     value = fields.Float('Value', digits=(16, Eval('unit_digits', 2)),
         depends=['unit_digits', 'test_state'])
-    unit = fields.Many2One('product.uom', 'Unit', domain=[
+    unit = fields.Many2One('product.uom', 'Unit',
+        domain=[
             If(Bool(Eval('unit_range_category')),
                 ('category', '=', Eval('unit_range_category')),
                 ('category', '!=', -1)),
             ],
         states={
             'required': Bool(Eval('value')),
-        }, depends=['unit_range_category', 'value'])
-    unit_digits = fields.Function(fields.Integer('Unit Digits',
-            on_change_with=['unit']),
+        },
+        depends=['unit_range_category', 'value'])
+    unit_digits = fields.Function(fields.Integer('Unit Digits'),
         'on_change_with_unit_digits')
     success = fields.Function(fields.Boolean('Success'), 'get_success')
 
@@ -481,15 +480,18 @@ class QuantitativeTestLine(ModelSQL, ModelView):
             res[line.id] = line.test.state
         return res
 
+    @fields.depends('unit_range')
     def on_change_with_unit_range_digits(self, name=None):
         if not self.unit_range:
             return 2
         return self.unit_range.digits
 
+    @fields.depends('unit_range')
     def on_change_with_unit_range_category(self, name=None):
         if self.unit_range:
             return self.unit_range.category.id
 
+    @fields.depends('unit')
     def on_change_with_unit_digits(self, name=None):
         if not self.unit:
             return 2
