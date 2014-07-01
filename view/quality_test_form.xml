@@ -16,8 +16,8 @@ contains the full copyright notices and license terms. -->
     <field name="company"/>
     <group col="3" colspan="4" id="template_data">
         <label name="template"/>
-        <field name="template"/> 
-        <button string="Set Template" name="set_template" 
+        <field name="template"/>
+        <button string="Set Template" name="set_template"
             confirm="Set this template?"/>
     </group>
     <notebook colspan="4">
@@ -40,9 +40,11 @@ contains the full copyright notices and license terms. -->
     <group col="7" colspan="4" id="state">
         <label name="state"/>
         <field name="state"/>
+        <label name="confirmed_date"/>
+        <field name="confirmed_date"/>
         <label name="success"/>
         <field name="success"/>
-        <group col="3" colspan="3" id="buttons">
+        <group col="3" id="buttons">
             <button name="confirmed" string="Confirm"/>
             <button name="manager_validate" string="Validate"/>
             <button string="Reset to Draft" name="draft" icon="tryton-clear"/>

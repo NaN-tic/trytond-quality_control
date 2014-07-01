@@ -213,6 +213,11 @@ class QualityTest(Workflow, ModelSQL, ModelView):
     template = fields.Many2One('quality.template', 'Template', states=_STATES,
         depends=['state'])
     success = fields.Function(fields.Boolean('Success'), 'get_success')
+    confirmed_date = fields.DateTime('Confirmed Date', readonly=True,
+        states={
+            'invisible': Eval('state') == 'draft',
+            },
+        depends=['state'])
     state = fields.Selection(_TEST_STATE, 'State',
         readonly=True, required=True)
 
@@ -251,9 +256,11 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         cls._buttons.update({
             'confirmed': {
                 'invisible': (Eval('state') != 'draft'),
+                'icon': 'tryton-go-next',
                 },
             'manager_validate': {
                 'invisible': (Eval('state') != 'confirmed'),
+                'icon': 'tryton-ok',
                 },
             'draft': {
                 'invisible': (Eval('state') == 'draft'),
@@ -284,13 +291,14 @@ class QualityTest(Workflow, ModelSQL, ModelView):
     @ModelView.button
     @Workflow.transition('draft')
     def draft(cls, tests):
-        pass
+        cls.write(tests, {'confirmed_date': None})
 
     @classmethod
     @ModelView.button
     @Workflow.transition('confirmed')
     def confirmed(cls, tests):
         cls.set_number(tests)
+        cls.write(tests, {'confirmed_date': datetime.datetime.now()})
 
     @classmethod
     @Workflow.transition('successful')

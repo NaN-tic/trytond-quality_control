@@ -3,7 +3,7 @@ msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
 msgctxt "field:quality.configuration,allowed_documents:"
-msgid "Documents"
+msgid "Documents with Quality Control"
 msgstr "Documents"
 
 msgctxt "field:quality.configuration,create_date:"
@@ -17,10 +17,6 @@ msgstr "Usuari creació"
 msgctxt "field:quality.configuration,id:"
 msgid "ID"
 msgstr "ID"
-
-msgctxt "field:quality.configuration,name:"
-msgid "Name"
-msgstr "Nom"
 
 msgctxt "field:quality.configuration,rec_name:"
 msgid "Name"
@@ -122,10 +118,6 @@ msgctxt "field:quality.proof.method,active:"
 msgid "Active"
 msgstr "Actiu"
 
-msgctxt "field:quality.proof.method,company:"
-msgid "Company"
-msgstr "Companyia"
-
 msgctxt "field:quality.proof.method,create_date:"
 msgid "Create Date"
 msgstr "Data creació"
@@ -149,10 +141,6 @@ msgstr "Valors possibles"
 msgctxt "field:quality.proof.method,proof:"
 msgid "Proof"
 msgstr "Prova"
-
-msgctxt "field:quality.proof.method,proof_type:"
-msgid "Proof Type"
-msgstr "Tipus de prova"
 
 msgctxt "field:quality.proof.method,rec_name:"
 msgid "Name"
@@ -206,10 +194,6 @@ msgctxt "field:quality.qualitative.template.line,rec_name:"
 msgid "Name"
 msgstr "Nom"
 
-msgctxt "field:quality.qualitative.template.line,sequence:"
-msgid "Sequence"
-msgstr "Seqüència"
-
 msgctxt "field:quality.qualitative.template.line,template:"
 msgid "Template"
 msgstr "Plantilla"
@@ -261,10 +245,6 @@ msgstr "Prova"
 msgctxt "field:quality.qualitative.test.line,rec_name:"
 msgid "Name"
 msgstr "Nom"
-
-msgctxt "field:quality.qualitative.test.line,sequence:"
-msgid "Sequence"
-msgstr "Seqüència"
 
 msgctxt "field:quality.qualitative.test.line,success:"
 msgid "Success"
@@ -378,10 +358,6 @@ msgctxt "field:quality.quantitative.template.line,rec_name:"
 msgid "Name"
 msgstr "Nom"
 
-msgctxt "field:quality.quantitative.template.line,sequence:"
-msgid "Sequence"
-msgstr "Seqüència"
-
 msgctxt "field:quality.quantitative.template.line,template:"
 msgid "Template"
 msgstr "Plantilla"
@@ -446,10 +422,6 @@ msgctxt "field:quality.quantitative.test.line,rec_name:"
 msgid "Name"
 msgstr "Nom"
 
-msgctxt "field:quality.quantitative.test.line,sequence:"
-msgid "Sequence"
-msgstr "Seqüència"
-
 msgctxt "field:quality.quantitative.test.line,success:"
 msgid "Success"
 msgstr "Vàlid"
@@ -477,6 +449,14 @@ msgstr "Dígits de la unitat"
 msgctxt "field:quality.quantitative.test.line,unit_range:"
 msgid "Unit Range"
 msgstr "Unitat del rang"
+
+msgctxt "field:quality.quantitative.test.line,unit_range_category:"
+msgid "Unit Range Category"
+msgstr "Categoria unitat del rang"
+
+msgctxt "field:quality.quantitative.test.line,unit_range_digits:"
+msgid "Unit Range Digits"
+msgstr "Digits unitat del rang"
 
 msgctxt "field:quality.quantitative.test.line,value:"
 msgid "Value"
@@ -558,6 +538,10 @@ msgctxt "field:quality.test,company:"
 msgid "Company"
 msgstr "Companyia"
 
+msgctxt "field:quality.test,confirmed_date:"
+msgid "Confirmed Date"
+msgstr "Data confirmació"
+
 msgctxt "field:quality.test,create_date:"
 msgid "Create Date"
 msgstr "Data creació"
@@ -623,11 +607,11 @@ msgid "Write User"
 msgstr "Usuari modificació"
 
 msgctxt "model:ir.action,name:act_quality_configuration"
-msgid "Quality configuration"
+msgid "Quality Configuration"
 msgstr "Configuració de qualitat"
 
 msgctxt "model:ir.action,name:act_quality_configuration_line"
-msgid "Quality Configuration line"
+msgid "Quality Configuration Line"
 msgstr "Línia de configuració de qualitat"
 
 msgctxt "model:ir.action,name:act_quality_proof"
@@ -666,13 +650,17 @@ msgctxt "model:ir.action,name:act_quality_test"
 msgid "Quality Test"
 msgstr "Test de qualitat"
 
-msgctxt "model:ir.sequence,name:sequence_party"
+msgctxt "model:ir.sequence,name:sequence_quality"
 msgid "Quality Control"
 msgstr "Control de qualitat"
 
 msgctxt "model:ir.sequence.type,name:sequence_type_quality"
 msgid "Quality Control"
 msgstr "Control de qualitat"
+
+msgctxt "model:ir.ui.menu,name:menu_configuration"
+msgid "Configuration"
+msgstr "Configuració"
 
 msgctxt "model:ir.ui.menu,name:menu_quality_configuration"
 msgid "Quality Configuration"
@@ -681,10 +669,6 @@ msgstr "Configuració de qualitat"
 msgctxt "model:ir.ui.menu,name:menu_quality_control"
 msgid "Quality Control"
 msgstr "Control de qualitat"
-
-msgctxt "model:ir.ui.menu,name:menu_quality_control_configuration"
-msgid "Configuration"
-msgstr "Configuració"
 
 msgctxt "model:ir.ui.menu,name:menu_quality_proof"
 msgid "Proofs"
@@ -701,10 +685,6 @@ msgstr "Línies qualitatatives"
 msgctxt "model:ir.ui.menu,name:menu_quality_qualitative_test_line"
 msgid "Qualitative Lines"
 msgstr "Línies qualitatatives"
-
-msgctxt "model:ir.ui.menu,name:menu_quality_qualitative_value"
-msgid "Values"
-msgstr "Valors"
 
 msgctxt "model:ir.ui.menu,name:menu_quality_quantitative_template_line"
 msgid "Quantitative Lines"
@@ -767,11 +747,11 @@ msgid "Quality Test"
 msgstr "Test de qualitat"
 
 msgctxt "model:res.group,name:group_quality_control"
-msgid "Quality_control"
+msgid "Quality Control"
 msgstr "Control de qualitat"
 
 msgctxt "model:res.group,name:group_quality_control_admin"
-msgid "Quality_control Administration"
+msgid "Quality Control Administration"
 msgstr "Administració de control de qualitat"
 
 msgctxt "selection:quality.proof,type:"
@@ -782,42 +762,150 @@ msgctxt "selection:quality.proof,type:"
 msgid "Quantitative"
 msgstr "Quantitativa"
 
-msgctxt "selection:quality.proof.method,proof_type:"
+msgctxt "selection:quality.quantitative.test.line,test_state:"
+msgid "Confirmed"
+msgstr "Confirmat"
+
+msgctxt "selection:quality.quantitative.test.line,test_state:"
+msgid "Draft"
+msgstr "Esborrany"
+
+msgctxt "selection:quality.quantitative.test.line,test_state:"
+msgid "Failed"
+msgstr "Fallit"
+
+msgctxt "selection:quality.quantitative.test.line,test_state:"
+msgid "Successful"
+msgstr "Correcte"
+
+msgctxt "selection:quality.test,state:"
+msgid "Confirmed"
+msgstr "Confirmat"
+
+msgctxt "selection:quality.test,state:"
+msgid "Draft"
+msgstr "Esborrany"
+
+msgctxt "selection:quality.test,state:"
+msgid "Failed"
+msgstr "Fallit"
+
+msgctxt "selection:quality.test,state:"
+msgid "Successful"
+msgstr "Correcte"
+
+msgctxt "view:quality.configuration.line:"
+msgid "Quality Document"
+msgstr "Document de qualitat"
+
+msgctxt "view:quality.configuration.line:"
+msgid "Quality Documents"
+msgstr "Documents de qualitat"
+
+msgctxt "view:quality.configuration:"
+msgid "Quality Configuration"
+msgstr "Configuració de qualitat"
+
+msgctxt "view:quality.proof.method:"
+msgid "Quality Proof Methods"
+msgstr "Mètodes de prova de qualitat"
+
+msgctxt "view:quality.proof:"
+msgid "Model"
+msgstr "Model"
+
+msgctxt "view:quality.proof:"
+msgid "Proof"
+msgstr "Prova"
+
+msgctxt "view:quality.qualitative.template.line:"
+msgid "Model"
+msgstr "Model"
+
+msgctxt "view:quality.qualitative.template.line:"
+msgid "Qualitative Template Line"
+msgstr "Línies de plantilla qualitatatives"
+
+msgctxt "view:quality.qualitative.test.line:"
+msgid "Qualitative Test Line"
+msgstr "Línies de prova qualitatatives"
+
+msgctxt "view:quality.qualitative.value:"
+msgid "Qualitative Value"
+msgstr "Valor qualitatu"
+
+msgctxt "view:quality.quantitative.template.line:"
+msgid "Quantitative Template Line"
+msgstr "Línia de plantilla quantitativa"
+
+msgctxt "view:quality.quantitative.template.line:"
+msgid "Range Values"
+msgstr "Valor rang"
+
+msgctxt "view:quality.quantitative.test.line:"
+msgid "Quantitative Test Line"
+msgstr "Línia de prova quantitativa"
+
+msgctxt "view:quality.quantitative.test.line:"
+msgid "Range"
+msgstr "Rang"
+
+msgctxt "view:quality.quantitative.test.line:"
+msgid "Test Value"
+msgstr "Valor del test"
+
+msgctxt "view:quality.template:"
+msgid "Model"
+msgstr "Model"
+
+msgctxt "view:quality.template:"
+msgid "Notes"
+msgstr "Notes"
+
+msgctxt "view:quality.template:"
 msgid "Qualitative"
 msgstr "Qualitativa"
 
-msgctxt "selection:quality.proof.method,proof_type:"
+msgctxt "view:quality.template:"
+msgid "Quality Template"
+msgstr "Plantilla de qualitat"
+
+msgctxt "view:quality.template:"
 msgid "Quantitative"
 msgstr "Quantitativa"
 
-msgctxt "selection:quality.quantitative.test.line,test_state:"
-msgid "Confirmed"
-msgstr "Confirmat"
+msgctxt "view:quality.test:"
+msgid "Confirm"
+msgstr "Confirma"
 
-msgctxt "selection:quality.quantitative.test.line,test_state:"
-msgid "Draft"
-msgstr "Esborrany"
+msgctxt "view:quality.test:"
+msgid "Notes"
+msgstr "Notes"
 
-msgctxt "selection:quality.quantitative.test.line,test_state:"
-msgid "Failed"
-msgstr "Fallit"
+msgctxt "view:quality.test:"
+msgid "Qualitative"
+msgstr "Qualitativa"
 
-msgctxt "selection:quality.quantitative.test.line,test_state:"
-msgid "Successful"
-msgstr "Correcte"
+msgctxt "view:quality.test:"
+msgid "Quality Test"
+msgstr "Test de qualitat"
 
-msgctxt "selection:quality.test,state:"
-msgid "Confirmed"
-msgstr "Confirmat"
+msgctxt "view:quality.test:"
+msgid "Quantitative"
+msgstr "Quantitativa"
 
-msgctxt "selection:quality.test,state:"
-msgid "Draft"
-msgstr "Esborrany"
+msgctxt "view:quality.test:"
+msgid "Reset to Draft"
+msgstr "Restaura a esborrany"
 
-msgctxt "selection:quality.test,state:"
-msgid "Failed"
-msgstr "Fallit"
+msgctxt "view:quality.test:"
+msgid "Set Template"
+msgstr "Estableix plantilla"
 
-msgctxt "selection:quality.test,state:"
-msgid "Successful"
-msgstr "Correcte"
+msgctxt "view:quality.test:"
+msgid "Set this template?"
+msgstr "Voleu establir aquesta plantilla?"
+
+msgctxt "view:quality.test:"
+msgid "Validate"
+msgstr "Valida"
