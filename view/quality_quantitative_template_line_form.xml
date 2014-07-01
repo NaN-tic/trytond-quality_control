@@ -2,19 +2,18 @@
 <!--The COPYRIGHT file at the top level of this repository
 contains the full copyright notices and license terms. -->
 <form string="Quantitative Template Line">
-    <group col="6" colspan="4" id="name">
-        <label name="name"/>
-        <field name="name"/>
-        <label name="active"/>
-        <field name="active"/>
-    </group>
+    <label name="template"/>
+    <field name="template" colspan="3"/>
+    <label name="name"/>
+    <field name="name"/>
+    <label name="active"/>
+    <field name="active"/>
     <label name="proof"/>
     <field name="proof"/>
     <label name="method"/>
     <field name="method"/>
-    <label name="template"/>
-    <field name="template"/>
-    <group string="Range Values" col="6" colspan="4" id="quantitative_values">
+    <separator string="Range Values" colspan="4"/>
+    <group col="6" colspan="4" id="quantitative_values">
         <label name="unit"/>
         <field name="unit"/>
         <label name="min_value"/>
