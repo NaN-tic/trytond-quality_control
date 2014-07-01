@@ -2,17 +2,16 @@
 <!--The COPYRIGHT file at the top level of this repository
 contains the full copyright notices and license terms. -->
 <form string="Quantitative Test Line">
-    <group col="6" colspan="4" id="name">
-        <label name="name"/>
-        <field name="name"/>
-        <label name="test"/>
-        <field name="test"/>
-    </group>
+    <label name="test"/>
+    <field name="test" colspan="3"/>
+    <label name="name"/>
+    <field name="name" colspan="3"/>
     <label name="proof"/>
     <field name="proof"/>
     <label name="method"/>
     <field name="method"/>
-    <group string="Range" colspan="4" col="6" id="range">
+    <separator string="Range" colspan="4"/>
+    <group colspan="4" col="6" id="range">
         <label name="unit_range"/>
         <field name="unit_range"/>
         <label name="min_value"/>
@@ -20,7 +19,8 @@ contains the full copyright notices and license terms. -->
         <label name="max_value"/>
         <field name="max_value"/>
     </group>
-    <group string="Test Value" col="6" colspan="4" id="value">
+    <separator string="Test Value" colspan="4"/>
+    <group col="6" colspan="4" id="value">
         <label name="value"/>
         <field name="value"/>
         <label name="unit"/>

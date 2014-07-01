@@ -2,12 +2,12 @@
 <!--The COPYRIGHT file at the top level of this repository
 contains the full copyright notices and license terms. -->
 <form string="Qualitative Test Line">
-    <group col="6" colspan="4" id="name">
-        <label name="name"/>
-        <field name="name"/>
-        <label name="test"/>
-        <field name="test"/>
-    </group>
+    <label name="test"/>
+    <field name="test" colspan="3"/>
+    <label name="name"/>
+    <field name="name"/>
+    <label name="success"/>
+    <field name="success"/>
     <label name="method"/>
     <field name="method"/>
     <label name="proof"/>
@@ -16,8 +16,6 @@ contains the full copyright notices and license terms. -->
     <field name="test_value"/>
     <label name="value"/>
     <field name="value"/>
-    <label name="success"/>
-    <field name="success"/>
     <newline/>
     <separator name="external_description" colspan="2"/>
     <separator name="internal_description" colspan="2"/>
