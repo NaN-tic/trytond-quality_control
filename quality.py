@@ -287,6 +287,10 @@ class QualityTest(Workflow, ModelSQL, ModelView):
     def default_company():
         return Transaction().context.get('company')
 
+    @staticmethod
+    def default_template():
+        return Transaction().context.get('default_quality_template')
+
     @classmethod
     @ModelView.button
     @Workflow.transition('draft')
