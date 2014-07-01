@@ -266,7 +266,8 @@ class QualityTest(Workflow, ModelSQL, ModelView):
                 'invisible': (Eval('state') == 'draft'),
                 },
             'set_template': {
-                'readonly': (Eval('state') != 'draft') | ~Bool(Eval('template'),
+                'readonly': ((Eval('state') != 'draft')
+                        | ~Bool(Eval('template'))),
                 },
             })
 
