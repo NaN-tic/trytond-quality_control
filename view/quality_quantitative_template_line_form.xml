@@ -12,7 +12,7 @@ contains the full copyright notices and license terms. -->
     <field name="proof"/>
     <label name="method"/>
     <field name="method"/>
-    <separator string="Range Values" colspan="4"/>
+    <separator string="Range Values" colspan="4" id="range_values"/>
     <group col="6" colspan="4" id="quantitative_values">
         <label name="unit"/>
         <field name="unit"/>

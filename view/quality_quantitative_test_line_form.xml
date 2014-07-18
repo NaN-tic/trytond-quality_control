@@ -10,7 +10,7 @@ contains the full copyright notices and license terms. -->
     <field name="proof"/>
     <label name="method"/>
     <field name="method"/>
-    <separator string="Range" colspan="4"/>
+    <separator string="Range" colspan="4" id="range_separator"/>
     <group colspan="4" col="6" id="range">
         <label name="unit_range"/>
         <field name="unit_range"/>
@@ -19,7 +19,7 @@ contains the full copyright notices and license terms. -->
         <label name="max_value"/>
         <field name="max_value"/>
     </group>
-    <separator string="Test Value" colspan="4"/>
+    <separator string="Test Value" colspan="4" id="test_value"/>
     <group col="6" colspan="4" id="value">
         <label name="value"/>
         <field name="value"/>
