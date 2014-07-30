@@ -3,7 +3,7 @@
 
 import datetime
 from trytond.model import Workflow, ModelView, ModelSQL, fields
-from trytond.pyson import Bool, Equal, Eval, If, Not, Or
+from trytond.pyson import Bool, Equal, Eval, If, Not
 from trytond.transaction import Transaction
 from trytond.pool import Pool, PoolMeta
 
@@ -154,6 +154,21 @@ class QualitativeTemplateLine(ModelSQL, ModelView):
         """ Return default value 'True' for active field """
         return True
 
+    @fields.depends('proof')
+    def on_change_proof(self):
+        res = {}
+        if not self.proof:
+            res['method'] = None
+            res['valid_value'] = None
+        return res
+
+    @fields.depends('method')
+    def on_change_method(self):
+        res = {}
+        if not self.method:
+            res['valid_value'] = None
+        return res
+
 
 class QuantitativeTemplateLine(ModelSQL, ModelView):
     'Quality Quantitative Template Line'
@@ -189,6 +204,13 @@ class QuantitativeTemplateLine(ModelSQL, ModelView):
         if not self.unit:
             return 2
         return self.unit.digits
+
+    @fields.depends('proof')
+    def on_change_proof(self):
+        res = {}
+        if not self.proof:
+            res['method'] = None
+        return res
 
 
 class QualityTest(Workflow, ModelSQL, ModelView):
