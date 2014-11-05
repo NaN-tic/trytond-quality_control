@@ -1,3 +1,4 @@
+Version 3.4.0 - 2014-11-03
 * Avoid domain errors on quantitave and qualitative lines when changing proof.
 
 Version 3.2.0 - 2014-06-04
