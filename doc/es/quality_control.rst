@@ -53,11 +53,11 @@ Los *métodos* son los diferentes procedimientos disponibles para realizar una
 prueba. Si la prueba es cuantitativa, sólo deberemos introducir su nombre. Si es 
 cualitativa añadiremos los posibles valores que puede tomar el test.
 
+.. inheritref:: quality_control/quality_control:section:plantilla
+
 ---------------
 Crear plantilla
 ---------------
-
-.. inheritref:: quality_control/quality_control:paragraph:plantilla
 
 Una plantilla no es necesario que esté asociada a ningún documento. De estarlo, 
 si la plantilla no está integrada con otros procesos (ver apartado específico) 
