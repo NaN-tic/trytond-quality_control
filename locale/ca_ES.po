@@ -508,7 +508,7 @@ msgstr "Nom"
 
 msgctxt "field:quality.template,qualitative_lines:"
 msgid "Qualitative Lines"
-msgstr "Línies qualitatatives"
+msgstr "Línies qualitatives"
 
 msgctxt "field:quality.template,quantitative_lines:"
 msgid "Quantitative Lines"
@@ -572,7 +572,7 @@ msgstr "Número"
 
 msgctxt "field:quality.test,qualitative_lines:"
 msgid "Qualitative Lines"
-msgstr "Línies qualitatatives"
+msgstr "Línies qualitatives"
 
 msgctxt "field:quality.test,quantitative_lines:"
 msgid "Quantitative Lines"
@@ -680,11 +680,11 @@ msgstr "Mètodes"
 
 msgctxt "model:ir.ui.menu,name:menu_quality_qualitative_template_line"
 msgid "Qualitative Lines"
-msgstr "Línies qualitatatives"
+msgstr "Línies qualitatives"
 
 msgctxt "model:ir.ui.menu,name:menu_quality_qualitative_test_line"
 msgid "Qualitative Lines"
-msgstr "Línies qualitatatives"
+msgstr "Línies qualitatives"
 
 msgctxt "model:ir.ui.menu,name:menu_quality_quantitative_template_line"
 msgid "Quantitative Lines"
@@ -819,16 +819,20 @@ msgid "Proof"
 msgstr "Prova"
 
 msgctxt "view:quality.qualitative.template.line:"
-msgid "Model"
-msgstr "Model"
+msgid "Qualitative Template Line"
+msgstr "Línia de plantilla qualitativa"
 
 msgctxt "view:quality.qualitative.template.line:"
-msgid "Qualitative Template Line"
-msgstr "Línies de plantilla qualitatatives"
+msgid "Qualitative Template Lines"
+msgstr "Línies de plantilla qualitatives"
 
 msgctxt "view:quality.qualitative.test.line:"
 msgid "Qualitative Test Line"
-msgstr "Línies de prova qualitatatives"
+msgstr "Línia de prova qualitativa"
+
+msgctxt "view:quality.qualitative.test.line:"
+msgid "Qualitative Test Lines"
+msgstr "Línies de prova qualitatives"
 
 msgctxt "view:quality.qualitative.value:"
 msgid "Qualitative Value"
@@ -839,12 +843,20 @@ msgid "Quantitative Template Line"
 msgstr "Línia de plantilla quantitativa"
 
 msgctxt "view:quality.quantitative.template.line:"
+msgid "Quantitative Template Lines"
+msgstr "Línies de plantilla quantitatives"
+
+msgctxt "view:quality.quantitative.template.line:"
 msgid "Range Values"
 msgstr "Valor rang"
 
 msgctxt "view:quality.quantitative.test.line:"
 msgid "Quantitative Test Line"
 msgstr "Línia de prova quantitativa"
+
+msgctxt "view:quality.quantitative.test.line:"
+msgid "Quantitative Test Lines"
+msgstr "Línies de prova quantitatives"
 
 msgctxt "view:quality.quantitative.test.line:"
 msgid "Range"

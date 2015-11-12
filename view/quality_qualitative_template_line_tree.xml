@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <!--The COPYRIGHT file at the top level of this repository
 contains the full copyright notices and license terms. -->
-<tree string="Model">
-    <field name="name"/>
-    <field name="active"/>
-    <field name="method"/>
-    <field name="proof"/>
-    <field name="valid_value"/>
+<tree string="Qualitative Template Lines">
     <field name="template"/>
+    <field name="name"/>
+    <field name="proof"/>
+    <field name="method"/>
+    <field name="valid_value"/>
+    <field name="active" tree_invisible="1"/>
 </tree>
