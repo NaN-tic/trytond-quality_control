@@ -22,7 +22,7 @@ otro documento del ERP (un registro) y calcula un resultado final de válido/no
 válido. 
 
 .. important:: Un test por sí sólo no se integra con los procesos del documento 
-referenciado, ni condiciona su flujo de trabajo.
+   referenciado, ni condiciona su flujo de trabajo.
 
 Como un mismo tipo de test lo vamos a repetir sobre diferentes registros de un 
 mismo documento/modelo, la forma habitual de trabajar será creando una plantilla 
@@ -96,9 +96,9 @@ Pasar y validar un test
 Un test tiene los siguientes estados:
 
  * Borrador: pendiente de completarse. Hará falta introducir los valores de las 
- pruebas realizadas y confirmarlo.
+   pruebas realizadas y confirmarlo.
  * Confirmado: el test ha sido ejecutado por el operario y falta que el 
- supervisor lo valide.
+   supervisor lo valide.
  * Validado: test completado.
 
 Buscamos el test en *borrador* que nos interesa, que debe tener las líneas ya 
