@@ -327,6 +327,18 @@
             <field name="perm_delete" eval="True"/>
         </record>
 
+        <record model="ir.ui.view" id="quality_template_line_form_view">
+            <field name="model">quality.template.line</field>
+            <field name="type">form</field>
+            <field name="name">quality_template_line_form</field>
+        </record>
+
+        <record model="ir.ui.view" id="quality_template_line_tree_view">
+            <field name="model">quality.template.line</field>
+            <field name="type">tree</field>
+            <field name="name">quality_template_line_tree</field>
+        </record>
+
         <!-- quality.test -->
         <record model="ir.ui.view" id="quality_test_form_view">
             <field name="model">quality.test</field>

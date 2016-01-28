@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!-- The COPYRIGHT file at the top level of this repository contains the full
+     copyright notices and license terms. -->
+<form string="Template Line">
+    <label name="type"/>
+    <field name="type"/>
+    <label name="template"/>
+    <field name="template"/>
+    <label name="name"/>
+    <field name="name"/>
+    <label name="active"/>
+    <field name="active"/>
+    <label name="proof"/>
+    <field name="proof"/>
+    <label name="method"/>
+    <field name="method"/>
+    <separator name="external_description" colspan="2"/>
+    <separator name="internal_description" colspan="2"/>
+    <field name="external_description" colspan="2"/>
+    <field name="internal_description" colspan="2"/>
+</form>

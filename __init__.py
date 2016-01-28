@@ -16,6 +16,7 @@ def register():
         Template,
         QuantitativeTemplateLine,
         QualitativeTemplateLine,
+        TemplateLine,
         QualityTest,
         QualitativeTestLine,
         QuantitativeTestLine,

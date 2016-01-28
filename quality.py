@@ -1,15 +1,15 @@
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms. """
-
+from collections import defaultdict
 import datetime
-from trytond.model import Workflow, ModelView, ModelSQL, fields
+from trytond.model import Workflow, ModelView, ModelSQL, fields, UnionMixin
 from trytond.pyson import Bool, Equal, Eval, If, Not
 from trytond.transaction import Transaction
 from trytond.pool import Pool, PoolMeta
 
 __all__ = ['Proof', 'ProofMethod', 'QualitativeValue', 'Template',
-    'QualitativeTemplateLine', 'QuantitativeTemplateLine', 'QualityTest',
-    'QuantitativeTestLine', 'QualitativeTestLine']
+    'QualitativeTemplateLine', 'QuantitativeTemplateLine', 'TemplateLine',
+    'QualityTest', 'QuantitativeTestLine', 'QualitativeTestLine']
 
 __metaclass__ = PoolMeta
 
@@ -105,6 +105,7 @@ class Template(ModelSQL, ModelView):
         'template', 'Quantitative Lines')
     qualitative_lines = fields.One2Many('quality.qualitative.template.line',
         'template', 'Qualitative Lines')
+    lines = fields.One2Many('quality.template.line', 'template', 'Lines')
     test = fields.One2Many('quality.test', 'template', 'Quality Test')
 
     @classmethod
@@ -148,6 +149,17 @@ class QualitativeTemplateLine(ModelSQL, ModelView):
             ], depends=['method'])
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
+    sequence = fields.Integer('Sequence')
+
+    @classmethod
+    def __setup__(cls):
+        super(QualitativeTemplateLine, cls).__setup__()
+        cls._order.insert(0, ('sequence', 'ASC'))
+
+    @staticmethod
+    def order_sequence(tables):
+        table, _ = tables[None]
+        return [table.sequence == None, table.sequence]
 
     @staticmethod
     def default_active():
@@ -194,6 +206,17 @@ class QuantitativeTemplateLine(ModelSQL, ModelView):
     unit = fields.Many2One('product.uom', 'Unit', required=True)
     unit_digits = fields.Function(fields.Integer('Unit Digits'),
         'on_change_with_unit_digits')
+    sequence = fields.Integer('Sequence')
+
+    @classmethod
+    def __setup__(cls):
+        super(QuantitativeTemplateLine, cls).__setup__()
+        cls._order.insert(0, ('sequence', 'ASC'))
+
+    @staticmethod
+    def order_sequence(tables):
+        table, _ = tables[None]
+        return [table.sequence == None, table.sequence]
 
     @staticmethod
     def default_active():
@@ -211,6 +234,70 @@ class QuantitativeTemplateLine(ModelSQL, ModelView):
         if not self.proof:
             res['method'] = None
         return res
+
+
+class TemplateLine(UnionMixin, ModelSQL, ModelView):
+    'Quality Template Line'
+    __name__ = 'quality.template.line'
+
+    template = fields.Many2One('quality.template', 'Template', required=True)
+    name = fields.Char('Name', required=True, translate=True, select=True)
+    proof = fields.Many2One('quality.proof', 'Proof', required=True)
+    active = fields.Boolean('Active', select=True)
+    method = fields.Many2One('quality.proof.method', 'Method', required=True,
+        domain=[
+            ('proof', '=', Eval('proof')),
+            ],
+        depends=['proof'])
+    type = fields.Selection('get_types', 'Type', required=True, readonly=True)
+    internal_description = fields.Text('Internal Description')
+    external_description = fields.Text('External Description')
+    sequence = fields.Integer('Sequence')
+
+    @classmethod
+    def __setup__(cls):
+        super(TemplateLine, cls).__setup__()
+        cls._order.insert(0, ('sequence', 'ASC'))
+
+    @staticmethod
+    def order_sequence(tables):
+        table, _ = tables[None]
+        return [table.sequence == None, table.sequence]
+
+    @staticmethod
+    def union_models():
+        return ['quality.qualitative.template.line',
+            'quality.quantitative.template.line']
+
+    @classmethod
+    def get_types(cls):
+        Model = Pool().get('ir.model')
+        models = cls.union_models()
+        models = Model.search([
+                ('model', 'in', models),
+                ])
+        return [(m.model, m.name) for m in models]
+
+    @classmethod
+    def union_column(cls, name, field, table, Model):
+        if name == 'type':
+            return Model.__name__
+        return super(TemplateLine, cls).union_column(name, field, table, Model)
+
+    @classmethod
+    def write(cls, *args):
+        pool = Pool()
+        models_to_write = defaultdict(list)
+        # Check Permisions
+        super(TemplateLine, cls).write(*args)
+        actions = iter(args)
+        for models, values in zip(actions, actions):
+            for model in models:
+                record = cls.union_unshard(model.id)
+                models_to_write[record.__name__].extend(([record], values))
+        for model, arguments in models_to_write.iteritems():
+            Model = pool.get(model)
+            Model.write(*arguments)
 
 
 class QualityTest(Workflow, ModelSQL, ModelView):
@@ -423,6 +510,17 @@ class QualitativeTestLine(ModelSQL, ModelView):
             ('method', '=', Eval('method')),
             ], depends=['method'])
     success = fields.Function(fields.Boolean('Success'), 'get_success')
+    sequence = fields.Integer('Sequence')
+
+    @classmethod
+    def __setup__(cls):
+        super(QualitativeTestLine, cls).__setup__()
+        cls._order.insert(0, ('sequence', 'ASC'))
+
+    @staticmethod
+    def order_sequence(tables):
+        table, _ = tables[None]
+        return [table.sequence == None, table.sequence]
 
     def get_success(self, name=None):
         if self.value == self.test_value:
@@ -439,6 +537,7 @@ class QualitativeTestLine(ModelSQL, ModelView):
         self.internal_description = template_line.internal_description
         self.external_description = template_line.external_description
         self.test_value = template_line.valid_value
+        self.sequence = template_line.sequence
 
 
 class QuantitativeTestLine(ModelSQL, ModelView):
@@ -506,6 +605,17 @@ class QuantitativeTestLine(ModelSQL, ModelView):
     unit_digits = fields.Function(fields.Integer('Unit Digits'),
         'on_change_with_unit_digits')
     success = fields.Function(fields.Boolean('Success'), 'get_success')
+    sequence = fields.Integer('Sequence')
+
+    @classmethod
+    def __setup__(cls):
+        super(QuantitativeTestLine, cls).__setup__()
+        cls._order.insert(0, ('sequence', 'ASC'))
+
+    @staticmethod
+    def order_sequence(tables):
+        table, _ = tables[None]
+        return [table.sequence == None, table.sequence]
 
     @classmethod
     def get_test_state(self, lines, name):
@@ -555,3 +665,4 @@ class QuantitativeTestLine(ModelSQL, ModelView):
         self.max_value = template_line.max_value
         self.unit_range = template_line.unit
         self.unit = template_line.unit
+        self.sequence = template_line.sequence

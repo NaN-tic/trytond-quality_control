@@ -194,6 +194,10 @@ msgctxt "field:quality.qualitative.template.line,rec_name:"
 msgid "Name"
 msgstr "Nombre"
 
+msgctxt "field:quality.qualitative.template.line,sequence:"
+msgid "Sequence"
+msgstr "Secuencia"
+
 msgctxt "field:quality.qualitative.template.line,template:"
 msgid "Template"
 msgstr "Plantilla"
@@ -245,6 +249,10 @@ msgstr "Prueba"
 msgctxt "field:quality.qualitative.test.line,rec_name:"
 msgid "Name"
 msgstr "Nombre"
+
+msgctxt "field:quality.qualitative.test.line,sequence:"
+msgid "Sequence"
+msgstr "Secuencia"
 
 msgctxt "field:quality.qualitative.test.line,success:"
 msgid "Success"
@@ -358,6 +366,10 @@ msgctxt "field:quality.quantitative.template.line,rec_name:"
 msgid "Name"
 msgstr "Nombre"
 
+msgctxt "field:quality.quantitative.template.line,sequence:"
+msgid "Sequence"
+msgstr "Secuencia"
+
 msgctxt "field:quality.quantitative.template.line,template:"
 msgid "Template"
 msgstr "Plantilla"
@@ -421,6 +433,10 @@ msgstr "Prueba"
 msgctxt "field:quality.quantitative.test.line,rec_name:"
 msgid "Name"
 msgstr "Nombre"
+
+msgctxt "field:quality.quantitative.test.line,sequence:"
+msgid "Sequence"
+msgstr "Secuencia"
 
 msgctxt "field:quality.quantitative.test.line,success:"
 msgid "Success"
@@ -502,6 +518,10 @@ msgctxt "field:quality.template,internal_description:"
 msgid "Internal Description"
 msgstr "Descripción interna"
 
+msgctxt "field:quality.template,lines:"
+msgid "Lines"
+msgstr "Líneas"
+
 msgctxt "field:quality.template,name:"
 msgid "Name"
 msgstr "Nombre"
@@ -527,6 +547,66 @@ msgid "Write Date"
 msgstr "Fecha modificación"
 
 msgctxt "field:quality.template,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:quality.template.line,active:"
+msgid "Active"
+msgstr "Activo"
+
+msgctxt "field:quality.template.line,create_date:"
+msgid "Create Date"
+msgstr "Fecha de creación"
+
+msgctxt "field:quality.template.line,create_uid:"
+msgid "Create User"
+msgstr "Usuario de creación"
+
+msgctxt "field:quality.template.line,external_description:"
+msgid "External Description"
+msgstr "Descripción externa"
+
+msgctxt "field:quality.template.line,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:quality.template.line,internal_description:"
+msgid "Internal Description"
+msgstr "Descripción interna"
+
+msgctxt "field:quality.template.line,method:"
+msgid "Method"
+msgstr "Método"
+
+msgctxt "field:quality.template.line,name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.template.line,proof:"
+msgid "Proof"
+msgstr "Prueba"
+
+msgctxt "field:quality.template.line,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.template.line,sequence:"
+msgid "Sequence"
+msgstr "Secuencia"
+
+msgctxt "field:quality.template.line,template:"
+msgid "Template"
+msgstr "Plantilla"
+
+msgctxt "field:quality.template.line,type:"
+msgid "Type"
+msgstr "Tipo"
+
+msgctxt "field:quality.template.line,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:quality.template.line,write_uid:"
 msgid "Write User"
 msgstr "Usuario modificación"
 
@@ -742,6 +822,10 @@ msgctxt "model:quality.template,name:"
 msgid "Quality Template"
 msgstr "Plantilla de calidad"
 
+msgctxt "model:quality.template.line,name:"
+msgid "Quality Template Line"
+msgstr "Linea de plantilla de calidad"
+
 msgctxt "model:quality.test,name:"
 msgid "Quality Test"
 msgstr "Test de calidad"
@@ -865,6 +949,14 @@ msgstr "Rango"
 msgctxt "view:quality.quantitative.test.line:"
 msgid "Test Value"
 msgstr "Valor válido"
+
+msgctxt "view:quality.template.line:"
+msgid "Template Line"
+msgstr "Línea de plantilla"
+
+msgctxt "view:quality.template.line:"
+msgid "Template Lines"
+msgstr "Lineas de plantilla"
 
 msgctxt "view:quality.template:"
 msgid "Model"
