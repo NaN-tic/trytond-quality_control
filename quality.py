@@ -106,7 +106,6 @@ class Template(ModelSQL, ModelView):
     qualitative_lines = fields.One2Many('quality.qualitative.template.line',
         'template', 'Qualitative Lines')
     lines = fields.One2Many('quality.template.line', 'template', 'Lines')
-    test = fields.One2Many('quality.test', 'template', 'Quality Test')
 
     @classmethod
     def get_model(cls):
@@ -126,6 +125,14 @@ class Template(ModelSQL, ModelView):
     @staticmethod
     def default_company():
         return Transaction().context.get('company')
+
+    @classmethod
+    def copy(cls, templates, default=None):
+        if default is None:
+            default = {}
+        if not 'lines' in default:
+            default['lines'] = None
+        return super(Template, cls).copy(templates, default)
 
 
 class QualitativeTemplateLine(ModelSQL, ModelView):
