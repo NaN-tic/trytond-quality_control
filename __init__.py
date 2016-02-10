@@ -20,5 +20,5 @@ def register():
         QualityTest,
         QualitativeTestLine,
         QuantitativeTestLine,
+        TestLine,
         module='quality_control', type_='model')
-

@@ -538,10 +538,6 @@ msgctxt "field:quality.template,rec_name:"
 msgid "Name"
 msgstr "Nom"
 
-msgctxt "field:quality.template,test:"
-msgid "Quality Test"
-msgstr "Test de qualitat"
-
 msgctxt "field:quality.template,write_date:"
 msgid "Write Date"
 msgstr "Data modificació"
@@ -574,9 +570,17 @@ msgctxt "field:quality.template.line,internal_description:"
 msgid "Internal Description"
 msgstr "Descripció interna"
 
+msgctxt "field:quality.template.line,max_value:"
+msgid "Max Value"
+msgstr "Valor màxim"
+
 msgctxt "field:quality.template.line,method:"
 msgid "Method"
 msgstr "Mètode"
+
+msgctxt "field:quality.template.line,min_value:"
+msgid "Min Value"
+msgstr "Valor mínim"
 
 msgctxt "field:quality.template.line,name:"
 msgid "Name"
@@ -601,6 +605,18 @@ msgstr "Plantilla"
 msgctxt "field:quality.template.line,type:"
 msgid "Type"
 msgstr "Tipus"
+
+msgctxt "field:quality.template.line,unit:"
+msgid "Unit"
+msgstr "Unitat"
+
+msgctxt "field:quality.template.line,unit_digits:"
+msgid "Unit Digits"
+msgstr "Dígits de la unitat"
+
+msgctxt "field:quality.template.line,valid_value:"
+msgid "Valid Value"
+msgstr "Valor Vàlid"
 
 msgctxt "field:quality.template.line,write_date:"
 msgid "Write Date"
@@ -646,6 +662,10 @@ msgctxt "field:quality.test,internal_description:"
 msgid "Internal Description"
 msgstr "Descripció interna"
 
+msgctxt "field:quality.test,lines:"
+msgid "Lines"
+msgstr "Línies"
+
 msgctxt "field:quality.test,number:"
 msgid "Number"
 msgstr "Número"
@@ -683,6 +703,98 @@ msgid "Write Date"
 msgstr "Data modificació"
 
 msgctxt "field:quality.test,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:quality.test.line,create_date:"
+msgid "Create Date"
+msgstr "Data de creació"
+
+msgctxt "field:quality.test.line,create_uid:"
+msgid "Create User"
+msgstr "Usuari de creació"
+
+msgctxt "field:quality.test.line,external_description:"
+msgid "External Description"
+msgstr "Descripció externa"
+
+msgctxt "field:quality.test.line,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:quality.test.line,internal_description:"
+msgid "Internal Description"
+msgstr "Descripció interna"
+
+msgctxt "field:quality.test.line,max_value:"
+msgid "Max Value"
+msgstr "Valor màxim"
+
+msgctxt "field:quality.test.line,method:"
+msgid "Method"
+msgstr "Mètode"
+
+msgctxt "field:quality.test.line,min_value:"
+msgid "Min Value"
+msgstr "Valor mínim"
+
+msgctxt "field:quality.test.line,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:quality.test.line,proof:"
+msgid "Proof"
+msgstr "Prova"
+
+msgctxt "field:quality.test.line,qualitative_value:"
+msgid "Qualitative Value"
+msgstr "Valor qualitatu"
+
+msgctxt "field:quality.test.line,quantitative_value:"
+msgid "Quantitative Value"
+msgstr "Valor quantiatiu"
+
+msgctxt "field:quality.test.line,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:quality.test.line,sequence:"
+msgid "Sequence"
+msgstr "Seqüència"
+
+msgctxt "field:quality.test.line,success:"
+msgid "Success"
+msgstr "Vàlid"
+
+msgctxt "field:quality.test.line,test:"
+msgid "Test"
+msgstr "Test"
+
+msgctxt "field:quality.test.line,test_value:"
+msgid "Test Value"
+msgstr "Valor del test"
+
+msgctxt "field:quality.test.line,type:"
+msgid "Type"
+msgstr "Tipus"
+
+msgctxt "field:quality.test.line,unit:"
+msgid "Unit"
+msgstr "Unitat"
+
+msgctxt "field:quality.test.line,unit_digits:"
+msgid "Unit Digits"
+msgstr "Dígits de la unitat"
+
+msgctxt "field:quality.test.line,value:"
+msgid "Value"
+msgstr "Valor"
+
+msgctxt "field:quality.test.line,write_date:"
+msgid "Write Date"
+msgstr "Data modificación"
+
+msgctxt "field:quality.test.line,write_uid:"
 msgid "Write User"
 msgstr "Usuari modificació"
 
@@ -829,6 +941,10 @@ msgstr "Línia de plantilla de qualitat"
 msgctxt "model:quality.test,name:"
 msgid "Quality Test"
 msgstr "Test de qualitat"
+
+msgctxt "model:quality.test.line,name:"
+msgid "Quality Test Line"
+msgstr "Linia de test de qualitat"
 
 msgctxt "model:res.group,name:group_quality_control"
 msgid "Quality Control"
@@ -977,6 +1093,14 @@ msgstr "Plantilla de qualitat"
 msgctxt "view:quality.template:"
 msgid "Quantitative"
 msgstr "Quantitativa"
+
+msgctxt "view:quality.test.line:"
+msgid "Test Line"
+msgstr "Línia de test"
+
+msgctxt "view:quality.test.line:"
+msgid "Test Lines"
+msgstr "Línies de test"
 
 msgctxt "view:quality.test:"
 msgid "Confirm"

@@ -2,6 +2,7 @@
 # copyright notices and license terms. """
 from collections import defaultdict
 import datetime
+from sql import Column, Literal
 from trytond.model import Workflow, ModelView, ModelSQL, fields, UnionMixin
 from trytond.pyson import Bool, Equal, Eval, If, Not
 from trytond.transaction import Transaction
@@ -9,7 +10,7 @@ from trytond.pool import Pool, PoolMeta
 
 __all__ = ['Proof', 'ProofMethod', 'QualitativeValue', 'Template',
     'QualitativeTemplateLine', 'QuantitativeTemplateLine', 'TemplateLine',
-    'QualityTest', 'QuantitativeTestLine', 'QualitativeTestLine']
+    'QualityTest', 'QuantitativeTestLine', 'QualitativeTestLine', 'TestLine']
 
 __metaclass__ = PoolMeta
 
@@ -259,6 +260,17 @@ class TemplateLine(UnionMixin, ModelSQL, ModelView):
     type = fields.Selection('get_types', 'Type', required=True, readonly=True)
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
+    valid_value = fields.Many2One('quality.qualitative.value', 'Valid Value',
+        required=True, domain=[
+            ('method', '=', Eval('method')),
+            ], depends=['method'])
+    min_value = fields.Float('Min Value', digits=(16, Eval('unit_digits', 2)),
+        depends=['unit_digits'])
+    max_value = fields.Float('Max Value', digits=(16, Eval('unit_digits', 2)),
+        depends=['unit_digits'])
+    unit = fields.Many2One('product.uom', 'Unit')
+    unit_digits = fields.Function(fields.Integer('Unit Digits'),
+        'on_change_with_unit_digits')
     sequence = fields.Integer('Sequence')
 
     @classmethod
@@ -284,6 +296,12 @@ class TemplateLine(UnionMixin, ModelSQL, ModelView):
                 ('model', 'in', models),
                 ])
         return [(m.model, m.name) for m in models]
+
+    @fields.depends('unit')
+    def on_change_with_unit_digits(self, name=None):
+        if not self.unit:
+            return 2
+        return self.unit.digits
 
     @classmethod
     def union_column(cls, name, field, table, Model):
@@ -326,6 +344,7 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         'test', 'Quantitative Lines', states=_STATES, depends=['state'])
     qualitative_lines = fields.One2Many('quality.qualitative.test.line',
         'test', 'Qualitative Lines', states=_STATES, depends=['state'])
+    lines = fields.One2Many('quality.test.line', 'test', 'Lines')
     template = fields.Many2One('quality.template', 'Template', states=_STATES,
         depends=['state'])
     success = fields.Function(fields.Boolean('Success'), 'get_success')
@@ -478,6 +497,14 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         for test in tests:
             test.set_template_vals()
             test.save()
+
+    @classmethod
+    def copy(cls, tests, default=None):
+        if default is None:
+            default = {}
+        if not 'lines' in default:
+            default['lines'] = None
+        return super(QualityTest, cls).copy(tests, default)
 
 
 class QualitativeTestLine(ModelSQL, ModelView):
@@ -673,3 +700,116 @@ class QuantitativeTestLine(ModelSQL, ModelView):
         self.unit_range = template_line.unit
         self.unit = template_line.unit
         self.sequence = template_line.sequence
+
+
+class TestLine(UnionMixin, ModelSQL, ModelView):
+    'Quality Test Line'
+    __name__ = 'quality.test.line'
+
+    test = fields.Many2One('quality.test', 'Test', required=True)
+    name = fields.Char('Name', required=True, translate=True, select=True)
+    proof = fields.Many2One('quality.proof', 'Proof', required=True)
+    method = fields.Many2One('quality.proof.method', 'Method', required=True,
+        domain=[
+            ('proof', '=', Eval('proof')),
+            ],
+        depends=['proof'])
+    type = fields.Selection('get_types', 'Type', required=True, readonly=True)
+    internal_description = fields.Text('Internal Description')
+    external_description = fields.Text('External Description')
+    test_value = fields.Many2One('quality.qualitative.value', 'Test Value',
+        required=True, readonly=True,
+        domain=[
+            ('method', '=', Eval('method')),
+            ],
+        depends=['method'])
+    qualitative_value = fields.Many2One('quality.qualitative.value',
+        'Qualitative Value',
+        domain=[
+            ('method', '=', Eval('method')),
+            ], depends=['method'])
+    quantitative_value = fields.Float('Quantitative Value',
+        digits=(16, Eval('unit_digits', 2)),
+        depends=['unit_digits'])
+    value = fields.Function(fields.Char('Value'), 'get_value')
+    min_value = fields.Float('Min Value', digits=(16, Eval('unit_digits', 2)),
+        depends=['unit_digits'])
+    max_value = fields.Float('Max Value', digits=(16, Eval('unit_digits', 2)),
+        depends=['unit_digits'])
+    unit = fields.Many2One('product.uom', 'Unit')
+    unit_digits = fields.Function(fields.Integer('Unit Digits'),
+        'on_change_with_unit_digits')
+    sequence = fields.Integer('Sequence')
+    success = fields.Function(fields.Boolean('Success'), 'get_success')
+
+    @classmethod
+    def __setup__(cls):
+        super(TestLine, cls).__setup__()
+        cls._order.insert(0, ('sequence', 'ASC'))
+
+    @staticmethod
+    def order_sequence(tables):
+        table, _ = tables[None]
+        return [table.sequence == None, table.sequence]
+
+    @staticmethod
+    def union_models():
+        return ['quality.qualitative.test.line',
+            'quality.quantitative.test.line']
+
+    @classmethod
+    def get_types(cls):
+        Model = Pool().get('ir.model')
+        models = cls.union_models()
+        models = Model.search([
+                ('model', 'in', models),
+                ])
+        return [(m.model, m.name) for m in models]
+
+    @classmethod
+    def union_column(cls, name, field, table, Model):
+        if name == 'type':
+            return Model.__name__
+        value = Literal(None)
+        if name == 'quantitative_value':
+            if 'quantitative' in Model.__name__:
+                value = Column(table, 'value')
+            return value
+        if name == 'qualitative_value':
+            if 'qualitative' in Model.__name__:
+                value = Column(table, 'value')
+            return value
+        return super(TestLine, cls).union_column(name, field, table, Model)
+
+    @fields.depends('unit')
+    def on_change_with_unit_digits(self, name=None):
+        if not self.unit:
+            return 2
+        return self.unit.digits
+
+    def get_value(self, name):
+        value = ''
+        if self.qualitative_value:
+            value = self.qualitative_value.rec_name
+        elif self.quantitative_value:
+            value = str(self.quantitative_value)
+        return value
+
+    def get_success(self, name):
+        record = self.union_unshard(self.id)
+        return record.success
+
+    @classmethod
+    def write(cls, *args):
+        pool = Pool()
+        models_to_write = defaultdict(list)
+        # Check Permisions
+        super(TestLine, cls).write(*args)
+        actions = iter(args)
+        for models, values in zip(actions, actions):
+            for model in models:
+                record = cls.union_unshard(model.id)
+                models_to_write[record.__name__].extend(([record], values))
+        for model, arguments in models_to_write.iteritems():
+            Model = pool.get(model)
+            Model.write(*arguments)
