@@ -324,6 +324,19 @@ class TemplateLine(UnionMixin, ModelSQL, ModelView):
             Model = pool.get(model)
             Model.write(*arguments)
 
+    @classmethod
+    def delete(cls, lines):
+        pool = Pool()
+        models_to_delete = defaultdict(list)
+        # Check Permisions
+        super(TemplateLine, cls).delete(lines)
+        for model in lines:
+            record = cls.union_unshard(model.id)
+            models_to_delete[record.__name__].append(record)
+        for model, records in models_to_delete.iteritems():
+            Model = pool.get(model)
+            Model.delete(records)
+
 
 class QualityTest(Workflow, ModelSQL, ModelView):
     'Quality Test'
@@ -813,3 +826,16 @@ class TestLine(UnionMixin, ModelSQL, ModelView):
         for model, arguments in models_to_write.iteritems():
             Model = pool.get(model)
             Model.write(*arguments)
+
+    @classmethod
+    def delete(cls, lines):
+        pool = Pool()
+        models_to_delete = defaultdict(list)
+        # Check Permisions
+        super(TestLine, cls).delete(lines)
+        for model in lines:
+            record = cls.union_unshard(model.id)
+            models_to_delete[record.__name__].append(record)
+        for model, records in models_to_delete.iteritems():
+            Model = pool.get(model)
+            Model.delete(records)
