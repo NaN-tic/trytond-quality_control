@@ -578,6 +578,7 @@ class QualitativeTestLine(ModelSQL, ModelView):
         return self.test.state
 
     def set_template_line_vals(self, template_line):
+        self.template_line = template_line
         self.name = template_line.name
         self.proof = template_line.proof
         self.method = template_line.method
