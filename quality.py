@@ -439,6 +439,12 @@ class QualityTest(Workflow, ModelSQL, ModelView):
     def default_template():
         return Transaction().context.get('default_quality_template')
 
+    def get_rec_name(self, name):
+        res = self.number
+        if self.document:
+            res += ' @ ' + self.document.rec_name
+        return res
+
     @classmethod
     @ModelView.button
     @Workflow.transition('draft')
