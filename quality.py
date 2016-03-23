@@ -440,7 +440,7 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         return Transaction().context.get('default_quality_template')
 
     def get_rec_name(self, name):
-        res = self.number
+        res = self.number or ''
         if self.document:
             res += ' @ ' + self.document.rec_name
         return res
