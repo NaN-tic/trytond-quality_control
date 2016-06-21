@@ -14,13 +14,12 @@ contains the full copyright notices and license terms. -->
     <field name="document"/>
     <label name="company"/>
     <field name="company"/>
-    <group col="3" colspan="4" id="template_data">
-        <label name="template"/>
-        <field name="template"/>
-        <button string="Set Template" name="set_template"
-            confirm="Set this template?"/>
-    </group>
     <notebook colspan="4">
+        <page string="Tests" id="tests">
+            <field name="tests" colspan="4"/>
+            <button string="Set Tests" name="set_tests"
+                confirm="Set those tests?" colspan="4"/>
+        </page>
         <page string="Qualitative" id="qualitative">
             <field name="qualitative_lines" colspan="4"/>
         </page>

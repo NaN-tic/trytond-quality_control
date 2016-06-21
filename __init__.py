@@ -4,7 +4,7 @@
 from trytond.pool import Pool
 from .configuration import *
 from .quality import *
-
+from .product import *
 
 def register():
     Pool.register(
@@ -21,4 +21,9 @@ def register():
         QualitativeTestLine,
         QuantitativeTestLine,
         TestLine,
+        QualityTestQualityTemplate,
+        Product,
+        ProductTemplate,
+        TemplateQualityTemplate,
+        ProductQualityTemplate,
         module='quality_control', type_='model')
