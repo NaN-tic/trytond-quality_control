@@ -690,9 +690,9 @@ msgctxt "field:quality.test,success:"
 msgid "Success"
 msgstr "Vàlido"
 
-msgctxt "field:quality.test,template:"
-msgid "Template"
-msgstr "Plantilla"
+msgctxt "field:quality.test,templates:"
+msgid "Tests"
+msgstr "Tests"
 
 msgctxt "field:quality.test,test_date:"
 msgid "Date"
@@ -703,6 +703,38 @@ msgid "Write Date"
 msgstr "Fecha modificación"
 
 msgctxt "field:quality.test,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:quality.test-quality.template,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:quality.test-quality.template,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:quality.test-quality.template,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:quality.test-quality.template,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:quality.test-quality.template,template:"
+msgid "Quality Template"
+msgstr "Plantilla de calidad"
+
+msgctxt "field:quality.test-quality.template,test:"
+msgid "Test"
+msgstr "Test"
+
+msgctxt "field:quality.test-quality.template,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:quality.test-quality.template,write_uid:"
 msgid "Write User"
 msgstr "Usuario modificación"
 
@@ -942,6 +974,10 @@ msgctxt "model:quality.test,name:"
 msgid "Quality Test"
 msgstr "Test de calidad"
 
+msgctxt "model:quality.test-quality.template,name:"
+msgid "Product Template - Quality Template"
+msgstr "Plantilla producto - Plantilla de calidad"
+
 msgctxt "model:quality.test.line,name:"
 msgid "Quality Test Line"
 msgstr "Linea de test de calidad"
@@ -993,6 +1029,10 @@ msgstr "Fallido"
 msgctxt "selection:quality.test,state:"
 msgid "Successful"
 msgstr "Correcto"
+
+msgctxt "view:product.template:"
+msgid "Quality Controls"
+msgstr "Controles de calidad"
 
 msgctxt "view:quality.configuration.line:"
 msgid "Quality Document"
@@ -1102,6 +1142,19 @@ msgctxt "view:quality.test.line:"
 msgid "Test Lines"
 msgstr "Lineas de test"
 
+#, fuzzy
+msgctxt "view:quality.test:"
+msgid "Apply Templates"
+msgstr "Aplicar plantillas"
+
+msgctxt "view:quality.test:"
+msgid ""
+"Applying templates will remove any data already introduced in the test. Are "
+"you sure you want to apply templates?"
+msgstr ""
+"Aplicar las plantillas eliminará cualquier dato introducido en el test. Está"
+" seguro que quiere aplicar las plantillas?"
+
 msgctxt "view:quality.test:"
 msgid "Confirm"
 msgstr "Confirmar"
@@ -1127,12 +1180,8 @@ msgid "Reset to Draft"
 msgstr "Restaurar a borrador"
 
 msgctxt "view:quality.test:"
-msgid "Set Template"
-msgstr "Establecer plantilla"
-
-msgctxt "view:quality.test:"
-msgid "Set this template?"
-msgstr "Estas seguro que quieres establecer esta plantilla?"
+msgid "Templates"
+msgstr "Plantillas"
 
 msgctxt "view:quality.test:"
 msgid "Validate"

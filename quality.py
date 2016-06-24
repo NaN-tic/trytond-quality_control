@@ -1,5 +1,5 @@
 # The COPYRIGHT file at the top level of this repository contains the full
-# copyright notices and license terms. """
+# copyright notices and license terms.
 from collections import defaultdict
 import datetime
 from sql import Column, Literal
@@ -10,7 +10,8 @@ from trytond.pool import Pool, PoolMeta
 
 __all__ = ['Proof', 'ProofMethod', 'QualitativeValue', 'Template',
     'QualitativeTemplateLine', 'QuantitativeTemplateLine', 'TemplateLine',
-    'QualityTest', 'QuantitativeTestLine', 'QualitativeTestLine', 'TestLine']
+    'QualityTest', 'QuantitativeTestLine', 'QualitativeTestLine', 'TestLine',
+    'QualityTestQualityTemplate']
 
 __metaclass__ = PoolMeta
 
@@ -28,6 +29,7 @@ _TEST_STATE = [
 _STATES = {
     'readonly': Eval('state') != 'draft',
     }
+_DEPENDS = ['state']
 
 
 class Proof(ModelSQL, ModelView):
@@ -347,25 +349,25 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         states={'required': Not(Equal(Eval('state'), 'draft'))})
     active = fields.Boolean('Active', select=True)
     company = fields.Many2One('company.company', 'Company', required=True,
-        select=True, states=_STATES, depends=['state'])
+        select=True, states=_STATES, depends=_DEPENDS)
     document = fields.Reference('Document', selection='get_model',
-        required=True, states=_STATES, depends=['state'])
-    test_date = fields.DateTime('Date', states=_STATES, depends=['state'])
+        required=True, states=_STATES, depends=_DEPENDS)
+    test_date = fields.DateTime('Date', states=_STATES, depends=_DEPENDS)
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
     quantitative_lines = fields.One2Many('quality.quantitative.test.line',
-        'test', 'Quantitative Lines', states=_STATES, depends=['state'])
+        'test', 'Quantitative Lines', states=_STATES, depends=_DEPENDS)
     qualitative_lines = fields.One2Many('quality.qualitative.test.line',
-        'test', 'Qualitative Lines', states=_STATES, depends=['state'])
+        'test', 'Qualitative Lines', states=_STATES, depends=_DEPENDS)
     lines = fields.One2Many('quality.test.line', 'test', 'Lines')
-    template = fields.Many2One('quality.template', 'Template', states=_STATES,
-        depends=['state'])
+    templates = fields.Many2Many('quality.test-quality.template',
+        'test', 'template', 'Tests', states=_STATES, depends=_DEPENDS)
     success = fields.Function(fields.Boolean('Success'), 'get_success')
     confirmed_date = fields.DateTime('Confirmed Date', readonly=True,
         states={
             'invisible': Eval('state') == 'draft',
             },
-        depends=['state'])
+        depends=_DEPENDS)
     state = fields.Selection(_TEST_STATE, 'State',
         readonly=True, required=True)
 
@@ -413,9 +415,12 @@ class QualityTest(Workflow, ModelSQL, ModelView):
             'draft': {
                 'invisible': (Eval('state') == 'draft'),
                 },
-            'set_template': {
-                'readonly': ((Eval('state') != 'draft')
-                        | ~Bool(Eval('template'))),
+            'apply_templates': {
+                'readonly': (
+                        (Eval('state') != 'draft') |
+                        ~Bool(Eval('templates')) |
+                        Bool(Eval('quantitative_lines')) |
+                        Bool(Eval('qualitative_lines')))
                 },
             })
 
@@ -483,7 +488,6 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         ConfigLine = pool.get('quality.configuration.line')
         Model = pool.get('ir.model')
         Sequence = pool.get('ir.sequence')
-
         for test in tests:
             doc = str(test.document).split(',')[0]
             model, = Model.search([('model', '=', doc)])
@@ -492,38 +496,60 @@ class QualityTest(Workflow, ModelSQL, ModelView):
             test.number = Sequence.get_id(sequence.id)
             test.save()
 
-    def set_template_vals(self):
-        pool = Pool()
-        QualitativeLine = pool.get('quality.qualitative.test.line')
-        QuantitativeLine = pool.get('quality.quantitative.test.line')
+    @staticmethod
+    def set_qualitative_vals(test):
+        # test -> quality.template
+        QualitativeLine = Pool().get('quality.qualitative.test.line')
+
         ql_lines = []
-        for ql in self.template.qualitative_lines:
+        for ql in test.qualitative_lines:
             line = QualitativeLine()
             line.set_template_line_vals(ql)
             ql_lines.append(line)
-        self.qualitative_lines = ql_lines
+        return ql_lines
+
+    @staticmethod
+    def set_quantitative_vals(test):
+        # test -> quality.template
+        QuantitativeLine = Pool().get('quality.quantitative.test.line')
 
         qt_lines = []
-        for qt in self.template.quantitative_lines:
+        for qt in test.quantitative_lines:
             line = QuantitativeLine()
             line.set_template_line_vals(qt)
             qt_lines.append(line)
-        self.quantitative_lines = qt_lines
+        return qt_lines
+
+    def apply_template_values(self):
+        ql_lines = []
+        qt_lines = []
+        for template in self.templates:
+            ql_lines += self.set_qualitative_vals(template)
+            qt_lines += self.set_quantitative_vals(template)
+
+        if ql_lines:
+            self.qualitative_lines = ql_lines
+        if qt_lines:
+            self.quantitative_lines = qt_lines
 
     @classmethod
     @ModelView.button
-    def set_template(cls, tests):
+    def apply_templates(cls, tests):
         for test in tests:
-            test.set_template_vals()
+            test.apply_template_values()
             test.save()
 
     @classmethod
     def copy(cls, tests, default=None):
         if default is None:
             default = {}
-        if not 'lines' in default:
-            default['lines'] = None
+        if not 'templates' in default:
+            default['templates'] = None
         return super(QualityTest, cls).copy(tests, default)
+
+    @fields.depends('document')
+    def on_change_document(self):
+        return {}
 
 
 class QualitativeTestLine(ModelSQL, ModelView):
@@ -846,3 +872,13 @@ class TestLine(UnionMixin, ModelSQL, ModelView):
         for model, records in models_to_delete.iteritems():
             Model = pool.get(model)
             Model.delete(records)
+
+
+class QualityTestQualityTemplate(ModelSQL):
+    'Product Template - Quality Template'
+    __name__ = 'quality.test-quality.template'
+    _table = 'quality_test_quality_template_rel'
+    test = fields.Many2One('quality.test', 'Test', ondelete='CASCADE',
+            required=True, select=True)
+    template = fields.Many2One('quality.template', 'Quality Template',
+        ondelete='CASCADE', required=True, select=True)

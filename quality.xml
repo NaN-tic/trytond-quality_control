@@ -573,13 +573,13 @@
             <field name="group" ref="quality_control.group_quality_control"/>
         </record>
 
-        <record model="ir.model.button" id="quality_set_template_button">
-            <field name="name">set_template</field>
+        <record model="ir.model.button" id="quality_apply_templates_button">
+            <field name="name">apply_templates</field>
             <field name="model" search="[('model', '=', 'quality.test')]"/>
         </record>
         <record model="ir.model.button-res.group"
-            id="quality_set_template_button_group_quality_admin">
-            <field name="button" ref="quality_set_template_button"/>
+            id="quality_apply_templates_button_group_quality_admin">
+            <field name="button" ref="quality_apply_templates_button"/>
             <field name="group" ref="quality_control.group_quality_control_admin"/>
         </record>
 
