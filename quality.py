@@ -360,7 +360,7 @@ class QualityTest(Workflow, ModelSQL, ModelView):
     qualitative_lines = fields.One2Many('quality.qualitative.test.line',
         'test', 'Qualitative Lines', states=_STATES, depends=_DEPENDS)
     lines = fields.One2Many('quality.test.line', 'test', 'Lines')
-    tests = fields.Many2Many('quality.test-quality.template',
+    templates = fields.Many2Many('quality.test-quality.template',
         'test', 'template', 'Tests', states=_STATES, depends=_DEPENDS)
     success = fields.Function(fields.Boolean('Success'), 'get_success')
     confirmed_date = fields.DateTime('Confirmed Date', readonly=True,
@@ -415,9 +415,12 @@ class QualityTest(Workflow, ModelSQL, ModelView):
             'draft': {
                 'invisible': (Eval('state') == 'draft'),
                 },
-            'set_tests': {
-                'readonly': ((Eval('state') != 'draft')
-                        | ~Bool(Eval('tests'))),
+            'apply_templates': {
+                'readonly': (
+                        (Eval('state') != 'draft') |
+                        ~Bool(Eval('templates')) |
+                        Bool(Eval('quantitative_lines')) |
+                        Bool(Eval('qualitative_lines')))
                 },
             })
 
@@ -485,7 +488,6 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         ConfigLine = pool.get('quality.configuration.line')
         Model = pool.get('ir.model')
         Sequence = pool.get('ir.sequence')
-
         for test in tests:
             doc = str(test.document).split(',')[0]
             model, = Model.search([('model', '=', doc)])
@@ -518,12 +520,12 @@ class QualityTest(Workflow, ModelSQL, ModelView):
             qt_lines.append(line)
         return qt_lines
 
-    def set_tests_vals(self):
+    def apply_template_values(self):
         ql_lines = []
         qt_lines = []
-        for test in self.tests:
-            ql_lines += self.set_qualitative_vals(test)
-            qt_lines += self.set_quantitative_vals(test)
+        for template in self.templates:
+            ql_lines += self.set_qualitative_vals(template)
+            qt_lines += self.set_quantitative_vals(template)
 
         if ql_lines:
             self.qualitative_lines = ql_lines
@@ -532,37 +534,22 @@ class QualityTest(Workflow, ModelSQL, ModelView):
 
     @classmethod
     @ModelView.button
-    def set_tests(cls, tests):
+    def apply_templates(cls, tests):
         for test in tests:
-            test.set_tests_vals()
+            test.apply_template_values()
             test.save()
 
     @classmethod
     def copy(cls, tests, default=None):
         if default is None:
             default = {}
-        if not 'lines' in default:
-            default['lines'] = None
+        if not 'templates' in default:
+            default['templates'] = None
         return super(QualityTest, cls).copy(tests, default)
 
     @fields.depends('document')
     def on_change_document(self):
-        changes = {}
-
-        tests = []
-        changes['tests'] = tests
-
-        if self.document:
-            if self.document.__name__ == 'product.product':
-                product = self.document
-                if product.id > 0: # skip product.product,-1
-                    if product.quality_controls:
-                        tests += [q.id for q in product.quality_controls]
-                    if product.template.quality_controls:
-                        tests += [q.id for q in product.template.quality_controls]
-        if tests:
-            changes['tests'] = tests
-        return changes
+        return {}
 
 
 class QualitativeTestLine(ModelSQL, ModelView):

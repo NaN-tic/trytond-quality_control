@@ -15,11 +15,6 @@ contains the full copyright notices and license terms. -->
     <label name="company"/>
     <field name="company"/>
     <notebook colspan="4">
-        <page string="Tests" id="tests">
-            <field name="tests" colspan="4"/>
-            <button string="Set Tests" name="set_tests"
-                confirm="Set those tests?" colspan="4"/>
-        </page>
         <page string="Qualitative" id="qualitative">
             <field name="qualitative_lines" colspan="4"/>
         </page>
@@ -35,7 +30,11 @@ contains the full copyright notices and license terms. -->
             <field name="external_description" colspan="2"/>
             <field name="internal_description" colspan="2"/>
         </page>
-
+        <page string="Templates" id="templates">
+            <field name="templates" colspan="4"/>
+            <button string="Apply Templates" name="apply_templates" colspan="4"
+                confirm="Applying templates will remove any data already introduced in the test. Are you sure you want to apply templates?"/>
+        </page>
     </notebook>
     <group col="7" colspan="4" id="state">
         <label name="state"/>
