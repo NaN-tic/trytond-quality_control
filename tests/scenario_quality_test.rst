@@ -1,6 +1,6 @@
-================
-Test Scenario
-================
+========================
+Quality Control Scenario
+========================
 
 Imports::
     >>> import datetime
@@ -104,7 +104,7 @@ Create Qualitative Proof::
 
 
 Create Quantitative Proof::
-    
+
     >>> Proof = Model.get('quality.proof')
     >>> Method = Model.get('quality.proof.method')
     >>> qtproof = Proof(name='Quantitative Proof', type='quantitative')
@@ -113,14 +113,14 @@ Create Quantitative Proof::
     >>> qtproof.save()
 
 Look For Values::
-    
+
     >>> method1, = Method.find([('name', '=', 'Method 1')])
     >>> method2, = Method.find([('name', '=', 'Method 2')])
     >>> val1, = QualityValue.find([('name','=','Val1')])
     >>> val2, = QualityValue.find([('name','=','Val2')])
 
 Create Template, Template1::
-    
+
     >>> Template = Model.get('quality.template')
     >>> template=Template()
     >>> template.name = 'Template 1'
@@ -153,18 +153,18 @@ Create Template, Template1::
     >>> template.save()
     >>> template.reload()
 
-Create And assing template to Test::
-    
+Create and assign template to Test::
+
     >>> Test = Model.get('quality.test')
     >>> test=Test()
     >>> test.name = 'TEST/'
     >>> test.document = product
-    >>> test.template = template 
+    >>> test.templates.append(template)
     >>> test.save()
-    >>> Test.set_template([test.id], config.context)
+    >>> Test.apply_templates([test.id], config.context)
 
 Check Unsuccess on Test Line::
-    
+
     >>> test.reload()
     >>> test.qualitative_lines[0].success
     False
@@ -174,7 +174,7 @@ Check Unsuccess on Test Line::
     False
 
 Check Success on Test Line::
-    
+
     >>> test.qualitative_lines[0].value = val1
     >>> test.quantitative_lines[0].value = Decimal('1.00')
     >>> test.quantitative_lines[0].unit = unit
@@ -185,9 +185,9 @@ Check Success on Test Line::
     True
     >>> test.success
     True
-   
+
 Confirm Test::
-    
+
     >>> test.save()
     >>> test.state
     u'draft'
@@ -197,21 +197,21 @@ Confirm Test::
     u'confirmed'
 
 Validate "successful" Test::
-    
+
     >>> Test.manager_validate([test.id], config.context)
     >>> test.reload()
     >>> test.state
     u'successful'
 
 Set To Draft Test::
-    
+
     >>> Test.draft([test.id], config.context)
     >>> test.reload()
     >>> test.state
     u'draft'
 
 Modify test to check failed test::
-    
+
     >>> test.quantitative_lines[0].value = Decimal('12')
     >>> test.save()
     >>> Test.confirmed([test.id], config.context)

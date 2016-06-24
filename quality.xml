@@ -327,6 +327,18 @@
             <field name="perm_delete" eval="True"/>
         </record>
 
+        <record model="ir.ui.view" id="quality_template_line_form_view">
+            <field name="model">quality.template.line</field>
+            <field name="type">form</field>
+            <field name="name">quality_template_line_form</field>
+        </record>
+
+        <record model="ir.ui.view" id="quality_template_line_tree_view">
+            <field name="model">quality.template.line</field>
+            <field name="type">tree</field>
+            <field name="name">quality_template_line_tree</field>
+        </record>
+
         <!-- quality.test -->
         <record model="ir.ui.view" id="quality_test_form_view">
             <field name="model">quality.test</field>
@@ -486,6 +498,18 @@
             <field name="perm_delete" eval="True"/>
         </record>
 
+        <record model="ir.ui.view" id="quality_test_line_form_view">
+            <field name="model">quality.test.line</field>
+            <field name="type">form</field>
+            <field name="name">quality_test_line_form</field>
+        </record>
+
+        <record model="ir.ui.view" id="quality_test_line_tree_view">
+            <field name="model">quality.test.line</field>
+            <field name="type">tree</field>
+            <field name="name">quality_test_line_tree</field>
+        </record>
+
         <!-- sequence -->
         <record model="ir.sequence.type" id="sequence_type_quality">
             <field name="name">Quality Control</field>
@@ -549,13 +573,13 @@
             <field name="group" ref="quality_control.group_quality_control"/>
         </record>
 
-        <record model="ir.model.button" id="quality_set_template_button">
-            <field name="name">set_template</field>
+        <record model="ir.model.button" id="quality_apply_templates_button">
+            <field name="name">apply_templates</field>
             <field name="model" search="[('model', '=', 'quality.test')]"/>
         </record>
         <record model="ir.model.button-res.group"
-            id="quality_set_template_button_group_quality_admin">
-            <field name="button" ref="quality_set_template_button"/>
+            id="quality_apply_templates_button_group_quality_admin">
+            <field name="button" ref="quality_apply_templates_button"/>
             <field name="group" ref="quality_control.group_quality_control_admin"/>
         </record>
 
