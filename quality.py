@@ -440,10 +440,6 @@ class QualityTest(Workflow, ModelSQL, ModelView):
     def default_company():
         return Transaction().context.get('company')
 
-    @staticmethod
-    def default_template():
-        return Transaction().context.get('default_quality_template')
-
     def get_rec_name(self, name):
         res = self.number or ''
         if self.document:
