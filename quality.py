@@ -1,17 +1,17 @@
 # The COPYRIGHT file at the top level of this repository contains the full
-# copyright notices and license terms. """
-
+# copyright notices and license terms.
+from collections import defaultdict
 import datetime
-from trytond.model import Workflow, ModelView, ModelSQL, fields
+from sql import Column, Literal
+from trytond.model import Workflow, ModelView, ModelSQL, fields, UnionMixin
 from trytond.pyson import Bool, Equal, Eval, If, Not
 from trytond.transaction import Transaction
-from trytond.pool import Pool, PoolMeta
+from trytond.pool import Pool
 
 __all__ = ['Proof', 'ProofMethod', 'QualitativeValue', 'Template',
-    'QualitativeTemplateLine', 'QuantitativeTemplateLine', 'QualityTest',
-    'QuantitativeTestLine', 'QualitativeTestLine']
-
-__metaclass__ = PoolMeta
+    'QualitativeTemplateLine', 'QuantitativeTemplateLine', 'TemplateLine',
+    'QualityTest', 'QuantitativeTestLine', 'QualitativeTestLine', 'TestLine',
+    'QualityTestQualityTemplate']
 
 _PROOF_TYPES = [
     ('qualitative', 'Qualitative'),
@@ -27,6 +27,7 @@ _TEST_STATE = [
 _STATES = {
     'readonly': Eval('state') != 'draft',
     }
+_DEPENDS = ['state']
 
 
 class Proof(ModelSQL, ModelView):
@@ -105,7 +106,7 @@ class Template(ModelSQL, ModelView):
         'template', 'Quantitative Lines')
     qualitative_lines = fields.One2Many('quality.qualitative.template.line',
         'template', 'Qualitative Lines')
-    test = fields.One2Many('quality.test', 'template', 'Quality Test')
+    lines = fields.One2Many('quality.template.line', 'template', 'Lines')
 
     @classmethod
     def get_model(cls):
@@ -125,6 +126,14 @@ class Template(ModelSQL, ModelView):
     @staticmethod
     def default_company():
         return Transaction().context.get('company')
+
+    @classmethod
+    def copy(cls, templates, default=None):
+        if default is None:
+            default = {}
+        if not 'lines' in default:
+            default['lines'] = None
+        return super(Template, cls).copy(templates, default)
 
 
 class QualitativeTemplateLine(ModelSQL, ModelView):
@@ -148,6 +157,17 @@ class QualitativeTemplateLine(ModelSQL, ModelView):
             ], depends=['method'])
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
+    sequence = fields.Integer('Sequence')
+
+    @classmethod
+    def __setup__(cls):
+        super(QualitativeTemplateLine, cls).__setup__()
+        cls._order.insert(0, ('sequence', 'ASC'))
+
+    @staticmethod
+    def order_sequence(tables):
+        table, _ = tables[None]
+        return [table.sequence == None, table.sequence]
 
     @staticmethod
     def default_active():
@@ -156,18 +176,14 @@ class QualitativeTemplateLine(ModelSQL, ModelView):
 
     @fields.depends('proof')
     def on_change_proof(self):
-        res = {}
         if not self.proof:
-            res['method'] = None
-            res['valid_value'] = None
-        return res
+            self.method = None
+            self.valid_value = None
 
     @fields.depends('method')
     def on_change_method(self):
-        res = {}
         if not self.method:
-            res['valid_value'] = None
-        return res
+            self.valid_value = None
 
 
 class QuantitativeTemplateLine(ModelSQL, ModelView):
@@ -194,6 +210,17 @@ class QuantitativeTemplateLine(ModelSQL, ModelView):
     unit = fields.Many2One('product.uom', 'Unit', required=True)
     unit_digits = fields.Function(fields.Integer('Unit Digits'),
         'on_change_with_unit_digits')
+    sequence = fields.Integer('Sequence')
+
+    @classmethod
+    def __setup__(cls):
+        super(QuantitativeTemplateLine, cls).__setup__()
+        cls._order.insert(0, ('sequence', 'ASC'))
+
+    @staticmethod
+    def order_sequence(tables):
+        table, _ = tables[None]
+        return [table.sequence == None, table.sequence]
 
     @staticmethod
     def default_active():
@@ -207,10 +234,102 @@ class QuantitativeTemplateLine(ModelSQL, ModelView):
 
     @fields.depends('proof')
     def on_change_proof(self):
-        res = {}
         if not self.proof:
-            res['method'] = None
-        return res
+            self.method = None
+
+
+class TemplateLine(UnionMixin, ModelSQL, ModelView):
+    'Quality Template Line'
+    __name__ = 'quality.template.line'
+
+    template = fields.Many2One('quality.template', 'Template', required=True)
+    name = fields.Char('Name', required=True, translate=True, select=True)
+    proof = fields.Many2One('quality.proof', 'Proof', required=True)
+    active = fields.Boolean('Active', select=True)
+    method = fields.Many2One('quality.proof.method', 'Method', required=True,
+        domain=[
+            ('proof', '=', Eval('proof')),
+            ],
+        depends=['proof'])
+    type = fields.Selection('get_types', 'Type', required=True, readonly=True)
+    internal_description = fields.Text('Internal Description')
+    external_description = fields.Text('External Description')
+    valid_value = fields.Many2One('quality.qualitative.value', 'Valid Value',
+        required=True, domain=[
+            ('method', '=', Eval('method')),
+            ], depends=['method'])
+    min_value = fields.Float('Min Value', digits=(16, Eval('unit_digits', 2)),
+        depends=['unit_digits'])
+    max_value = fields.Float('Max Value', digits=(16, Eval('unit_digits', 2)),
+        depends=['unit_digits'])
+    unit = fields.Many2One('product.uom', 'Unit')
+    unit_digits = fields.Function(fields.Integer('Unit Digits'),
+        'on_change_with_unit_digits')
+    sequence = fields.Integer('Sequence')
+
+    @classmethod
+    def __setup__(cls):
+        super(TemplateLine, cls).__setup__()
+        cls._order.insert(0, ('sequence', 'ASC'))
+
+    @staticmethod
+    def order_sequence(tables):
+        table, _ = tables[None]
+        return [table.sequence == None, table.sequence]
+
+    @staticmethod
+    def union_models():
+        return ['quality.qualitative.template.line',
+            'quality.quantitative.template.line']
+
+    @classmethod
+    def get_types(cls):
+        Model = Pool().get('ir.model')
+        models = cls.union_models()
+        models = Model.search([
+                ('model', 'in', models),
+                ])
+        return [(m.model, m.name) for m in models]
+
+    @fields.depends('unit')
+    def on_change_with_unit_digits(self, name=None):
+        if not self.unit:
+            return 2
+        return self.unit.digits
+
+    @classmethod
+    def union_column(cls, name, field, table, Model):
+        if name == 'type':
+            return Model.__name__
+        return super(TemplateLine, cls).union_column(name, field, table, Model)
+
+    @classmethod
+    def write(cls, *args):
+        pool = Pool()
+        models_to_write = defaultdict(list)
+        # Check Permisions
+        super(TemplateLine, cls).write(*args)
+        actions = iter(args)
+        for models, values in zip(actions, actions):
+            for model in models:
+                record = cls.union_unshard(model.id)
+                models_to_write[record.__name__].extend(([record], values))
+        for model, arguments in models_to_write.iteritems():
+            Model = pool.get(model)
+            Model.write(*arguments)
+
+    @classmethod
+    def delete(cls, lines):
+        pool = Pool()
+        models_to_delete = defaultdict(list)
+        # Check Permisions
+        super(TemplateLine, cls).delete(lines)
+        for model in lines:
+            record = cls.union_unshard(model.id)
+            models_to_delete[record.__name__].append(record)
+        for model, records in models_to_delete.iteritems():
+            Model = pool.get(model)
+            Model.delete(records)
 
 
 class QualityTest(Workflow, ModelSQL, ModelView):
@@ -222,24 +341,25 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         states={'required': Not(Equal(Eval('state'), 'draft'))})
     active = fields.Boolean('Active', select=True)
     company = fields.Many2One('company.company', 'Company', required=True,
-        select=True, states=_STATES, depends=['state'])
+        select=True, states=_STATES, depends=_DEPENDS)
     document = fields.Reference('Document', selection='get_model',
-        required=True, states=_STATES, depends=['state'])
-    test_date = fields.DateTime('Date', states=_STATES, depends=['state'])
+        required=True, states=_STATES, depends=_DEPENDS)
+    test_date = fields.DateTime('Date', states=_STATES, depends=_DEPENDS)
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
     quantitative_lines = fields.One2Many('quality.quantitative.test.line',
-        'test', 'Quantitative Lines', states=_STATES, depends=['state'])
+        'test', 'Quantitative Lines', states=_STATES, depends=_DEPENDS)
     qualitative_lines = fields.One2Many('quality.qualitative.test.line',
-        'test', 'Qualitative Lines', states=_STATES, depends=['state'])
-    template = fields.Many2One('quality.template', 'Template', states=_STATES,
-        depends=['state'])
+        'test', 'Qualitative Lines', states=_STATES, depends=_DEPENDS)
+    lines = fields.One2Many('quality.test.line', 'test', 'Lines')
+    templates = fields.Many2Many('quality.test-quality.template',
+        'test', 'template', 'Tests', states=_STATES, depends=_DEPENDS)
     success = fields.Function(fields.Boolean('Success'), 'get_success')
     confirmed_date = fields.DateTime('Confirmed Date', readonly=True,
         states={
             'invisible': Eval('state') == 'draft',
             },
-        depends=['state'])
+        depends=_DEPENDS)
     state = fields.Selection(_TEST_STATE, 'State',
         readonly=True, required=True)
 
@@ -287,9 +407,12 @@ class QualityTest(Workflow, ModelSQL, ModelView):
             'draft': {
                 'invisible': (Eval('state') == 'draft'),
                 },
-            'set_template': {
-                'readonly': ((Eval('state') != 'draft')
-                        | ~Bool(Eval('template'))),
+            'apply_templates': {
+                'readonly': (
+                        (Eval('state') != 'draft') |
+                        ~Bool(Eval('templates')) |
+                        Bool(Eval('quantitative_lines')) |
+                        Bool(Eval('qualitative_lines')))
                 },
             })
 
@@ -309,9 +432,11 @@ class QualityTest(Workflow, ModelSQL, ModelView):
     def default_company():
         return Transaction().context.get('company')
 
-    @staticmethod
-    def default_template():
-        return Transaction().context.get('default_quality_template')
+    def get_rec_name(self, name):
+        res = self.number or ''
+        if self.document:
+            res += ' @ ' + self.document.rec_name
+        return res
 
     @classmethod
     @ModelView.button
@@ -351,7 +476,6 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         ConfigLine = pool.get('quality.configuration.line')
         Model = pool.get('ir.model')
         Sequence = pool.get('ir.sequence')
-
         for test in tests:
             doc = str(test.document).split(',')[0]
             model, = Model.search([('model', '=', doc)])
@@ -360,30 +484,60 @@ class QualityTest(Workflow, ModelSQL, ModelView):
             test.number = Sequence.get_id(sequence.id)
             test.save()
 
-    def set_template_vals(self):
-        pool = Pool()
-        QualitativeLine = pool.get('quality.qualitative.test.line')
-        QuantitativeLine = pool.get('quality.quantitative.test.line')
+    @staticmethod
+    def set_qualitative_vals(test):
+        # test -> quality.template
+        QualitativeLine = Pool().get('quality.qualitative.test.line')
+
         ql_lines = []
-        for ql in self.template.qualitative_lines:
+        for ql in test.qualitative_lines:
             line = QualitativeLine()
             line.set_template_line_vals(ql)
             ql_lines.append(line)
-        self.qualitative_lines = ql_lines
+        return ql_lines
+
+    @staticmethod
+    def set_quantitative_vals(test):
+        # test -> quality.template
+        QuantitativeLine = Pool().get('quality.quantitative.test.line')
 
         qt_lines = []
-        for qt in self.template.quantitative_lines:
+        for qt in test.quantitative_lines:
             line = QuantitativeLine()
             line.set_template_line_vals(qt)
             qt_lines.append(line)
-        self.quantitative_lines = qt_lines
+        return qt_lines
+
+    def apply_template_values(self):
+        ql_lines = []
+        qt_lines = []
+        for template in self.templates:
+            ql_lines += self.set_qualitative_vals(template)
+            qt_lines += self.set_quantitative_vals(template)
+
+        if ql_lines:
+            self.qualitative_lines = ql_lines
+        if qt_lines:
+            self.quantitative_lines = qt_lines
 
     @classmethod
     @ModelView.button
-    def set_template(cls, tests):
+    def apply_templates(cls, tests):
         for test in tests:
-            test.set_template_vals()
+            test.apply_template_values()
             test.save()
+
+    @classmethod
+    def copy(cls, tests, default=None):
+        if default is None:
+            default = {}
+        if not 'templates' in default:
+            default['templates'] = None
+        return super(QualityTest, cls).copy(tests, default)
+
+    @fields.depends('document')
+    def on_change_document(self):
+        pass
 
 
 class QualitativeTestLine(ModelSQL, ModelView):
@@ -423,6 +577,17 @@ class QualitativeTestLine(ModelSQL, ModelView):
             ('method', '=', Eval('method')),
             ], depends=['method'])
     success = fields.Function(fields.Boolean('Success'), 'get_success')
+    sequence = fields.Integer('Sequence')
+
+    @classmethod
+    def __setup__(cls):
+        super(QualitativeTestLine, cls).__setup__()
+        cls._order.insert(0, ('sequence', 'ASC'))
+
+    @staticmethod
+    def order_sequence(tables):
+        table, _ = tables[None]
+        return [table.sequence == None, table.sequence]
 
     def get_success(self, name=None):
         if self.value == self.test_value:
@@ -433,12 +598,14 @@ class QualitativeTestLine(ModelSQL, ModelView):
         return self.test.state
 
     def set_template_line_vals(self, template_line):
+        self.template_line = template_line
         self.name = template_line.name
         self.proof = template_line.proof
         self.method = template_line.method
         self.internal_description = template_line.internal_description
         self.external_description = template_line.external_description
         self.test_value = template_line.valid_value
+        self.sequence = template_line.sequence
 
 
 class QuantitativeTestLine(ModelSQL, ModelView):
@@ -506,6 +673,17 @@ class QuantitativeTestLine(ModelSQL, ModelView):
     unit_digits = fields.Function(fields.Integer('Unit Digits'),
         'on_change_with_unit_digits')
     success = fields.Function(fields.Boolean('Success'), 'get_success')
+    sequence = fields.Integer('Sequence')
+
+    @classmethod
+    def __setup__(cls):
+        super(QuantitativeTestLine, cls).__setup__()
+        cls._order.insert(0, ('sequence', 'ASC'))
+
+    @staticmethod
+    def order_sequence(tables):
+        table, _ = tables[None]
+        return [table.sequence == None, table.sequence]
 
     @classmethod
     def get_test_state(self, lines, name):
@@ -555,3 +733,140 @@ class QuantitativeTestLine(ModelSQL, ModelView):
         self.max_value = template_line.max_value
         self.unit_range = template_line.unit
         self.unit = template_line.unit
+        self.sequence = template_line.sequence
+
+
+class TestLine(UnionMixin, ModelSQL, ModelView):
+    'Quality Test Line'
+    __name__ = 'quality.test.line'
+
+    test = fields.Many2One('quality.test', 'Test', required=True)
+    name = fields.Char('Name', required=True, translate=True, select=True)
+    proof = fields.Many2One('quality.proof', 'Proof', required=True)
+    method = fields.Many2One('quality.proof.method', 'Method', required=True,
+        domain=[
+            ('proof', '=', Eval('proof')),
+            ],
+        depends=['proof'])
+    type = fields.Selection('get_types', 'Type', required=True, readonly=True)
+    internal_description = fields.Text('Internal Description')
+    external_description = fields.Text('External Description')
+    test_value = fields.Many2One('quality.qualitative.value', 'Test Value',
+        required=True, readonly=True,
+        domain=[
+            ('method', '=', Eval('method')),
+            ],
+        depends=['method'])
+    qualitative_value = fields.Many2One('quality.qualitative.value',
+        'Qualitative Value',
+        domain=[
+            ('method', '=', Eval('method')),
+            ], depends=['method'])
+    quantitative_value = fields.Float('Quantitative Value',
+        digits=(16, Eval('unit_digits', 2)),
+        depends=['unit_digits'])
+    value = fields.Function(fields.Char('Value'), 'get_value')
+    min_value = fields.Float('Min Value', digits=(16, Eval('unit_digits', 2)),
+        depends=['unit_digits'])
+    max_value = fields.Float('Max Value', digits=(16, Eval('unit_digits', 2)),
+        depends=['unit_digits'])
+    unit = fields.Many2One('product.uom', 'Unit')
+    unit_digits = fields.Function(fields.Integer('Unit Digits'),
+        'on_change_with_unit_digits')
+    sequence = fields.Integer('Sequence')
+    success = fields.Function(fields.Boolean('Success'), 'get_success')
+
+    @classmethod
+    def __setup__(cls):
+        super(TestLine, cls).__setup__()
+        cls._order.insert(0, ('sequence', 'ASC'))
+
+    @staticmethod
+    def order_sequence(tables):
+        table, _ = tables[None]
+        return [table.sequence == None, table.sequence]
+
+    @staticmethod
+    def union_models():
+        return ['quality.qualitative.test.line',
+            'quality.quantitative.test.line']
+
+    @classmethod
+    def get_types(cls):
+        Model = Pool().get('ir.model')
+        models = cls.union_models()
+        models = Model.search([
+                ('model', 'in', models),
+                ])
+        return [(m.model, m.name) for m in models]
+
+    @classmethod
+    def union_column(cls, name, field, table, Model):
+        if name == 'type':
+            return Model.__name__
+        value = Literal(None)
+        if name == 'quantitative_value':
+            if 'quantitative' in Model.__name__:
+                value = Column(table, 'value')
+            return value
+        if name == 'qualitative_value':
+            if 'qualitative' in Model.__name__:
+                value = Column(table, 'value')
+            return value
+        return super(TestLine, cls).union_column(name, field, table, Model)
+
+    @fields.depends('unit')
+    def on_change_with_unit_digits(self, name=None):
+        if not self.unit:
+            return 2
+        return self.unit.digits
+
+    def get_value(self, name):
+        value = ''
+        if self.qualitative_value:
+            value = self.qualitative_value.rec_name
+        elif self.quantitative_value:
+            value = str(self.quantitative_value)
+        return value
+
+    def get_success(self, name):
+        record = self.union_unshard(self.id)
+        return record.success
+
+    @classmethod
+    def write(cls, *args):
+        pool = Pool()
+        models_to_write = defaultdict(list)
+        # Check Permisions
+        super(TestLine, cls).write(*args)
+        actions = iter(args)
+        for models, values in zip(actions, actions):
+            for model in models:
+                record = cls.union_unshard(model.id)
+                models_to_write[record.__name__].extend(([record], values))
+        for model, arguments in models_to_write.iteritems():
+            Model = pool.get(model)
+            Model.write(*arguments)
+
+    @classmethod
+    def delete(cls, lines):
+        pool = Pool()
+        models_to_delete = defaultdict(list)
+        # Check Permisions
+        super(TestLine, cls).delete(lines)
+        for model in lines:
+            record = cls.union_unshard(model.id)
+            models_to_delete[record.__name__].append(record)
+        for model, records in models_to_delete.iteritems():
+            Model = pool.get(model)
+            Model.delete(records)
+
+
+class QualityTestQualityTemplate(ModelSQL):
+    'Product Template - Quality Template'
+    __name__ = 'quality.test-quality.template'
+    _table = 'quality_test_quality_template_rel'
+    test = fields.Many2One('quality.test', 'Test', ondelete='CASCADE',
+            required=True, select=True)
+    template = fields.Many2One('quality.template', 'Quality Template',
+        ondelete='CASCADE', required=True, select=True)

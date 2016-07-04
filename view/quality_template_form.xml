@@ -11,11 +11,14 @@ contains the full copyright notices and license terms. -->
     <label name="document"/>
     <field name="document"/>
     <notebook colspan="4">
-        <page string="Qualitative" id="qualitative">
+        <page name="qualitative_lines">
             <field name="qualitative_lines" colspan="4"/>
         </page>
-        <page string="Quantitative" id="quantitative">
+        <page name="quantitative_lines">
             <field name="quantitative_lines" colspan="4"/>
+        </page>
+        <page name="lines">
+            <field name="lines" colspan="4"/>
         </page>
         <page string="Notes" id="notes">
             <separator name="external_description" colspan="2"/>

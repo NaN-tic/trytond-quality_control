@@ -28,11 +28,6 @@ class ConfigurationLine(ModelSQL, ModelView):
     configuration = fields.Many2One('quality.configuration', 'Configuration')
 
     @staticmethod
-    def default_active():
-        """ Return default value 'True' for active field """
-        return True
-
-    @staticmethod
     def default_company():
         """ Return default company value, context setted for company field """
         return Transaction().context.get('company')

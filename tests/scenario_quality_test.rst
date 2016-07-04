@@ -1,6 +1,6 @@
-================
-Test Scenario
-================
+========================
+Quality Control Scenario
+========================
 
 Imports::
     >>> import datetime
@@ -8,6 +8,8 @@ Imports::
     >>> from decimal import Decimal
     >>> from operator import attrgetter
     >>> from proteus import config, Model, Wizard
+    >>> from trytond.modules.company.tests.tools import create_company, \
+    ...     get_company
     >>> today = datetime.date.today()
 
 Create database::
@@ -17,37 +19,16 @@ Create database::
 
 Install quality_test module::
 
-    >>> Module = Model.get('ir.module.module')
+    >>> Module = Model.get('ir.module')
     >>> quality_test_module, = Module.find(
     ...     [('name', '=', 'quality_control')])
     >>> Module.install([quality_test_module.id], config.context)
-    >>> Wizard('ir.module.module.install_upgrade').execute('upgrade')
+    >>> Wizard('ir.module.install_upgrade').execute('upgrade')
 
 Create company::
 
-    >>> Currency = Model.get('currency.currency')
-    >>> CurrencyRate = Model.get('currency.currency.rate')
-    >>> currencies = Currency.find([('code', '=', 'USD')])
-    >>> if not currencies:
-    ...     currency = Currency(name='US Dollar', symbol=u'$', code='USD',
-    ...         rounding=Decimal('0.01'), mon_grouping='[]',
-    ...         mon_decimal_point='.')
-    ...     currency.save()
-    ...     CurrencyRate(date=today + relativedelta(month=1, day=1),
-    ...         rate=Decimal('1.0'), currency=currency).save()
-    ... else:
-    ...     currency, = currencies
-    >>> Company = Model.get('company.company')
-    >>> Party = Model.get('party.party')
-    >>> company_config = Wizard('company.company.config')
-    >>> company_config.execute('company')
-    >>> company = company_config.form
-    >>> party = Party(name='Dunder Mifflin')
-    >>> party.save()
-    >>> company.party = party
-    >>> company.currency = currency
-    >>> company_config.execute('add')
-    >>> company, = Company.find([])
+    >>> _ = create_company()
+    >>> company = get_company()
 
 Reload the context::
 
@@ -102,9 +83,8 @@ Create Qualitative Proof::
     >>> method1.possible_values.append(val2)
     >>> qlproof.save()
 
-
 Create Quantitative Proof::
-    
+
     >>> Proof = Model.get('quality.proof')
     >>> Method = Model.get('quality.proof.method')
     >>> qtproof = Proof(name='Quantitative Proof', type='quantitative')
@@ -113,14 +93,14 @@ Create Quantitative Proof::
     >>> qtproof.save()
 
 Look For Values::
-    
+
     >>> method1, = Method.find([('name', '=', 'Method 1')])
     >>> method2, = Method.find([('name', '=', 'Method 2')])
     >>> val1, = QualityValue.find([('name','=','Val1')])
     >>> val2, = QualityValue.find([('name','=','Val2')])
 
 Create Template, Template1::
-    
+
     >>> Template = Model.get('quality.template')
     >>> template=Template()
     >>> template.name = 'Template 1'
@@ -153,18 +133,18 @@ Create Template, Template1::
     >>> template.save()
     >>> template.reload()
 
-Create And assing template to Test::
-    
+Create and assign template to Test::
+
     >>> Test = Model.get('quality.test')
     >>> test=Test()
     >>> test.name = 'TEST/'
     >>> test.document = product
-    >>> test.template = template 
+    >>> test.templates.append(template)
     >>> test.save()
-    >>> Test.set_template([test.id], config.context)
+    >>> Test.apply_templates([test.id], config.context)
 
 Check Unsuccess on Test Line::
-    
+
     >>> test.reload()
     >>> test.qualitative_lines[0].success
     False
@@ -174,7 +154,7 @@ Check Unsuccess on Test Line::
     False
 
 Check Success on Test Line::
-    
+
     >>> test.qualitative_lines[0].value = val1
     >>> test.quantitative_lines[0].value = Decimal('1.00')
     >>> test.quantitative_lines[0].unit = unit
@@ -185,9 +165,9 @@ Check Success on Test Line::
     True
     >>> test.success
     True
-   
+
 Confirm Test::
-    
+
     >>> test.save()
     >>> test.state
     u'draft'
@@ -197,21 +177,21 @@ Confirm Test::
     u'confirmed'
 
 Validate "successful" Test::
-    
+
     >>> Test.manager_validate([test.id], config.context)
     >>> test.reload()
     >>> test.state
     u'successful'
 
 Set To Draft Test::
-    
+
     >>> Test.draft([test.id], config.context)
     >>> test.reload()
     >>> test.state
     u'draft'
 
 Modify test to check failed test::
-    
+
     >>> test.quantitative_lines[0].value = Decimal('12')
     >>> test.save()
     >>> Test.confirmed([test.id], config.context)

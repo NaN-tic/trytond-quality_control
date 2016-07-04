@@ -14,12 +14,6 @@ contains the full copyright notices and license terms. -->
     <field name="document"/>
     <label name="company"/>
     <field name="company"/>
-    <group col="3" colspan="4" id="template_data">
-        <label name="template"/>
-        <field name="template"/>
-        <button string="Set Template" name="set_template"
-            confirm="Set this template?"/>
-    </group>
     <notebook colspan="4">
         <page string="Qualitative" id="qualitative">
             <field name="qualitative_lines" colspan="4"/>
@@ -27,15 +21,20 @@ contains the full copyright notices and license terms. -->
         <page string="Quantitative" id="quantitative">
             <field name="quantitative_lines" colspan="4"/>
         </page>
+        <page name="lines">
+            <field name="lines" colspan="4"/>
+        </page>
         <page string="Notes" id="notes">
             <separator name="external_description" colspan="2"/>
             <separator name="internal_description" colspan="2"/>
-            <field name="external_description" colspan="2"
-                    spell="Eval('party_lang')"/>
-            <field name="internal_description" colspan="2"
-                spell="Eval('party_lang')"/>
+            <field name="external_description" colspan="2"/>
+            <field name="internal_description" colspan="2"/>
         </page>
-
+        <page string="Templates" id="templates">
+            <field name="templates" colspan="4"/>
+            <button string="Apply Templates" name="apply_templates" colspan="4"
+                confirm="Applying templates will remove any data already introduced in the test. Are you sure you want to apply templates?"/>
+        </page>
     </notebook>
     <group col="7" colspan="4" id="state">
         <label name="state"/>
