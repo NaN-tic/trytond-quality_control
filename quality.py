@@ -6,14 +6,12 @@ from sql import Column, Literal
 from trytond.model import Workflow, ModelView, ModelSQL, fields, UnionMixin
 from trytond.pyson import Bool, Equal, Eval, If, Not
 from trytond.transaction import Transaction
-from trytond.pool import Pool, PoolMeta
+from trytond.pool import Pool
 
 __all__ = ['Proof', 'ProofMethod', 'QualitativeValue', 'Template',
     'QualitativeTemplateLine', 'QuantitativeTemplateLine', 'TemplateLine',
     'QualityTest', 'QuantitativeTestLine', 'QualitativeTestLine', 'TestLine',
     'QualityTestQualityTemplate']
-
-__metaclass__ = PoolMeta
 
 _PROOF_TYPES = [
     ('qualitative', 'Qualitative'),
@@ -178,18 +176,14 @@ class QualitativeTemplateLine(ModelSQL, ModelView):
 
     @fields.depends('proof')
     def on_change_proof(self):
-        res = {}
         if not self.proof:
-            res['method'] = None
-            res['valid_value'] = None
-        return res
+            self.method = None
+            self.valid_value = None
 
     @fields.depends('method')
     def on_change_method(self):
-        res = {}
         if not self.method:
-            res['valid_value'] = None
-        return res
+            self.valid_value = None
 
 
 class QuantitativeTemplateLine(ModelSQL, ModelView):
@@ -240,10 +234,8 @@ class QuantitativeTemplateLine(ModelSQL, ModelView):
 
     @fields.depends('proof')
     def on_change_proof(self):
-        res = {}
         if not self.proof:
-            res['method'] = None
-        return res
+            self.method = None
 
 
 class TemplateLine(UnionMixin, ModelSQL, ModelView):
@@ -440,10 +432,6 @@ class QualityTest(Workflow, ModelSQL, ModelView):
     def default_company():
         return Transaction().context.get('company')
 
-    @staticmethod
-    def default_template():
-        return Transaction().context.get('default_quality_template')
-
     def get_rec_name(self, name):
         res = self.number or ''
         if self.document:
@@ -549,7 +537,7 @@ class QualityTest(Workflow, ModelSQL, ModelView):
 
     @fields.depends('document')
     def on_change_document(self):
-        return {}
+        pass
 
 
 class QualitativeTestLine(ModelSQL, ModelView):
