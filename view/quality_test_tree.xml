@@ -6,5 +6,6 @@ contains the full copyright notices and license terms. -->
     <field name="company"/>
     <field name="document"/>
     <field name="state"/>
-    <field name="test_date"/>
+    <field name="test_date" widget="date"/>
+    <field name="test_date" widget="time" string="Test Time"/>
 </tree>
