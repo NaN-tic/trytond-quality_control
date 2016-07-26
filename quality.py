@@ -3,7 +3,8 @@
 from collections import defaultdict
 import datetime
 from sql import Column, Literal
-from trytond.model import Workflow, ModelView, ModelSQL, fields, UnionMixin
+from trytond.model import Workflow, ModelView, ModelSQL, fields
+from trytond.model import Unique, UnionMixin
 from trytond.pyson import Bool, Equal, Eval, If, Not
 from trytond.transaction import Transaction
 from trytond.pool import Pool
@@ -514,6 +515,7 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         for template in self.templates:
             ql_lines += self.set_qualitative_vals(template)
             qt_lines += self.set_quantitative_vals(template)
+            self.formula = template.formula
 
         if ql_lines:
             self.qualitative_lines = ql_lines
@@ -863,10 +865,19 @@ class TestLine(UnionMixin, ModelSQL, ModelView):
 
 
 class QualityTestQualityTemplate(ModelSQL):
-    'Product Template - Quality Template'
+    'Quality Test - Quality Template'
     __name__ = 'quality.test-quality.template'
     _table = 'quality_test_quality_template_rel'
     test = fields.Many2One('quality.test', 'Test', ondelete='CASCADE',
             required=True, select=True)
     template = fields.Many2One('quality.template', 'Quality Template',
         ondelete='CASCADE', required=True, select=True)
+
+    @classmethod
+    def __setup__(cls):
+        super(QualityTestQualityTemplate, cls).__setup__()
+        t = cls.__table__()
+        cls._sql_constraints += [
+            ('quality_test_uniq', Unique(t, t.test),
+                'Quality Test can only be related with one template.'),
+            ]
