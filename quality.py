@@ -515,7 +515,6 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         for template in self.templates:
             ql_lines += self.set_qualitative_vals(template)
             qt_lines += self.set_quantitative_vals(template)
-            self.formula = template.formula
 
         if ql_lines:
             self.qualitative_lines = ql_lines
