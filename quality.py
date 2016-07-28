@@ -532,7 +532,7 @@ class QualityTest(Workflow, ModelSQL, ModelView):
     def copy(cls, tests, default=None):
         if default is None:
             default = {}
-        if not 'templates' in default:
+        if 'templates' not in default:
             default['templates'] = None
         return super(QualityTest, cls).copy(tests, default)
 
