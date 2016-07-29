@@ -7,4 +7,5 @@ contains the full copyright notices and license terms. -->
     <field name="document"/>
     <field name="state"/>
     <field name="test_date"/>
+    <field name="active" tree_invisible="1"/>
 </tree>
