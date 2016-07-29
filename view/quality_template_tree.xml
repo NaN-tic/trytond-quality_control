@@ -5,4 +5,5 @@ contains the full copyright notices and license terms. -->
     <field name="name"/>
     <field name="company"/>
     <field name="document"/>
+    <field name="active" tree_invisible="1"/>
 </tree>

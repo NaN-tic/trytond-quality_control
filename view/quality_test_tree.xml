@@ -8,4 +8,5 @@ contains the full copyright notices and license terms. -->
     <field name="state"/>
     <field name="test_date" widget="date"/>
     <field name="test_date" widget="time" string="Test Time"/>
+    <field name="active" tree_invisible="1"/>
 </tree>
