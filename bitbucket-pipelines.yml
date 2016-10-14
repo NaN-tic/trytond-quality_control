@@ -1,0 +1,15 @@
+image: nantic/nantic-tryton
+
+pipelines:
+  default:
+    - step:
+        script:
+          - /etc/init.d/postgresql start
+          - tox
+
+  branches:
+    '**':
+      - step:
+          script:
+            - /etc/init.d/postgresql start
+            - tox
