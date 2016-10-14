@@ -100,7 +100,7 @@ setup(name=name,
     zip_safe=False,
     entry_points="""
     [trytond.modules]
-    account_invoice_maturity_dates = trytond.modules.quality_control
+    quality_control = trytond.modules.quality_control
     """,
     test_suite='tests',
     test_loader='trytond.test_loader:Loader',
