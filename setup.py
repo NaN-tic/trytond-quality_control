@@ -39,7 +39,7 @@ version = info.get('version', '0.0.1')
 major_version, minor_version, _ = version.split('.', 2)
 major_version = int(major_version)
 minor_version = int(minor_version)
-name = 'nantinc_quality_control'
+name = 'nantic_quality_control'
 download_url = ('https://bitbucket.org/nantic/'
     'trytond-quality_control')
 
