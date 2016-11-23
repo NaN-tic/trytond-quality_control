@@ -34,7 +34,7 @@
             <field name="global_p" eval="True"/>
         </record>
         <record model="ir.rule" id="rule_quality">
-            <field name="domain">[('company', 'in', [c.id for c in user.companies])]</field>
+            <field name="domain">[('company', '=', user.company.id if user.company else None)]</field>
             <field name="rule_group" ref="rule_group_quality"/>
         </record>
 
@@ -43,7 +43,7 @@
             <field name="global_p" eval="True"/>
         </record>
         <record model="ir.rule" id="rule_quality_template">
-            <field name="domain">[('company', 'in', [c.id for c in user.companies])]</field>
+            <field name="domain">[('company', '=', user.company.id if user.company else None)]</field>
             <field name="rule_group" ref="rule_group_quality_template"/>
         </record>
 
@@ -52,7 +52,7 @@
             <field name="global_p" eval="True"/>
         </record>
         <record model="ir.rule" id="rule_quality_test">
-            <field name="domain">[('company', 'in', [c.id for c in user.companies])]</field>
+            <field name="domain">[('company', '=', user.company.id if user.company else None)]</field>
             <field name="rule_group" ref="rule_group_quality_test"/>
         </record>
 
