@@ -10,6 +10,8 @@ try:
 except ImportError:
     from ConfigParser import ConfigParser
 
+MODULE = 'quality_control'
+PREFIX = 'nantic'
 MODULE2PREFIX = {}
 
 
@@ -39,9 +41,6 @@ version = info.get('version', '0.0.1')
 major_version, minor_version, _ = version.split('.', 2)
 major_version = int(major_version)
 minor_version = int(minor_version)
-name = 'nantic_quality_control'
-download_url = ('https://bitbucket.org/nantic/'
-    'trytond-quality_control')
 
 requires = []
 for dep in info.get('depends', []):
@@ -56,22 +55,22 @@ if minor_version % 2:
     # Add development index for testing with proteus
     dependency_links.append('https://trydevpi.tryton.org/')
 
-setup(name=name,
+setup(name='%s_%s' % (PREFIX, MODULE),
     version=version,
     description='Tryton Quality Control Module',
     long_description=read('README'),
     author='NaN·tic',
     author_email='info@nan-tic.com',
     url='http://www.nan-tic.com/',
-    download_url=download_url,
+    download_url="https://bitbucket.org/nantic/trytond-%s" % MODULE,
     keywords='',
-    package_dir={'trytond.modules.quality_control': '.'},
+    package_dir={'trytond.modules.%s' % MODULE: '.'},
     packages=[
-        'trytond.modules.quality_control',
-        'trytond.modules.quality_control.tests',
+        'trytond.modules.%s' % MODULE,
+        'trytond.modules.%s.tests' % MODULE,
         ],
     package_data={
-        'trytond.modules.quality_control': (info.get('xml', [])
+        'trytond.modules.%s' % MODULE: (info.get('xml', [])
             + ['tryton.cfg', 'view/*.xml', 'locale/*.po', '*.odt',
                 'icons/*.svg', 'tests/*.rst']),
         },
@@ -100,12 +99,13 @@ setup(name=name,
     zip_safe=False,
     entry_points="""
     [trytond.modules]
-    quality_control = trytond.modules.quality_control
-    """,
+    %s = trytond.modules.%s
+    """ % (MODULE, MODULE),
     test_suite='tests',
     test_loader='trytond.test_loader:Loader',
     tests_require=tests_require,
     use_2to3=True,
     convert_2to3_doctests=[
-        'tests/scenario_quality_control.rst'],
+        'tests/scenario_quality_control.rst',
+        ],
     )

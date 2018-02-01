@@ -8,32 +8,19 @@ Imports::
     >>> from decimal import Decimal
     >>> from operator import attrgetter
     >>> from proteus import config, Model, Wizard
+    >>> from trytond.tests.tools import activate_modules
     >>> from trytond.modules.company.tests.tools import create_company, \
     ...     get_company
     >>> today = datetime.date.today()
 
-Create database::
-
-    >>> config = config.set_trytond()
-    >>> config.pool.test = True
-
 Install quality_test module::
 
-    >>> Module = Model.get('ir.module')
-    >>> quality_test_module, = Module.find(
-    ...     [('name', '=', 'quality_control')])
-    >>> Module.install([quality_test_module.id], config.context)
-    >>> Wizard('ir.module.install_upgrade').execute('upgrade')
+    >>> config = activate_modules('quality_control')
 
 Create company::
 
     >>> _ = create_company()
     >>> company = get_company()
-
-Reload the context::
-
-    >>> User = Model.get('res.user')
-    >>> config._context = User.get_preferences(True, config.context)
 
 Create product::
 
@@ -55,17 +42,13 @@ Create product::
 Create Quality Configuration::
 
     >>> Sequence = Model.get('ir.sequence')
-    >>> sequence = Sequence.find([('code','=','quality.test')])[0]
     >>> Configuration = Model.get('quality.configuration')
-    >>> configuration = Configuration()
-    >>> configuration.name = 'Configuration'
-    >>> Product = Model.get('product.product')
-    >>> ConfigLine = Model.get('quality.configuration.line')
-    >>> config_line = ConfigLine()
-    >>> configuration.allowed_documents.append(config_line)
+    >>> IrModel = Model.get('ir.model')
+    >>> sequence, = Sequence.find([('code', '=', 'quality.test')])
+    >>> configuration = Configuration(1)
+    >>> config_line = configuration.allowed_documents.new()
     >>> config_line.quality_sequence = sequence
-    >>> models = Model.get('ir.model')
-    >>> allowed_doc, = models.find([('model','=','product.product')])
+    >>> allowed_doc, = IrModel.find([('model','=','product.product')])
     >>> config_line.document = allowed_doc
     >>> configuration.save()
 

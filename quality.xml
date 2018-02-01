@@ -35,7 +35,7 @@
         </record>
         <record model="ir.rule" id="rule_quality">
             <field name="domain"
-                eval="[('company', 'in', Eval('user', {}).get('company', -1))]"
+                eval="[('company', '=', Eval('user', {}).get('company', -1))]"
                 pyson="1"/>
             <field name="rule_group" ref="rule_group_quality"/>
         </record>

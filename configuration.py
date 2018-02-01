@@ -17,7 +17,6 @@ class Configuration(ModelSingleton, ModelSQL, ModelView):
 class ConfigurationLine(ModelSQL, ModelView):
     'Quality Configuration Model'
     __name__ = 'quality.configuration.line'
-    _rec_name = 'document'
 
     company = fields.Many2One('company.company', 'Company', required=True,
         select=True)
