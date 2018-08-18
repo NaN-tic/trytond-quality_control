@@ -34,7 +34,6 @@ Create product::
     >>> template.default_uom = unit
     >>> template.type = 'service'
     >>> template.list_price = Decimal('40')
-    >>> template.cost_price = Decimal('25')
     >>> template.save()
     >>> product.template = template
     >>> product.save()
@@ -153,25 +152,25 @@ Confirm Test::
 
     >>> test.save()
     >>> test.state
-    u'draft'
+    'draft'
     >>> Test.confirmed([test.id], config.context)
     >>> test.reload()
     >>> test.state
-    u'confirmed'
+    'confirmed'
 
 Validate "successful" Test::
 
     >>> Test.manager_validate([test.id], config.context)
     >>> test.reload()
     >>> test.state
-    u'successful'
+    'successful'
 
 Set To Draft Test::
 
     >>> Test.draft([test.id], config.context)
     >>> test.reload()
     >>> test.state
-    u'draft'
+    'draft'
 
 Modify test to check failed test::
 
@@ -181,4 +180,4 @@ Modify test to check failed test::
     >>> Test.manager_validate([test.id], config.context)
     >>> test.reload()
     >>> test.state
-    u'failed'
+    'failed'

@@ -282,7 +282,7 @@ class TemplateLine(UnionMixin, sequence_ordered(), ModelSQL, ModelView):
             for model in models:
                 record = cls.union_unshard(model.id)
                 models_to_write[record.__name__].extend(([record], values))
-        for model, arguments in models_to_write.iteritems():
+        for model, arguments in models_to_write.items():
             Model = pool.get(model)
             Model.write(*arguments)
 
@@ -295,7 +295,7 @@ class TemplateLine(UnionMixin, sequence_ordered(), ModelSQL, ModelView):
         for model in lines:
             record = cls.union_unshard(model.id)
             models_to_delete[record.__name__].append(record)
-        for model, records in models_to_delete.iteritems():
+        for model, records in models_to_delete.items():
             Model = pool.get(model)
             Model.delete(records)
 
@@ -780,7 +780,7 @@ class TestLine(UnionMixin, sequence_ordered(), ModelSQL, ModelView):
             for model in models:
                 record = cls.union_unshard(model.id)
                 models_to_write[record.__name__].extend(([record], values))
-        for model, arguments in models_to_write.iteritems():
+        for model, arguments in models_to_write.items():
             Model = pool.get(model)
             Model.write(*arguments)
 
@@ -793,7 +793,7 @@ class TestLine(UnionMixin, sequence_ordered(), ModelSQL, ModelView):
         for model in lines:
             record = cls.union_unshard(model.id)
             models_to_delete[record.__name__].append(record)
-        for model, records in models_to_delete.iteritems():
+        for model, records in models_to_delete.items():
             Model = pool.get(model)
             Model.delete(records)
 
