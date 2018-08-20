@@ -599,7 +599,7 @@
 
         <menuitem name="Configuration" parent="menu_quality_control"
             id="menu_configuration"
-            sequence="0" icon="tryton-preferences"/>
+            sequence="0" icon="tryton-settings"/>
         <record model="ir.ui.menu-res.group" id="menu_quality_configuration_group_quality_admin">
             <field name="menu" ref="menu_configuration"/>
             <field name="group" ref="group_quality_control_admin"/>
