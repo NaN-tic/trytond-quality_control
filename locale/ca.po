@@ -1,6 +1,10 @@
-# 
+#
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "error:quality.test-quality.template:"
+msgid "Quality Test can only be related with one template."
+msgstr ""
 
 msgctxt "field:quality.configuration,allowed_documents:"
 msgid "Documents with Quality Control"
@@ -19,7 +23,7 @@ msgid "ID"
 msgstr "ID"
 
 msgctxt "field:quality.configuration,rec_name:"
-msgid "Name"
+msgid "Record Name"
 msgstr "Nom"
 
 msgctxt "field:quality.configuration,write_date:"
@@ -59,7 +63,7 @@ msgid "Quality Sequence"
 msgstr "Seqüència de qualitat"
 
 msgctxt "field:quality.configuration.line,rec_name:"
-msgid "Name"
+msgid "Record Name"
 msgstr "Nom"
 
 msgctxt "field:quality.configuration.line,write_date:"
@@ -99,7 +103,7 @@ msgid "Name"
 msgstr "Nom"
 
 msgctxt "field:quality.proof,rec_name:"
-msgid "Name"
+msgid "Record Name"
 msgstr "Nom"
 
 msgctxt "field:quality.proof,type:"
@@ -143,7 +147,7 @@ msgid "Proof"
 msgstr "Prova"
 
 msgctxt "field:quality.proof.method,rec_name:"
-msgid "Name"
+msgid "Record Name"
 msgstr "Nom"
 
 msgctxt "field:quality.proof.method,write_date:"
@@ -191,7 +195,7 @@ msgid "Proof"
 msgstr "Prova"
 
 msgctxt "field:quality.qualitative.template.line,rec_name:"
-msgid "Name"
+msgid "Record Name"
 msgstr "Nom"
 
 msgctxt "field:quality.qualitative.template.line,sequence:"
@@ -247,7 +251,7 @@ msgid "Proof"
 msgstr "Prova"
 
 msgctxt "field:quality.qualitative.test.line,rec_name:"
-msgid "Name"
+msgid "Record Name"
 msgstr "Nom"
 
 msgctxt "field:quality.qualitative.test.line,sequence:"
@@ -307,7 +311,7 @@ msgid "Name"
 msgstr "Nom"
 
 msgctxt "field:quality.qualitative.value,rec_name:"
-msgid "Name"
+msgid "Record Name"
 msgstr "Nom"
 
 msgctxt "field:quality.qualitative.value,write_date:"
@@ -363,7 +367,7 @@ msgid "Proof"
 msgstr "Prova"
 
 msgctxt "field:quality.quantitative.template.line,rec_name:"
-msgid "Name"
+msgid "Record Name"
 msgstr "Nom"
 
 msgctxt "field:quality.quantitative.template.line,sequence:"
@@ -431,7 +435,7 @@ msgid "Proof"
 msgstr "Prova"
 
 msgctxt "field:quality.quantitative.test.line,rec_name:"
-msgid "Name"
+msgid "Record Name"
 msgstr "Nom"
 
 msgctxt "field:quality.quantitative.test.line,sequence:"
@@ -535,7 +539,7 @@ msgid "Quantitative Lines"
 msgstr "Línia quantitativa"
 
 msgctxt "field:quality.template,rec_name:"
-msgid "Name"
+msgid "Record Name"
 msgstr "Nom"
 
 msgctxt "field:quality.template,write_date:"
@@ -591,7 +595,7 @@ msgid "Proof"
 msgstr "Prova"
 
 msgctxt "field:quality.template.line,rec_name:"
-msgid "Name"
+msgid "Record Name"
 msgstr "Nom"
 
 msgctxt "field:quality.template.line,sequence:"
@@ -679,7 +683,7 @@ msgid "Quantitative Lines"
 msgstr "Línia quantitativa"
 
 msgctxt "field:quality.test,rec_name:"
-msgid "Name"
+msgid "Record Name"
 msgstr "Nom"
 
 msgctxt "field:quality.test,state:"
@@ -690,7 +694,6 @@ msgctxt "field:quality.test,success:"
 msgid "Success"
 msgstr "Vàlid"
 
-#, fuzzy
 msgctxt "field:quality.test,templates:"
 msgid "Tests"
 msgstr "Tests"
@@ -720,7 +723,7 @@ msgid "ID"
 msgstr "ID"
 
 msgctxt "field:quality.test-quality.template,rec_name:"
-msgid "Name"
+msgid "Record Name"
 msgstr "Nom"
 
 msgctxt "field:quality.test-quality.template,template:"
@@ -788,7 +791,7 @@ msgid "Quantitative Value"
 msgstr "Valor quantiatiu"
 
 msgctxt "field:quality.test.line,rec_name:"
-msgid "Name"
+msgid "Record Name"
 msgstr "Nom"
 
 msgctxt "field:quality.test.line,sequence:"
@@ -976,7 +979,7 @@ msgid "Quality Test"
 msgstr "Test de qualitat"
 
 msgctxt "model:quality.test-quality.template,name:"
-msgid "Product Template - Quality Template"
+msgid "Quality Test - Quality Template"
 msgstr "Plantilla producte - Plantilla de qualitat"
 
 msgctxt "model:quality.test.line,name:"
