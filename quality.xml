@@ -30,6 +30,7 @@
 
         <!-- rules -->
         <record model="ir.rule.group" id="rule_group_quality">
+            <field name="name">User in company</field>
             <field name="model" search="[('model', '=', 'quality.configuration.line')]"/>
             <field name="global_p" eval="True"/>
         </record>
@@ -41,6 +42,7 @@
         </record>
 
         <record model="ir.rule.group" id="rule_group_quality_template">
+            <field name="name">User in company</field>
             <field name="model" search="[('model', '=', 'quality.template')]"/>
             <field name="global_p" eval="True"/>
         </record>
@@ -52,6 +54,7 @@
         </record>
 
         <record model="ir.rule.group" id="rule_group_quality_test">
+            <field name="name">User in company</field>
             <field name="model" search="[('model', '=', 'quality.test')]"/>
             <field name="global_p" eval="True"/>
         </record>
