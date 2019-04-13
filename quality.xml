@@ -11,11 +11,6 @@
             <field name="user" ref="res.user_admin"/>
             <field name="group" ref="group_quality_control_admin"/>
         </record>
-        <record model="res.user-res.group" id="user_trigger_group_quality_control_admin">
-            <field name="user" ref="res.user_trigger"/>
-            <field name="group" ref="group_quality_control_admin"/>
-        </record>
-
         <record model="res.group" id="group_quality_control">
             <field name="name">Quality Control</field>
         </record>
@@ -23,11 +18,6 @@
             <field name="user" ref="res.user_admin"/>
             <field name="group" ref="group_quality_control"/>
         </record>
-        <record model="res.user-res.group" id="user_trigger_group_quality_control">
-            <field name="user" ref="res.user_trigger"/>
-            <field name="group" ref="group_quality_control"/>
-        </record>
-
         <!-- rules -->
         <record model="ir.rule.group" id="rule_group_quality">
             <field name="name">User in company</field>
