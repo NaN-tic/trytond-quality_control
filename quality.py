@@ -366,7 +366,7 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         cls._buttons.update({
             'confirmed': {
                 'invisible': (Eval('state') != 'draft'),
-                'icon': 'tryton-go-next',
+                'icon': 'tryton-forward',
                 },
             'manager_validate': {
                 'invisible': (Eval('state') != 'confirmed'),
