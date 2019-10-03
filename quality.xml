@@ -534,6 +534,7 @@
         <!-- Button -->
         <record model="ir.model.button" id="quality_draft_button">
             <field name="name">draft</field>
+            <field name="string">Reset to Draft</field>
             <field name="model" search="[('model', '=', 'quality.test')]"/>
         </record>
         <record model="ir.model.button-res.group"
@@ -544,6 +545,7 @@
 
         <record model="ir.model.button" id="quality_confirm_button">
             <field name="name">confirmed</field>
+            <field name="string">Confirm</field>
             <field name="model" search="[('model', '=', 'quality.test')]"/>
         </record>
         <record model="ir.model.button-res.group"
@@ -554,6 +556,7 @@
 
         <record model="ir.model.button" id="quality_manager_validate_button">
             <field name="name">manager_validate</field>
+            <field name="string">Validate</field>
             <field name="model" search="[('model', '=', 'quality.test')]"/>
         </record>
         <record model="ir.model.button-res.group"
@@ -574,6 +577,8 @@
 
         <record model="ir.model.button" id="quality_apply_templates_button">
             <field name="name">apply_templates</field>
+            <field name="string">Apply Templates</field>
+            <field name="confirm">Applying templates will remove any data already introduced in the test. Are you sure you want to apply templates?</field>
             <field name="model" search="[('model', '=', 'quality.test')]"/>
         </record>
         <record model="ir.model.button-res.group"

@@ -374,6 +374,7 @@ class QualityTest(Workflow, ModelSQL, ModelView):
                 },
             'draft': {
                 'invisible': (Eval('state') == 'draft'),
+                'icon': 'tryton-clear',
                 },
             'apply_templates': {
                 'readonly': (
