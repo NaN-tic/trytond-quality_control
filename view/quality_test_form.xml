@@ -32,8 +32,7 @@ contains the full copyright notices and license terms. -->
         </page>
         <page string="Templates" id="templates">
             <field name="templates" colspan="4"/>
-            <button string="Apply Templates" name="apply_templates" colspan="4"
-                confirm="Applying templates will remove any data already introduced in the test. Are you sure you want to apply templates?"/>
+            <button name="apply_templates" colspan="4"/>
         </page>
     </notebook>
     <group col="7" colspan="4" id="state">
@@ -44,9 +43,9 @@ contains the full copyright notices and license terms. -->
         <label name="success"/>
         <field name="success"/>
         <group col="3" id="buttons">
-            <button name="confirmed" string="Confirm"/>
-            <button name="manager_validate" string="Validate"/>
-            <button string="Reset to Draft" name="draft" icon="tryton-clear"/>
+            <button name="confirmed"/>
+            <button name="manager_validate"/>
+            <button name="draft"/>
         </group>
     </group>
 </form>
