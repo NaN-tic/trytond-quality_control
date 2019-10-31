@@ -106,7 +106,6 @@ Create Template, Template1::
     >>> qt_line.proof = qtproof
     >>> qt_line.method = method2
     >>> qt_line.unit = unit
-    >>> qt_line.unit_range = unit
     >>> qt_line.internal_description = 'quality line intenal description'
     >>> qt_line.external_description = 'quality line external description'
     >>> qt_line.min_value = Decimal('1.00')
@@ -119,7 +118,6 @@ Create and assign template to Test::
 
     >>> Test = Model.get('quality.test')
     >>> test=Test()
-    >>> test.name = 'TEST/'
     >>> test.document = product
     >>> test.templates.append(template)
     >>> test.save()
