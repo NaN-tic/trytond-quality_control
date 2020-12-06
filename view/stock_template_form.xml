@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!-- The COPYRIGHT file at the top level of this repository contains the full
+     copyright notices and license terms. -->
+<data>
+    <xpath expr="/form/notebook/page[@name='lot_required']"
+            position="inside">
+        <separator id="quality_control" string="Lot Quality Control" colspan="4"/>
+        <label name="shipment_in_quality_template"/>
+        <field name="shipment_in_quality_template"/>
+        <label name="shipment_out_quality_template"/>
+        <field name="shipment_out_quality_template"/>
+        <label name="shipment_internal_quality_template"/>
+        <field name="shipment_internal_quality_template"/>
+    </xpath>
+</data>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!-- This file is part of party_comment module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full
+copyright notices and license types. -->
+<data>
+    <xpath expr="/form/notebook" position="inside">
+        <page string="Quality Test" id="quality">
+            <label name="shipment_in_quality_template"/>
+            <field name="shipment_in_quality_template"/>
+            <label name="shipment_out_quality_template"/>
+            <field name="shipment_out_quality_template"/>
+        </page>
+    </xpath>
+</data>
