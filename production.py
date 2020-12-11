@@ -21,5 +21,7 @@ class Production(CreateQualityLotTestsMixin, metaclass=PoolMeta):
 
     def lots_for_quality_tests(self):
         return list(set(m.lot for m in self.outputs if m.lot and
-            m.state == 'done'
-            and m.product.template.production_quality_template))
+            m.state == 'done' and
+            m.product.template.production_quality_template and
+            not [x for x in m.lot.quality_tests if
+            m.product.template.production_quality_template in x]))

@@ -22,13 +22,13 @@ Create company::
     >>> _ = create_company()
     >>> company = get_company()
 
-
 Create supplier::
 
     >>> Party = Model.get('party.party')
+    >>> supplier = Party(name='Supplier')
+    >>> supplier.save()
     >>> customer = Party(name='Customer')
     >>> customer.save()
-
 
 Create product::
 
@@ -36,15 +36,13 @@ Create product::
     >>> unit, = ProductUom.find([('name', '=', 'Unit')])
     >>> ProductTemplate = Model.get('product.template')
     >>> Product = Model.get('product.product')
-    >>> product = Product()
     >>> template = ProductTemplate()
     >>> template.name = 'product'
     >>> template.default_uom = unit
     >>> template.type = 'goods'
     >>> template.list_price = Decimal('40')
     >>> template.save()
-    >>> product.template = template
-    >>> product.save()
+    >>> product, = template.products
 
 Create Quality Configuration::
 
@@ -55,8 +53,12 @@ Create Quality Configuration::
     >>> configuration = Configuration(1)
     >>> config_line = configuration.allowed_documents.new()
     >>> config_line.quality_sequence = sequence
-    >>> allowed_doc, = IrModel.find([('model','=','stock.shipment.out')])
+    >>> allowed_doc, = IrModel.find([('model','=','stock.shipment.in')])
     >>> config_line.document = allowed_doc
+    >>> config_line = configuration.allowed_documents.new()
+    >>> config_line.quality_sequence = sequence
+    >>> allowed_doc2, = IrModel.find([('model','=','stock.shipment.out')])
+    >>> config_line.document = allowed_doc2
     >>> configuration.save()
 
 Create Qualitative Proof::
@@ -123,6 +125,8 @@ Create Template, Template1::
 
 Assign Template to Supplier::
 
+    >>> supplier.shipment_in_quality_template = template
+    >>> supplier.save()
     >>> customer.shipment_out_quality_template = template
     >>> customer.save()
 
@@ -142,6 +146,40 @@ Get stock locations and create new internal location::
     >>> internal_loc.type = 'storage'
     >>> internal_loc.parent = storage_loc
     >>> internal_loc.save()
+
+Create Shipment In::
+
+    >>> ShipmentIn = Model.get('stock.shipment.in')
+    >>> shipment_in = ShipmentIn()
+    >>> shipment_in.planned_date = today
+    >>> shipment_in.supplier = supplier
+    >>> shipment_in.warehouse = warehouse_loc
+
+Add three shipment lines of product 1::
+
+    >>> StockMove = Model.get('stock.move')
+    >>> move = shipment_in.incoming_moves.new()
+    >>> move.product = product
+    >>> move.uom = unit
+    >>> move.quantity = 1
+    >>> move.from_location = supplier_loc
+    >>> move.to_location = input_loc
+    >>> move.unit_price = Decimal('1')
+    >>> shipment_in.save()
+
+Receive products::
+
+    >>> ShipmentIn.receive([shipment_in.id], config.context)
+    >>> shipment_in.reload()
+    >>> shipment_in.state
+    'received'
+
+Check the created Quality Tests::
+
+    >>> QualityTest = Model.get('quality.test')
+    >>> tests_in, = QualityTest.find([])
+    >>> tests_in.document == shipment_in
+    True
 
 Create Shipment out::
 
@@ -174,6 +212,6 @@ Receive products::
 Check the created Quality Tests::
 
     >>> QualityTest = Model.get('quality.test')
-    >>> tests_in, = QualityTest.find([])
-    >>> tests_in.document == shipment_out
+    >>> tests_in, test_out = QualityTest.find([])
+    >>> test_out.document == shipment_out
     True

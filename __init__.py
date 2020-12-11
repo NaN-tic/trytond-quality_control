@@ -7,6 +7,7 @@ from . import stock
 from . import stock_lot
 from . import production
 
+
 def register():
     Pool.register(
         configuration.Configuration,
@@ -28,7 +29,6 @@ def register():
         stock_lot.Template,
         stock_lot.ShipmentIn,
         stock_lot.ShipmentOut,
-        stock_lot.ShipmentInternal,
         stock_lot.Lot,
         stock_lot.QualityTest,
         depends=['stock_lot_deactivatable'],

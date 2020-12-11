@@ -12,50 +12,41 @@ class Template(metaclass=PoolMeta):
         'Shipment In Quality Template')
     shipment_out_quality_template = fields.Many2One('quality.template',
         'Shipment Out Quality Template')
-    shipment_internal_quality_template = fields.Many2One('quality.template',
-        'Shipment Internal Quality Template')
+
 
 class CreateQualityLotTestsMixin(object):
 
     @classmethod
-    def create_lot_quality_tests(cls, shipments, template):
-        QualityTest = Pool().get('quality.test')
-        StockLot = Pool().get('stock.lot')
-        to_save = []
-        to_create = []
-        for shipment in shipments:
-            lots = shipment.lots_for_quality_tests()
+    def create_lot_quality_tests(cls, documents, template):
+        pool = Pool()
+        QualityTest = pool.get('quality.test')
+        StockLot = pool.get('stock.lot')
+        lot_to_save = []
+
+        for document in documents:
+            lots = document.lots_for_quality_tests()
             if not lots:
                 continue
 
-            to_create = []
-            today = datetime.today()
-            for lot in lots:
-                used_template = None
-                lot.active = False
-                to_save.append(lot)
+            test_to_save = []
+            with Transaction().set_context(_check_access=False):
+                for lot in lots:
+                    used_template = None
+                    lot.active = False
+                    lot_to_save.append(lot)
 
-                if not template:
-                    continue
-
-                used_template = getattr(lot.product.template,
-                    template+'_quality_template')
-
-                test_date = (datetime.combine(shipment.effective_date,
-                    datetime.now().time()) if shipment.effective_date else
-                    today)
-
-                test = QualityTest(
-                    test_date=test_date,
-                    templates=[used_template],
-                    document=str(lot))
-                test.apply_template_values()
-                to_create.append(test)
-
-        with Transaction().set_user(0, set_context=True):
-            QualityTest.save(to_create)
-
-        StockLot.save(to_save)
+                    if not template:
+                        continue
+                    used_template = getattr(lot.product.template,
+                        template+'_quality_template')
+                    test = QualityTest(
+                        test_date=datetime.now(),
+                        templates=[used_template],
+                        document=str(lot))
+                    test.apply_template_values()
+                    test_to_save.append(test)
+                QualityTest.save(test_to_save)
+        StockLot.save(lot_to_save)
 
 
 class ShipmentIn(CreateQualityLotTestsMixin, metaclass=PoolMeta):
@@ -69,7 +60,9 @@ class ShipmentIn(CreateQualityLotTestsMixin, metaclass=PoolMeta):
     def lots_for_quality_tests(self):
         return list(set(m.lot for m in self.incoming_moves if m.lot and
             m.state == 'done' and
-            m.product.template.shipment_in_quality_template))
+            m.product.template.shipment_in_quality_template and
+            not [x for x in m.lot.quality_tests if
+                m.product.template.shipment_in_quality_template in x]))
 
 
 class ShipmentOut(CreateQualityLotTestsMixin, metaclass=PoolMeta):
@@ -83,27 +76,23 @@ class ShipmentOut(CreateQualityLotTestsMixin, metaclass=PoolMeta):
     def lots_for_quality_tests(self):
         return list(set(m.lot for m in self.outgoing_moves if m.lot and
             m.state == 'draft' and
-            m.product.template.shipment_out_quality_template))
-
-
-class ShipmentInternal(CreateQualityLotTestsMixin, metaclass=PoolMeta):
-    __name__ = 'stock.shipment.internal'
-
-    @classmethod
-    def assign(cls, shipments):
-        super().assign(shipments)
-        cls.create_lot_quality_tests(shipments, 'shipment_internal')
-
-    def lots_for_quality_tests(self):
-        return list(set(m.lot for m in self.moves if m.lot and
-            m.state == 'assigned' and
-            m.product.template.shipment_internal_quality_template))
+            m.product.template.shipment_out_quality_template and
+            not [x for x in m.lot.quality_tests if
+            m.product.template.shipment_out_quality_template in x]))
 
 
 class Lot(metaclass=PoolMeta):
     __name__ = 'stock.lot'
     quality_tests = fields.One2Many('quality.test', 'document', 'Tests',
         readonly=True)
+
+    @classmethod
+    def copy(cls, lots, default=None):
+        if default is None:
+            default = {}
+        default = default.copy()
+        default['quality_test'] = None
+        return super().copy(lots, default)
 
 
 class QualityTest(metaclass=PoolMeta):
@@ -133,5 +122,4 @@ class QualityTest(metaclass=PoolMeta):
                 if test.state == 'successful':
                     test.document.active = True
                 to_save.append(test.document)
-
         StockLot.save(to_save)

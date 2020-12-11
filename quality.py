@@ -108,17 +108,6 @@ class Template(ModelSQL, ModelView):
         'template', 'Qualitative Lines')
     lines = fields.One2Many('quality.template.line', 'template', 'Lines')
 
-    @classmethod
-    def get_model(cls):
-        pool = Pool()
-        ConfigLine = pool.get('quality.configuration.line')
-
-        lines = ConfigLine.search([])
-        res = [('', '')]
-        for line in lines:
-            res.append((line.document.model, line.document.name))
-        return res
-
     @staticmethod
     def default_active():
         return True

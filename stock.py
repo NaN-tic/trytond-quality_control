@@ -14,32 +14,28 @@ class Party(metaclass=PoolMeta):
     shipment_out_quality_template = fields.Many2One('quality.template',
         'Shipment Out Quality Template')
 
+
 class CreateQualityModelTestsMixin(object):
 
     @classmethod
     def create_model_test(cls, shipments, type_, party_field):
         QualityTest = Pool().get('quality.test')
-
         if not shipments:
             return
+        to_save = []
+        with Transaction().set_context(_check_access=False):
+            for shipment in shipments:
+                party = getattr(shipment, party_field)
+                used_template = getattr(party, type_ + '_quality_template')
+                resource = str(shipment)
+                test = QualityTest(
+                    test_date=datetime.now(),
+                    templates=[used_template],
+                    document=resource)
+                test.apply_template_values()
+                to_save.append(test)
 
-        today = datetime.today()
-        to_create = []
-        for shipment in shipments:
-            party = getattr(shipment, party_field)
-            used_template = getattr(party, type_ + '_quality_template')
-            resource = str(shipment)
-            test_date = (datetime.combine(shipment.effective_date,
-                datetime.now().time()) if shipment.effective_date else today)
-            test = QualityTest(
-                test_date=test_date,
-                templates=[used_template],
-                document=resource)
-            test.apply_template_values()
-            to_create.append(test)
-
-        with Transaction().set_user(0, set_context=True):
-            QualityTest.save(to_create)
+            QualityTest.save(to_save)
 
 
 class ShipmentIn(CreateQualityModelTestsMixin, metaclass=PoolMeta):

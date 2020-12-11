@@ -37,16 +37,13 @@ Create product::
     >>> ProductUom = Model.get('product.uom')
     >>> unit, = ProductUom.find([('name', '=', 'Unit')])
     >>> ProductTemplate = Model.get('product.template')
-    >>> Product = Model.get('product.product')
-    >>> product = Product()
     >>> product_template = ProductTemplate()
     >>> product_template.name = 'product'
     >>> product_template.default_uom = unit
     >>> product_template.type = 'goods'
     >>> product_template.list_price = Decimal('40')
     >>> product_template.save()
-    >>> product.template = product_template
-    >>> product.save()
+    >>> product, = product_template.products
 
 Create Quality Configuration::
 
