@@ -91,7 +91,7 @@ class Lot(metaclass=PoolMeta):
         if default is None:
             default = {}
         default = default.copy()
-        default['quality_test'] = None
+        default['quality_tests'] = None
         return super().copy(lots, default)
 
 
