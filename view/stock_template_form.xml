@@ -9,7 +9,5 @@
         <field name="shipment_in_quality_template"/>
         <label name="shipment_out_quality_template"/>
         <field name="shipment_out_quality_template"/>
-        <label name="shipment_internal_quality_template"/>
-        <field name="shipment_internal_quality_template"/>
     </xpath>
 </data>
