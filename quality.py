@@ -100,7 +100,6 @@ class Template(ModelSQL, ModelView):
     active = fields.Boolean('Active', select=True)
     company = fields.Many2One('company.company', 'Company', required=True,
         select=True)
-    document = fields.Reference('Document', selection='get_model')
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
     quantitative_lines = fields.One2Many('quality.quantitative.template.line',
@@ -108,17 +107,6 @@ class Template(ModelSQL, ModelView):
     qualitative_lines = fields.One2Many('quality.qualitative.template.line',
         'template', 'Qualitative Lines')
     lines = fields.One2Many('quality.template.line', 'template', 'Lines')
-
-    @classmethod
-    def get_model(cls):
-        pool = Pool()
-        ConfigLine = pool.get('quality.configuration.line')
-
-        lines = ConfigLine.search([])
-        res = [('', '')]
-        for line in lines:
-            res.append((line.document.model, line.document.name))
-        return res
 
     @staticmethod
     def default_active():
@@ -665,8 +653,8 @@ class QuantitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
             res[line.id] = False
             value = line.value
             value = Uom.compute_qty(line.unit, value, line.unit_range)
-            if (value is not None
-                    and value >= line.min_value and value <= line.max_value):
+            if (value is not None and
+                    value >= line.min_value and value <= line.max_value):
                 res[line.id] = True
         return res
 
