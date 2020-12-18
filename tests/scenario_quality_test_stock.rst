@@ -15,12 +15,20 @@ Imports::
 
 Install quality_test module::
 
-    >>> config = activate_modules('quality_control')
+    >>> config = activate_modules(['stock', 'quality_control'])
 
 Create company::
 
     >>> _ = create_company()
     >>> company = get_company()
+
+Create supplier::
+
+    >>> Party = Model.get('party.party')
+    >>> supplier = Party(name='Supplier')
+    >>> supplier.save()
+    >>> customer = Party(name='Customer')
+    >>> customer.save()
 
 Create product::
 
@@ -31,7 +39,7 @@ Create product::
     >>> template = ProductTemplate()
     >>> template.name = 'product'
     >>> template.default_uom = unit
-    >>> template.type = 'service'
+    >>> template.type = 'goods'
     >>> template.list_price = Decimal('40')
     >>> template.save()
     >>> product, = template.products
@@ -45,8 +53,12 @@ Create Quality Configuration::
     >>> configuration = Configuration(1)
     >>> config_line = configuration.allowed_documents.new()
     >>> config_line.quality_sequence = sequence
-    >>> allowed_doc, = IrModel.find([('model','=','product.product')])
+    >>> allowed_doc, = IrModel.find([('model','=','stock.shipment.in')])
     >>> config_line.document = allowed_doc
+    >>> config_line = configuration.allowed_documents.new()
+    >>> config_line.quality_sequence = sequence
+    >>> allowed_doc2, = IrModel.find([('model','=','stock.shipment.out')])
+    >>> config_line.document = allowed_doc2
     >>> configuration.save()
 
 Create Qualitative Proof::
@@ -111,68 +123,95 @@ Create Template, Template1::
     >>> template.save()
     >>> template.reload()
 
-Create and assign template to Test::
+Assign Template to Supplier::
 
-    >>> Test = Model.get('quality.test')
-    >>> test=Test()
-    >>> test.document = product
-    >>> test.templates.append(template)
-    >>> test.save()
-    >>> Test.apply_templates([test.id], config.context)
+    >>> supplier.shipment_in_quality_template = template
+    >>> supplier.save()
+    >>> customer.shipment_out_quality_template = template
+    >>> customer.save()
 
-Check Unsuccess on Test Line::
 
-    >>> test.reload()
-    >>> test.qualitative_lines[0].success
-    False
-    >>> test.quantitative_lines[0].success
-    False
-    >>> test.success
-    False
+Get stock locations and create new internal location::
 
-Check Success on Test Line::
+    >>> Location = Model.get('stock.location')
+    >>> warehouse_loc, = Location.find([('code', '=', 'WH')])
+    >>> supplier_loc, = Location.find([('code', '=', 'SUP')])
+    >>> customer_loc, = Location.find([('code', '=', 'CUS')])
+    >>> input_loc, = Location.find([('code', '=', 'IN')])
+    >>> output_loc, = Location.find([('code', '=', 'OUT')])
+    >>> storage_loc, = Location.find([('code', '=', 'STO')])
+    >>> internal_loc = Location()
+    >>> internal_loc.name = 'Internal Location'
+    >>> internal_loc.code = 'INT'
+    >>> internal_loc.type = 'storage'
+    >>> internal_loc.parent = storage_loc
+    >>> internal_loc.save()
 
-    >>> test.qualitative_lines[0].value = val1
-    >>> test.quantitative_lines[0].value = Decimal('1.00')
-    >>> test.quantitative_lines[0].unit = unit
-    >>> test.save()
-    >>> test.qualitative_lines[0].success
+Create Shipment In::
+
+    >>> ShipmentIn = Model.get('stock.shipment.in')
+    >>> shipment_in = ShipmentIn()
+    >>> shipment_in.planned_date = today
+    >>> shipment_in.supplier = supplier
+    >>> shipment_in.warehouse = warehouse_loc
+
+Add three shipment lines of product 1::
+
+    >>> StockMove = Model.get('stock.move')
+    >>> move = shipment_in.incoming_moves.new()
+    >>> move.product = product
+    >>> move.uom = unit
+    >>> move.quantity = 1
+    >>> move.from_location = supplier_loc
+    >>> move.to_location = input_loc
+    >>> move.unit_price = Decimal('1')
+    >>> shipment_in.save()
+
+Receive products::
+
+    >>> ShipmentIn.receive([shipment_in.id], config.context)
+    >>> shipment_in.reload()
+    >>> shipment_in.state
+    'received'
+
+Check the created Quality Tests::
+
+    >>> QualityTest = Model.get('quality.test')
+    >>> tests_in, = QualityTest.find([])
+    >>> tests_in.document == shipment_in
     True
-    >>> test.quantitative_lines[0].success
+
+Create Shipment out::
+
+    >>> ShipmentOut = Model.get('stock.shipment.out')
+    >>> shipment_out = ShipmentOut()
+    >>> shipment_out.planned_date = today
+    >>> shipment_out.customer = customer
+    >>> shipment_out.warehouse = warehouse_loc
+
+Add three shipment lines of product 1::
+
+    >>> StockMove = Model.get('stock.move')
+    >>> move = shipment_out.outgoing_moves.new()
+    >>> move.product = product
+    >>> move.uom = unit
+    >>> move.quantity = 1
+    >>> move.from_location = supplier_loc
+    >>> move.to_location = input_loc
+    >>> move.unit_price = Decimal('1')
+    >>> shipment_out.save()
+
+Receive products::
+
+    >>> shipment_out.click('wait')
+    >>> a = shipment_out.click('assign_try')
+    >>> shipment_out.reload()
+    >>> shipment_out.click('pack')
+
+
+Check the created Quality Tests::
+
+    >>> QualityTest = Model.get('quality.test')
+    >>> tests_in, test_out = QualityTest.find([])
+    >>> test_out.document == shipment_out
     True
-    >>> test.success
-    True
-
-Confirm Test::
-
-    >>> test.save()
-    >>> test.state
-    'draft'
-    >>> Test.confirmed([test.id], config.context)
-    >>> test.reload()
-    >>> test.state
-    'confirmed'
-
-Validate "successful" Test::
-
-    >>> Test.manager_validate([test.id], config.context)
-    >>> test.reload()
-    >>> test.state
-    'successful'
-
-Set To Draft Test::
-
-    >>> Test.draft([test.id], config.context)
-    >>> test.reload()
-    >>> test.state
-    'draft'
-
-Modify test to check failed test::
-
-    >>> test.quantitative_lines[0].value = Decimal('12')
-    >>> test.save()
-    >>> Test.confirmed([test.id], config.context)
-    >>> Test.manager_validate([test.id], config.context)
-    >>> test.reload()
-    >>> test.state
-    'failed'

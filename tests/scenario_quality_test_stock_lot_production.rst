@@ -15,26 +15,37 @@ Imports::
 
 Install quality_test module::
 
-    >>> config = activate_modules('quality_control')
+    >>> config = activate_modules(['production', 'stock_lot_deactivatable',
+    ...   'quality_control'])
 
 Create company::
 
     >>> _ = create_company()
     >>> company = get_company()
 
+
+Create supplier::
+
+    >>> Party = Model.get('party.party')
+    >>> supplier = Party(name='Supplier')
+    >>> supplier.save()
+    >>> customer = Party(name='Customer')
+    >>> customer.save()
+
+
 Create product::
 
     >>> ProductUom = Model.get('product.uom')
     >>> unit, = ProductUom.find([('name', '=', 'Unit')])
     >>> ProductTemplate = Model.get('product.template')
-    >>> Product = Model.get('product.product')
-    >>> template = ProductTemplate()
-    >>> template.name = 'product'
-    >>> template.default_uom = unit
-    >>> template.type = 'service'
-    >>> template.list_price = Decimal('40')
-    >>> template.save()
-    >>> product, = template.products
+    >>> product_template = ProductTemplate()
+    >>> product_template.name = 'product'
+    >>> product_template.default_uom = unit
+    >>> product_template.type = 'goods'
+    >>> product_template.producible = True
+    >>> product_template.list_price = Decimal('40')
+    >>> product_template.save()
+    >>> product, = product_template.products
 
 Create Quality Configuration::
 
@@ -45,7 +56,7 @@ Create Quality Configuration::
     >>> configuration = Configuration(1)
     >>> config_line = configuration.allowed_documents.new()
     >>> config_line.quality_sequence = sequence
-    >>> allowed_doc, = IrModel.find([('model','=','product.product')])
+    >>> allowed_doc, = IrModel.find([('model','=','stock.lot')])
     >>> config_line.document = allowed_doc
     >>> configuration.save()
 
@@ -111,68 +122,62 @@ Create Template, Template1::
     >>> template.save()
     >>> template.reload()
 
-Create and assign template to Test::
+Assign Template to Product::
 
-    >>> Test = Model.get('quality.test')
-    >>> test=Test()
-    >>> test.document = product
-    >>> test.templates.append(template)
-    >>> test.save()
-    >>> Test.apply_templates([test.id], config.context)
+    >>> product_template.production_quality_template = template
+    >>> product_template.save()
 
-Check Unsuccess on Test Line::
 
-    >>> test.reload()
-    >>> test.qualitative_lines[0].success
-    False
-    >>> test.quantitative_lines[0].success
-    False
-    >>> test.success
-    False
+Get stock locations and create new internal location::
 
-Check Success on Test Line::
+    >>> Location = Model.get('stock.location')
+    >>> warehouse_loc, = Location.find([('code', '=', 'WH')])
+    >>> supplier_loc, = Location.find([('code', '=', 'SUP')])
+    >>> customer_loc, = Location.find([('code', '=', 'CUS')])
+    >>> input_loc, = Location.find([('code', '=', 'IN')])
+    >>> output_loc, = Location.find([('code', '=', 'OUT')])
+    >>> storage_loc, = Location.find([('code', '=', 'STO')])
+    >>> production_loc, = Location.find([('code', '=', 'PROD')])
+    >>> internal_loc = Location()
+    >>> internal_loc.name = 'Internal Location'
+    >>> internal_loc.code = 'INT'
+    >>> internal_loc.type = 'storage'
+    >>> internal_loc.parent = storage_loc
+    >>> internal_loc.save()
 
-    >>> test.qualitative_lines[0].value = val1
-    >>> test.quantitative_lines[0].value = Decimal('1.00')
-    >>> test.quantitative_lines[0].unit = unit
-    >>> test.save()
-    >>> test.qualitative_lines[0].success
+
+Make a production::
+
+    >>> Lot = Model.get('stock.lot')
+    >>> lot = Lot()
+    >>> lot.number = '1'
+    >>> lot.product = product
+    >>> lot.save()
+    >>> StockMove = Model.get('stock.move')
+    >>> Production = Model.get('production')
+    >>> production = Production()
+    >>> production.planned_date = today
+    >>> production.product = product
+    >>> production.quantity = 2
+    >>> production.outputs.extend([StockMove()])
+    >>> for move in production.outputs:
+    ...   move.product = product
+    ...   move.lot = lot
+    ...   move.uom = unit
+    ...   move.quantity = 1
+    ...   move.from_location = production_loc
+    ...   move.to_location = storage_loc
+    ...   move.unit_price = Decimal('1')
+    ...   move.currency = company.currency
+    >>> production.save()
+    >>> production.click('wait')
+    >>> a = production.click('assign_try')
+    >>> production.click('run')
+    >>> production.click('done')
+
+Check the created Quality Tests::
+
+    >>> QualityTest = Model.get('quality.test')
+    >>> test, = QualityTest.find([])
+    >>> test.document == lot
     True
-    >>> test.quantitative_lines[0].success
-    True
-    >>> test.success
-    True
-
-Confirm Test::
-
-    >>> test.save()
-    >>> test.state
-    'draft'
-    >>> Test.confirmed([test.id], config.context)
-    >>> test.reload()
-    >>> test.state
-    'confirmed'
-
-Validate "successful" Test::
-
-    >>> Test.manager_validate([test.id], config.context)
-    >>> test.reload()
-    >>> test.state
-    'successful'
-
-Set To Draft Test::
-
-    >>> Test.draft([test.id], config.context)
-    >>> test.reload()
-    >>> test.state
-    'draft'
-
-Modify test to check failed test::
-
-    >>> test.quantitative_lines[0].value = Decimal('12')
-    >>> test.save()
-    >>> Test.confirmed([test.id], config.context)
-    >>> Test.manager_validate([test.id], config.context)
-    >>> test.reload()
-    >>> test.state
-    'failed'
