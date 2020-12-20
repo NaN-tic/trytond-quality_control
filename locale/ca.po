@@ -2,9 +2,25 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
-msgctxt "error:quality.test-quality.template:"
-msgid "Quality Test can only be related with one template."
-msgstr ""
+msgctxt "field:party.party,shipment_in_quality_template:"
+msgid "Shipment In Quality Template"
+msgstr "Plantilla qualitat albarà entrada"
+
+msgctxt "field:party.party,shipment_out_quality_template:"
+msgid "Shipment Out Quality Template"
+msgstr "Plantilla qualitat albarà sortida"
+
+msgctxt "field:product.template,production_quality_template:"
+msgid "Production Quality Template"
+msgstr "Plantilla qualitat producció"
+
+msgctxt "field:product.template,shipment_in_quality_template:"
+msgid "Shipment In Quality Template"
+msgstr "Plantilla qualitat albarà sortida"
+
+msgctxt "field:product.template,shipment_out_quality_template:"
+msgid "Shipment Out Quality Template"
+msgstr "Plantilla qualitat albarà sortida"
 
 msgctxt "field:quality.configuration,allowed_documents:"
 msgid "Documents with Quality Control"
@@ -834,6 +850,10 @@ msgctxt "field:quality.test.line,write_uid:"
 msgid "Write User"
 msgstr "Usuari modificació"
 
+msgctxt "field:stock.lot,quality_tests:"
+msgid "Tests"
+msgstr "Tests"
+
 msgctxt "model:ir.action,name:act_quality_configuration"
 msgid "Quality Configuration"
 msgstr "Configuració de qualitat"
@@ -877,6 +897,42 @@ msgstr "Plantilla de qualitat"
 msgctxt "model:ir.action,name:act_quality_test"
 msgid "Quality Test"
 msgstr "Test de qualitat"
+
+msgctxt "model:ir.model.button,confirm:quality_apply_templates_button"
+msgid ""
+"Applying templates will remove any data already introduced in the test. Are "
+"you sure you want to apply templates?"
+msgstr ""
+"Aplicar les plantilles eliminarà qualsevol dada introduïda en el test. Segur"
+" que voleu aplicar les plantilles?"
+
+msgctxt "model:ir.model.button,string:quality_apply_templates_button"
+msgid "Apply Templates"
+msgstr "Aplica les plantilles"
+
+msgctxt "model:ir.model.button,string:quality_confirm_button"
+msgid "Confirm"
+msgstr "Confirmació"
+
+msgctxt "model:ir.model.button,string:quality_draft_button"
+msgid "Reset to Draft"
+msgstr "Restaura a esborrany"
+
+msgctxt "model:ir.model.button,string:quality_manager_validate_button"
+msgid "Validate"
+msgstr "Valida"
+
+msgctxt "model:ir.rule.group,name:rule_group_quality"
+msgid "User in company"
+msgstr "Usuari a l'empresa"
+
+msgctxt "model:ir.rule.group,name:rule_group_quality_template"
+msgid "User in company"
+msgstr "Usuari a l'empresa"
+
+msgctxt "model:ir.rule.group,name:rule_group_quality_test"
+msgid "User in company"
+msgstr "Usuari a l'empresa"
 
 msgctxt "model:ir.sequence,name:sequence_quality"
 msgid "Quality Control"
@@ -1034,10 +1090,6 @@ msgctxt "selection:quality.test,state:"
 msgid "Successful"
 msgstr "Correcte"
 
-msgctxt "view:product.template:"
-msgid "Quality Controls"
-msgstr "Controls de qualitat"
-
 msgctxt "view:quality.configuration.line:"
 msgid "Quality Document"
 msgstr "Document de qualitat"
@@ -1083,24 +1135,8 @@ msgid "Qualitative Value"
 msgstr "Valor qualitatu"
 
 msgctxt "view:quality.quantitative.template.line:"
-msgid "Quantitative Template Line"
-msgstr "Línia de plantilla quantitativa"
-
-msgctxt "view:quality.quantitative.template.line:"
-msgid "Quantitative Template Lines"
-msgstr "Línies de plantilla quantitatives"
-
-msgctxt "view:quality.quantitative.template.line:"
 msgid "Range Values"
 msgstr "Valor rang"
-
-msgctxt "view:quality.quantitative.test.line:"
-msgid "Quantitative Test Line"
-msgstr "Línia de prova quantitativa"
-
-msgctxt "view:quality.quantitative.test.line:"
-msgid "Quantitative Test Lines"
-msgstr "Línies de prova quantitatives"
 
 msgctxt "view:quality.quantitative.test.line:"
 msgid "Range"
@@ -1119,24 +1155,8 @@ msgid "Template Lines"
 msgstr "Línies de plantilla"
 
 msgctxt "view:quality.template:"
-msgid "Model"
-msgstr "Model"
-
-msgctxt "view:quality.template:"
 msgid "Notes"
 msgstr "Notes"
-
-msgctxt "view:quality.template:"
-msgid "Qualitative"
-msgstr "Qualitativa"
-
-msgctxt "view:quality.template:"
-msgid "Quality Template"
-msgstr "Plantilla de qualitat"
-
-msgctxt "view:quality.template:"
-msgid "Quantitative"
-msgstr "Quantitativa"
 
 msgctxt "view:quality.test.line:"
 msgid "Test Line"
@@ -1147,22 +1167,6 @@ msgid "Test Lines"
 msgstr "Línies de test"
 
 msgctxt "view:quality.test:"
-msgid "Apply Templates"
-msgstr "Aplica les plantilles"
-
-msgctxt "view:quality.test:"
-msgid ""
-"Applying templates will remove any data already introduced in the test. Are "
-"you sure you want to apply templates?"
-msgstr ""
-"Aplicar les plantilles eliminarà qualsevol dada introduïda en el test. Segur"
-" que voleu aplicar les plantilles?"
-
-msgctxt "view:quality.test:"
-msgid "Confirm"
-msgstr "Confirma"
-
-msgctxt "view:quality.test:"
 msgid "Notes"
 msgstr "Notes"
 
@@ -1171,21 +1175,9 @@ msgid "Qualitative"
 msgstr "Qualitativa"
 
 msgctxt "view:quality.test:"
-msgid "Quality Test"
-msgstr "Test de qualitat"
-
-msgctxt "view:quality.test:"
 msgid "Quantitative"
 msgstr "Quantitativa"
 
 msgctxt "view:quality.test:"
-msgid "Reset to Draft"
-msgstr "Restaura a esborrany"
-
-msgctxt "view:quality.test:"
 msgid "Templates"
 msgstr "Plantilles"
-
-msgctxt "view:quality.test:"
-msgid "Validate"
-msgstr "Valida"
