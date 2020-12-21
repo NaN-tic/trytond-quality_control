@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <tryton>
-    <data depends='stock_lot'>
+    <data depends='stock_lot_deactivatable'>
         <record model="ir.ui.view" id="lot_view_form">
             <field name="model">stock.lot</field>
             <field name="inherit" ref="stock_lot.lot_view_form"/>
