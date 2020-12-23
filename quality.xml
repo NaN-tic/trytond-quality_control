@@ -18,6 +18,7 @@
             <field name="user" ref="res.user_admin"/>
             <field name="group" ref="group_quality_control"/>
         </record>
+
         <!-- rules -->
         <record model="ir.rule.group" id="rule_group_quality">
             <field name="name">User in company</field>
