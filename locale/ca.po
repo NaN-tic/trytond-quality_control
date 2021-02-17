@@ -16,7 +16,7 @@ msgstr "Plantilla qualitat producció"
 
 msgctxt "field:product.template,shipment_in_quality_template:"
 msgid "Shipment In Quality Template"
-msgstr "Plantilla qualitat albarà sortida"
+msgstr "Plantilla qualitat albarà entrada"
 
 msgctxt "field:product.template,shipment_out_quality_template:"
 msgid "Shipment Out Quality Template"
