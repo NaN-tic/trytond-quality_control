@@ -432,13 +432,11 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         pool = Pool()
         ConfigLine = pool.get('quality.configuration.line')
         Model = pool.get('ir.model')
-        Sequence = pool.get('ir.sequence')
         for test in tests:
             doc = str(test.document).split(',')[0]
             model, = Model.search([('model', '=', doc)])
             config = ConfigLine.search([('document', '=', model.id)])[0]
-            sequence = config.quality_sequence
-            test.number = Sequence.get_id(sequence.id)
+            test.number = config.quality_sequence.get()
             test.save()
 
     @staticmethod

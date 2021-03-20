@@ -2,8 +2,7 @@
 # copyright notices and license terms.
 from trytond.model import ModelView, ModelSQL, fields, ModelSingleton
 from trytond.transaction import Transaction
-
-__all__ = ['Configuration', 'ConfigurationLine']
+from trytond.pyson import Id
 
 
 class Configuration(ModelSingleton, ModelSQL, ModelView):
@@ -21,7 +20,11 @@ class ConfigurationLine(ModelSQL, ModelView):
     company = fields.Many2One('company.company', 'Company', required=True,
         select=True)
     quality_sequence = fields.Many2One('ir.sequence',
-            'Quality Sequence', domain=[('code', '=', 'quality.test')],
+            'Quality Sequence',
+            domain=[
+            ('sequence_type', '=', Id('quality_control',
+                    'sequence_type_quality')),
+            ],
             required=True)
     document = fields.Many2One('ir.model', 'Document', required=True)
     configuration = fields.Many2One('quality.configuration', 'Configuration')

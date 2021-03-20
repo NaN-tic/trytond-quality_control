@@ -41,7 +41,7 @@ Create Quality Configuration::
     >>> Sequence = Model.get('ir.sequence')
     >>> Configuration = Model.get('quality.configuration')
     >>> IrModel = Model.get('ir.model')
-    >>> sequence, = Sequence.find([('code', '=', 'quality.test')])
+    >>> sequence, = Sequence.find([('name', '=', 'Quality Control')])
     >>> configuration = Configuration(1)
     >>> config_line = configuration.allowed_documents.new()
     >>> config_line.quality_sequence = sequence
