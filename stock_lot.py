@@ -31,6 +31,9 @@ class CreateQualityLotTestsMixin(object):
             test_to_save = []
             with Transaction().set_context(_check_access=False):
                 for lot in lots:
+                    if lot.quality_tests:
+                        continue
+
                     used_template = None
                     lot.active = False
                     lot_to_save.append(lot)
@@ -38,7 +41,7 @@ class CreateQualityLotTestsMixin(object):
                     if not template:
                         continue
                     used_template = getattr(lot.product.template,
-                        template+'_quality_template')
+                        template + '_quality_template')
                     test = QualityTest(
                         test_date=datetime.now(),
                         templates=[used_template],

@@ -217,6 +217,6 @@ Receive products::
 Check the created Quality Tests::
 
     >>> QualityTest = Model.get('quality.test')
-    >>> tests_in,test_out = QualityTest.find([])
+    >>> test_out, = QualityTest.find([])
     >>> test_out.document == lot
     True
