@@ -507,7 +507,7 @@ class QualitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
         'get_test_state')
     template_line = fields.Many2One('quality.qualitative.template.line',
         'Template Line')
-    name = fields.Char('Name', required=True, translate=True, select=True)
+    name = fields.Char('Name', required=True, select=True)
     proof = fields.Many2One('quality.proof', 'Proof', required=True, domain=[
             ('type', '=', 'qualitative'),
             ],
@@ -564,7 +564,7 @@ class QuantitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
         'get_test_state')
     template_line = fields.Many2One('quality.quantitative.template.line',
         'Template Line', readonly=True)
-    name = fields.Char('Name', required=True, translate=True, select=True,
+    name = fields.Char('Name', required=True, select=True,
         states={
             'readonly': Bool(Eval('template_line', 0)),
             }, depends=['template_line'])
