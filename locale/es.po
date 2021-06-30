@@ -1158,7 +1158,7 @@ msgstr "Línea de plantilla"
 
 msgctxt "view:quality.template.line:"
 msgid "Template Lines"
-msgstr "Lineas de plantilla"
+msgstr "Líneas de plantilla"
 
 msgctxt "view:quality.template:"
 msgid "Notes"
@@ -1170,7 +1170,7 @@ msgstr "Linea de test"
 
 msgctxt "view:quality.test.line:"
 msgid "Test Lines"
-msgstr "Lineas de test"
+msgstr "Líneas de test"
 
 msgctxt "view:quality.test:"
 msgid "Notes"
