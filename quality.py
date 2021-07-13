@@ -589,6 +589,11 @@ class QualitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
             ], depends=['method'])
     success = fields.Function(fields.Boolean('Success'), 'get_success')
 
+    @fields.depends('proof')
+    def on_change_proof(self):
+        if not self.proof:
+            self.method = None
+
     def get_success(self, name=None):
         if self.value == self.test_value:
             return True
@@ -680,6 +685,11 @@ class QuantitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
         for line in lines:
             res[line.id] = line.test.state
         return res
+
+    @fields.depends('proof')
+    def on_change_proof(self):
+        if not self.proof:
+            self.method = None
 
     @fields.depends('unit_range')
     def on_change_with_unit_range_digits(self, name=None):
