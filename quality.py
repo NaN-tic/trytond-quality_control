@@ -489,6 +489,8 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         ConfigLine = pool.get('quality.configuration.line')
         Model = pool.get('ir.model')
         for test in tests:
+            if test.number:
+                continue
             doc = str(test.document).split(',')[0]
             model, = Model.search([('model', '=', doc)])
             config = ConfigLine.search([('document', '=', model.id)])[0]
@@ -542,6 +544,7 @@ class QualityTest(Workflow, ModelSQL, ModelView):
     def copy(cls, tests, default=None):
         if default is None:
             default = {}
+        default.setdefault('number', None)
         if 'templates' not in default:
             default['templates'] = None
         return super(QualityTest, cls).copy(tests, default)
