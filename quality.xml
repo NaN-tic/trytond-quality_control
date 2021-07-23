@@ -56,50 +56,6 @@
             <field name="rule_group" ref="rule_group_quality_test"/>
         </record>
 
-        <!-- quality.proof.template -->
-        <record model="ir.ui.view" id="quality_proof_template_form_view">
-            <field name="model">quality.proof.template</field>
-            <field name="type">form</field>
-            <field name="name">quality_proof_template_form</field>
-        </record>
-
-        <record model="ir.ui.view" id="quality_proof_template_tree_view">
-            <field name="model">quality.proof.template</field>
-            <field name="type">tree</field>
-            <field name="name">quality_proof_template_tree</field>
-        </record>
-
-        <record model="ir.action.act_window" id="act_quality_proof_template">
-            <field name="name">Quality Proof Template</field>
-            <field name="res_model">quality.proof.template</field>
-        </record>
-        <record model="ir.action.act_window.view" id="act_quality_proof_template_view1">
-            <field name="sequence" eval="10"/>
-            <field name="view" ref="quality_proof_template_tree_view"/>
-            <field name="act_window" ref="act_quality_proof_template"/>
-        </record>
-        <record model="ir.action.act_window.view" id="act_quality_proof_template_view2">
-            <field name="sequence" eval="20"/>
-            <field name="view" ref="quality_proof_template_form_view"/>
-            <field name="act_window" ref="act_quality_proof_template"/>
-        </record>
-
-        <record model="ir.model.access" id="access_quality_proof_template">
-            <field name="model" search="[('model', '=', 'quality.proof.template')]"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="False"/>
-            <field name="perm_create" eval="False"/>
-            <field name="perm_delete" eval="False"/>
-        </record>
-        <record model="ir.model.access" id="access_quality_proof_template_admin">
-            <field name="model" search="[('model', '=', 'quality.proof.template')]"/>
-            <field name="group" ref="group_quality_control_admin"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="True"/>
-            <field name="perm_create" eval="True"/>
-            <field name="perm_delete" eval="True"/>
-        </record>
-
         <!-- quality.proof -->
         <record model="ir.ui.view" id="quality_proof_form_view">
             <field name="model">quality.proof</field>
@@ -188,18 +144,6 @@
             <field name="perm_write" eval="True"/>
             <field name="perm_create" eval="True"/>
             <field name="perm_delete" eval="True"/>
-        </record>
-
-        <!-- create proof from template -->
-        <record model="ir.ui.view" id="create_proof_start_view_form">
-            <field name="model">quality.proof.create_proof.start</field>
-            <field name="type">form</field>
-            <field name="name">create_proof_start_form</field>
-        </record>
-
-        <record model="ir.action.wizard" id="wizard_create_proof">
-            <field name="name">Create Proof from Template</field>
-            <field name="wiz_name">quality.proof.create_proof</field>
         </record>
 
         <!-- quality.qualitative.value -->
@@ -681,10 +625,6 @@
         </record>
         <menuitem action="act_quality_proof" id="menu_quality_proof"
             parent="menu_configuration" sequence="1" name="Proofs"/>
-        <menuitem action="act_quality_proof_template" id="menu_quality_proof_template"
-            parent="menu_quality_proof" sequence="1"/>
-        <menuitem action="wizard_create_proof" id="menu_create_proof"
-            parent="menu_quality_proof" sequence="1"/>
         <menuitem action="act_quality_proof_method"
             id="menu_quality_proof_method"
             parent="menu_quality_proof" sequence="1" name="Methods"/>

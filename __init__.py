@@ -12,8 +12,6 @@ def register():
     Pool.register(
         configuration.Configuration,
         configuration.ConfigurationLine,
-        quality.CreateProofStart,
-        quality.ProofTemplate,
         quality.Proof,
         quality.ProofMethod,
         quality.QualitativeValue,
@@ -27,9 +25,6 @@ def register():
         quality.TestLine,
         quality.QualityTestQualityTemplate,
         module='quality_control', type_='model')
-    Pool.register(
-        quality.CreateProof,
-        module='quality_control', type_='wizard')
     Pool.register(
         stock_lot.Template,
         stock_lot.ShipmentIn,

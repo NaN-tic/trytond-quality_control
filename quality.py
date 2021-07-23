@@ -3,15 +3,13 @@
 from collections import defaultdict
 import datetime
 from sql import Column, Literal
-from trytond.model import Workflow, Model, ModelView, ModelSQL, fields
+from trytond.model import Workflow, ModelView, ModelSQL, fields
 from trytond.model import Unique, UnionMixin, sequence_ordered
-from trytond.wizard import Wizard, StateTransition, StateView, Button
 from trytond.pyson import Bool, Equal, Eval, If, Not
 from trytond.transaction import Transaction
 from trytond.pool import Pool
 
-__all__ = ['ProofTemplate', 'Proof', 'ProofMethod',
-    'CreateProofStart', 'CreateProof',
+__all__ = ['Proof', 'ProofMethod',
     'QualitativeValue', 'Template',
     'QualitativeTemplateLine', 'QuantitativeTemplateLine', 'TemplateLine',
     'QualityTest', 'QuantitativeTestLine', 'QualitativeTestLine', 'TestLine',
@@ -34,38 +32,26 @@ _STATES = {
 _DEPENDS = ['state']
 
 
-class ProofMixin(Model):
+class Proof(ModelSQL, ModelView):
+    'Quality Proof'
+    __name__ = 'quality.proof'
     name = fields.Char('Name', required=True, select=True, translate=True)
     active = fields.Boolean('Active', select=True)
     type = fields.Selection(_PROOF_TYPES, 'Type', required=True)
+    methods = fields.One2Many('quality.proof.method', 'proof', 'Methods')
+
+    @classmethod
+    def __register__(cls, module_name):
+        table = cls.__table_handler__(module_name)
+
+        super(Proof, cls).__register__(module_name)
+        # Migration from 5.4: Drop company
+        if table.column_exist('company'):
+            table.drop_column('company')
 
     @staticmethod
     def default_active():
         return True
-
-
-class ProofTemplate(ProofMixin, ModelSQL, ModelView):
-    'Quality Template Proof'
-    __name__ = 'quality.proof.template'
-
-    @classmethod
-    def __setup__(cls):
-        super(ProofTemplate, cls).__setup__()
-        cls.name.translate = False
-
-
-class Proof(ProofMixin, ModelSQL, ModelView):
-    'Quality Proof'
-    __name__ = 'quality.proof'
-    company = fields.Many2One('company.company', 'Company', required=True,
-        select=True)
-    methods = fields.One2Many('quality.proof.method', 'proof', 'Methods',
-        required=True)
-    template = fields.Many2One('quality.proof.template', 'Template')
-
-    @staticmethod
-    def default_company():
-        return Transaction().context.get('company')
 
 
 class ProofMethod(ModelSQL, ModelView):
@@ -88,49 +74,6 @@ class ProofMethod(ModelSQL, ModelView):
     @staticmethod
     def default_active():
         return True
-
-
-class CreateProofStart(ModelView):
-    'Create Proof'
-    __name__ = 'quality.proof.create_proof.start'
-
-
-class CreateProof(Wizard):
-    'Create Proof'
-    __name__ = 'quality.proof.create_proof'
-    start = StateView('quality.proof.create_proof.start',
-        'quality_control.create_proof_start_view_form', [
-            Button('Cancel', 'end', 'tryton-cancel'),
-            Button('OK', 'proof', 'tryton-ok', default=True),
-            ])
-    proof = StateTransition()
-
-    def transition_proof(self):
-        pool = Pool()
-        Proof = pool.get('quality.proof')
-        ProofTemplate = pool.get('quality.proof.template')
-        ProofMethod = pool.get('quality.proof.method')
-
-        proofs = Proof.search([('template', '!=', None)])
-
-        to_create = []
-        for template in ProofTemplate.search([
-                ('id', 'not in', [p.template for p in proofs])
-                ]):
-            method = ProofMethod()
-            method.name = template.name
-
-            proof = Proof()
-            proof.name = template.name
-            proof.type = template.type
-            proof.template = template
-            proof.methods = [method]
-            to_create.append(proof._save_values)
-
-        if to_create:
-            Proof.create(to_create)
-
-        return 'end'
 
 
 class QualitativeValue(ModelSQL, ModelView):
