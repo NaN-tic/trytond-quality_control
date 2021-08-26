@@ -398,10 +398,6 @@ msgctxt "field:quality.quantitative.template.line,unit:"
 msgid "Unit"
 msgstr "Unitat"
 
-msgctxt "field:quality.quantitative.template.line,unit_digits:"
-msgid "Unit Digits"
-msgstr "Dígits de la unitat"
-
 msgctxt "field:quality.quantitative.template.line,write_date:"
 msgid "Write Date"
 msgstr "Data modificació"
@@ -477,10 +473,6 @@ msgstr "Estat del test"
 msgctxt "field:quality.quantitative.test.line,unit:"
 msgid "Unit"
 msgstr "Unitat"
-
-msgctxt "field:quality.quantitative.test.line,unit_digits:"
-msgid "Unit Digits"
-msgstr "Dígits de la unitat"
 
 msgctxt "field:quality.quantitative.test.line,unit_range:"
 msgid "Unit Range"
@@ -629,10 +621,6 @@ msgstr "Tipus"
 msgctxt "field:quality.template.line,unit:"
 msgid "Unit"
 msgstr "Unitat"
-
-msgctxt "field:quality.template.line,unit_digits:"
-msgid "Unit Digits"
-msgstr "Dígits de la unitat"
 
 msgctxt "field:quality.template.line,valid_value:"
 msgid "Valid Value"
@@ -833,10 +821,6 @@ msgstr "Tipus"
 msgctxt "field:quality.test.line,unit:"
 msgid "Unit"
 msgstr "Unitat"
-
-msgctxt "field:quality.test.line,unit_digits:"
-msgid "Unit Digits"
-msgstr "Dígits de la unitat"
 
 msgctxt "field:quality.test.line,value:"
 msgid "Value"

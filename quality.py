@@ -181,23 +181,15 @@ class QuantitativeTemplateLine(sequence_ordered(), ModelSQL, ModelView):
             ], depends=['proof'])
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
-    min_value = fields.Float('Min Value', digits=(16, Eval('unit_digits', 2)),
-        required=True, depends=['unit_digits'])
-    max_value = fields.Float('Max Value', digits=(16, Eval('unit_digits', 2)),
-        required=True, depends=['unit_digits'])
+    min_value = fields.Float('Min Value', digits='unit',
+        required=True)
+    max_value = fields.Float('Max Value', digits='unit',
+        required=True)
     unit = fields.Many2One('product.uom', 'Unit', required=True)
-    unit_digits = fields.Function(fields.Integer('Unit Digits'),
-        'on_change_with_unit_digits')
 
     @staticmethod
     def default_active():
         return True
-
-    @fields.depends('unit')
-    def on_change_with_unit_digits(self, name=None):
-        if not self.unit:
-            return 2
-        return self.unit.digits
 
     @fields.depends('proof')
     def on_change_proof(self):
@@ -225,13 +217,9 @@ class TemplateLine(UnionMixin, sequence_ordered(), ModelSQL, ModelView):
         required=True, domain=[
             ('method', '=', Eval('method')),
             ], depends=['method'])
-    min_value = fields.Float('Min Value', digits=(16, Eval('unit_digits', 2)),
-        depends=['unit_digits'])
-    max_value = fields.Float('Max Value', digits=(16, Eval('unit_digits', 2)),
-        depends=['unit_digits'])
+    min_value = fields.Float('Min Value', digits='unit')
+    max_value = fields.Float('Max Value', digits='unit')
     unit = fields.Many2One('product.uom', 'Unit')
-    unit_digits = fields.Function(fields.Integer('Unit Digits'),
-        'on_change_with_unit_digits')
 
     @staticmethod
     def union_models():
@@ -246,12 +234,6 @@ class TemplateLine(UnionMixin, sequence_ordered(), ModelSQL, ModelView):
                 ('model', 'in', models),
                 ])
         return [(m.model, m.name) for m in models]
-
-    @fields.depends('unit')
-    def on_change_with_unit_digits(self, name=None):
-        if not self.unit:
-            return 2
-        return self.unit.digits
 
     @classmethod
     def union_column(cls, name, field, table, Model):
@@ -602,8 +584,8 @@ class QuantitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
             'readonly': Bool(Eval('template_line', 0)),
             },
         depends=['unit_range_digits', 'template_line'])
-    value = fields.Float('Value', digits=(16, Eval('unit_digits', 2)),
-        depends=['unit_digits', 'test_state'])
+    value = fields.Float('Value', digits='unit',
+        depends=['test_state'])
     unit = fields.Many2One('product.uom', 'Unit',
         domain=[
             If(Bool(Eval('unit_range_category')),
@@ -614,8 +596,6 @@ class QuantitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
             'required': Bool(Eval('value')),
         },
         depends=['unit_range_category', 'value'])
-    unit_digits = fields.Function(fields.Integer('Unit Digits'),
-        'on_change_with_unit_digits')
     success = fields.Function(fields.Boolean('Success'), 'get_success')
 
     @classmethod
@@ -635,12 +615,6 @@ class QuantitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
     def on_change_with_unit_range_category(self, name=None):
         if self.unit_range:
             return self.unit_range.category.id
-
-    @fields.depends('unit')
-    def on_change_with_unit_digits(self, name=None):
-        if not self.unit:
-            return 2
-        return self.unit.digits
 
     @classmethod
     def get_success(self, lines, name):
@@ -696,17 +670,11 @@ class TestLine(UnionMixin, sequence_ordered(), ModelSQL, ModelView):
         domain=[
             ('method', '=', Eval('method')),
             ], depends=['method'])
-    quantitative_value = fields.Float('Quantitative Value',
-        digits=(16, Eval('unit_digits', 2)),
-        depends=['unit_digits'])
+    quantitative_value = fields.Float('Quantitative Value', digits='unit')
     value = fields.Function(fields.Char('Value'), 'get_value')
-    min_value = fields.Float('Min Value', digits=(16, Eval('unit_digits', 2)),
-        depends=['unit_digits'])
-    max_value = fields.Float('Max Value', digits=(16, Eval('unit_digits', 2)),
-        depends=['unit_digits'])
+    min_value = fields.Float('Min Value', digits='unit')
+    max_value = fields.Float('Max Value', digits='unit')
     unit = fields.Many2One('product.uom', 'Unit')
-    unit_digits = fields.Function(fields.Integer('Unit Digits'),
-        'on_change_with_unit_digits')
     success = fields.Function(fields.Boolean('Success'), 'get_success')
 
     @staticmethod
@@ -737,12 +705,6 @@ class TestLine(UnionMixin, sequence_ordered(), ModelSQL, ModelView):
                 value = Column(table, 'value')
             return value
         return super(TestLine, cls).union_column(name, field, table, Model)
-
-    @fields.depends('unit')
-    def on_change_with_unit_digits(self, name=None):
-        if not self.unit:
-            return 2
-        return self.unit.digits
 
     def get_value(self, name):
         value = ''
