@@ -2,113 +2,29 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
-msgctxt "field:party.party,shipment_in_quality_template:"
-msgid "Shipment In Quality Template"
-msgstr "Plantilla qualitat albarà entrada"
-
-msgctxt "field:party.party,shipment_out_quality_template:"
-msgid "Shipment Out Quality Template"
-msgstr "Plantilla qualitat albarà sortida"
-
-msgctxt "field:product.template,production_quality_template:"
-msgid "Production Quality Template"
-msgstr "Plantilla qualitat producció"
-
-msgctxt "field:product.template,shipment_in_quality_template:"
-msgid "Shipment In Quality Template"
-msgstr "Plantilla qualitat albarà entrada"
-
-msgctxt "field:product.template,shipment_out_quality_template:"
-msgid "Shipment Out Quality Template"
-msgstr "Plantilla qualitat albarà sortida"
-
 msgctxt "field:quality.configuration,allowed_documents:"
 msgid "Documents with Quality Control"
 msgstr "Documents"
 
-msgctxt "field:quality.configuration,create_date:"
-msgid "Create Date"
-msgstr "Data creació"
-
-msgctxt "field:quality.configuration,create_uid:"
-msgid "Create User"
-msgstr "Usuari creació"
-
-msgctxt "field:quality.configuration,id:"
-msgid "ID"
-msgstr "ID"
-
-msgctxt "field:quality.configuration,rec_name:"
-msgid "Record Name"
-msgstr "Nom"
-
-msgctxt "field:quality.configuration,write_date:"
-msgid "Write Date"
-msgstr "Data modificació"
-
-msgctxt "field:quality.configuration,write_uid:"
-msgid "Write User"
-msgstr "Usuari modificació"
-
 msgctxt "field:quality.configuration.line,company:"
 msgid "Company"
-msgstr "Companyia"
+msgstr "Empresa"
 
 msgctxt "field:quality.configuration.line,configuration:"
 msgid "Configuration"
 msgstr "Configuració"
 
-msgctxt "field:quality.configuration.line,create_date:"
-msgid "Create Date"
-msgstr "Data creació"
-
-msgctxt "field:quality.configuration.line,create_uid:"
-msgid "Create User"
-msgstr "Usuari creació"
-
 msgctxt "field:quality.configuration.line,document:"
 msgid "Document"
 msgstr "Document"
-
-msgctxt "field:quality.configuration.line,id:"
-msgid "ID"
-msgstr "ID"
 
 msgctxt "field:quality.configuration.line,quality_sequence:"
 msgid "Quality Sequence"
 msgstr "Seqüència de qualitat"
 
-msgctxt "field:quality.configuration.line,rec_name:"
-msgid "Record Name"
-msgstr "Nom"
-
-msgctxt "field:quality.configuration.line,write_date:"
-msgid "Write Date"
-msgstr "Data modificació"
-
-msgctxt "field:quality.configuration.line,write_uid:"
-msgid "Write User"
-msgstr "Usuari modificació"
-
 msgctxt "field:quality.proof,active:"
 msgid "Active"
 msgstr "Actiu"
-
-msgctxt "field:quality.proof,company:"
-msgid "Company"
-msgstr "Companyia"
-
-msgctxt "field:quality.proof,create_date:"
-msgid "Create Date"
-msgstr "Data creació"
-
-msgctxt "field:quality.proof,create_uid:"
-msgid "Create User"
-msgstr "Usuari creació"
-
-msgctxt "field:quality.proof,id:"
-msgid "ID"
-msgstr "ID"
 
 msgctxt "field:quality.proof,methods:"
 msgid "Methods"
@@ -118,37 +34,13 @@ msgctxt "field:quality.proof,name:"
 msgid "Name"
 msgstr "Nom"
 
-msgctxt "field:quality.proof,rec_name:"
-msgid "Record Name"
-msgstr "Nom"
-
 msgctxt "field:quality.proof,type:"
 msgid "Type"
 msgstr "Tipus"
 
-msgctxt "field:quality.proof,write_date:"
-msgid "Write Date"
-msgstr "Data modificació"
-
-msgctxt "field:quality.proof,write_uid:"
-msgid "Write User"
-msgstr "Usuari modificació"
-
 msgctxt "field:quality.proof.method,active:"
 msgid "Active"
 msgstr "Actiu"
-
-msgctxt "field:quality.proof.method,create_date:"
-msgid "Create Date"
-msgstr "Data creació"
-
-msgctxt "field:quality.proof.method,create_uid:"
-msgid "Create User"
-msgstr "Usuari creació"
-
-msgctxt "field:quality.proof.method,id:"
-msgid "ID"
-msgstr "ID"
 
 msgctxt "field:quality.proof.method,name:"
 msgid "Name"
@@ -162,37 +54,13 @@ msgctxt "field:quality.proof.method,proof:"
 msgid "Proof"
 msgstr "Prova"
 
-msgctxt "field:quality.proof.method,rec_name:"
-msgid "Record Name"
-msgstr "Nom"
-
-msgctxt "field:quality.proof.method,write_date:"
-msgid "Write Date"
-msgstr "Data modificació"
-
-msgctxt "field:quality.proof.method,write_uid:"
-msgid "Write User"
-msgstr "Usuari modificació"
-
 msgctxt "field:quality.qualitative.template.line,active:"
 msgid "Active"
 msgstr "Actiu"
 
-msgctxt "field:quality.qualitative.template.line,create_date:"
-msgid "Create Date"
-msgstr "Data creació"
-
-msgctxt "field:quality.qualitative.template.line,create_uid:"
-msgid "Create User"
-msgstr "Usuari creació"
-
 msgctxt "field:quality.qualitative.template.line,external_description:"
 msgid "External Description"
 msgstr "Descripció externa"
-
-msgctxt "field:quality.qualitative.template.line,id:"
-msgid "ID"
-msgstr "ID"
 
 msgctxt "field:quality.qualitative.template.line,internal_description:"
 msgid "Internal Description"
@@ -210,14 +78,6 @@ msgctxt "field:quality.qualitative.template.line,proof:"
 msgid "Proof"
 msgstr "Prova"
 
-msgctxt "field:quality.qualitative.template.line,rec_name:"
-msgid "Record Name"
-msgstr "Nom"
-
-msgctxt "field:quality.qualitative.template.line,sequence:"
-msgid "Sequence"
-msgstr "Seqüència"
-
 msgctxt "field:quality.qualitative.template.line,template:"
 msgid "Template"
 msgstr "Plantilla"
@@ -226,29 +86,9 @@ msgctxt "field:quality.qualitative.template.line,valid_value:"
 msgid "Valid Value"
 msgstr "Valor Vàlid"
 
-msgctxt "field:quality.qualitative.template.line,write_date:"
-msgid "Write Date"
-msgstr "Data modificació"
-
-msgctxt "field:quality.qualitative.template.line,write_uid:"
-msgid "Write User"
-msgstr "Usuari modificació"
-
-msgctxt "field:quality.qualitative.test.line,create_date:"
-msgid "Create Date"
-msgstr "Data creació"
-
-msgctxt "field:quality.qualitative.test.line,create_uid:"
-msgid "Create User"
-msgstr "Usuari creació"
-
 msgctxt "field:quality.qualitative.test.line,external_description:"
 msgid "External Description"
 msgstr "Descripció externa"
-
-msgctxt "field:quality.qualitative.test.line,id:"
-msgid "ID"
-msgstr "ID"
 
 msgctxt "field:quality.qualitative.test.line,internal_description:"
 msgid "Internal Description"
@@ -265,14 +105,6 @@ msgstr "Nom"
 msgctxt "field:quality.qualitative.test.line,proof:"
 msgid "Proof"
 msgstr "Prova"
-
-msgctxt "field:quality.qualitative.test.line,rec_name:"
-msgid "Record Name"
-msgstr "Nom"
-
-msgctxt "field:quality.qualitative.test.line,sequence:"
-msgid "Sequence"
-msgstr "Seqüència"
 
 msgctxt "field:quality.qualitative.test.line,success:"
 msgid "Success"
@@ -294,29 +126,9 @@ msgctxt "field:quality.qualitative.test.line,value:"
 msgid "Value"
 msgstr "Valor"
 
-msgctxt "field:quality.qualitative.test.line,write_date:"
-msgid "Write Date"
-msgstr "Data modificació"
-
-msgctxt "field:quality.qualitative.test.line,write_uid:"
-msgid "Write User"
-msgstr "Usuari modificació"
-
 msgctxt "field:quality.qualitative.value,active:"
 msgid "Active"
 msgstr "Actiu"
-
-msgctxt "field:quality.qualitative.value,create_date:"
-msgid "Create Date"
-msgstr "Data creació"
-
-msgctxt "field:quality.qualitative.value,create_uid:"
-msgid "Create User"
-msgstr "Usuari creació"
-
-msgctxt "field:quality.qualitative.value,id:"
-msgid "ID"
-msgstr "ID"
 
 msgctxt "field:quality.qualitative.value,method:"
 msgid "Method"
@@ -326,37 +138,13 @@ msgctxt "field:quality.qualitative.value,name:"
 msgid "Name"
 msgstr "Nom"
 
-msgctxt "field:quality.qualitative.value,rec_name:"
-msgid "Record Name"
-msgstr "Nom"
-
-msgctxt "field:quality.qualitative.value,write_date:"
-msgid "Write Date"
-msgstr "Data modificació"
-
-msgctxt "field:quality.qualitative.value,write_uid:"
-msgid "Write User"
-msgstr "Usuari modificació"
-
 msgctxt "field:quality.quantitative.template.line,active:"
 msgid "Active"
 msgstr "Actiu"
 
-msgctxt "field:quality.quantitative.template.line,create_date:"
-msgid "Create Date"
-msgstr "Data creació"
-
-msgctxt "field:quality.quantitative.template.line,create_uid:"
-msgid "Create User"
-msgstr "Usuari creació"
-
 msgctxt "field:quality.quantitative.template.line,external_description:"
 msgid "External Description"
 msgstr "Descripció externa"
-
-msgctxt "field:quality.quantitative.template.line,id:"
-msgid "ID"
-msgstr "ID"
 
 msgctxt "field:quality.quantitative.template.line,internal_description:"
 msgid "Internal Description"
@@ -382,14 +170,6 @@ msgctxt "field:quality.quantitative.template.line,proof:"
 msgid "Proof"
 msgstr "Prova"
 
-msgctxt "field:quality.quantitative.template.line,rec_name:"
-msgid "Record Name"
-msgstr "Nom"
-
-msgctxt "field:quality.quantitative.template.line,sequence:"
-msgid "Sequence"
-msgstr "Seqüència"
-
 msgctxt "field:quality.quantitative.template.line,template:"
 msgid "Template"
 msgstr "Plantilla"
@@ -402,29 +182,9 @@ msgctxt "field:quality.quantitative.template.line,unit_digits:"
 msgid "Unit Digits"
 msgstr "Dígits de la unitat"
 
-msgctxt "field:quality.quantitative.template.line,write_date:"
-msgid "Write Date"
-msgstr "Data modificació"
-
-msgctxt "field:quality.quantitative.template.line,write_uid:"
-msgid "Write User"
-msgstr "Usuari modificació"
-
-msgctxt "field:quality.quantitative.test.line,create_date:"
-msgid "Create Date"
-msgstr "Data creació"
-
-msgctxt "field:quality.quantitative.test.line,create_uid:"
-msgid "Create User"
-msgstr "Usuari creació"
-
 msgctxt "field:quality.quantitative.test.line,external_description:"
 msgid "External Description"
 msgstr "Descripció externa"
-
-msgctxt "field:quality.quantitative.test.line,id:"
-msgid "ID"
-msgstr "ID"
 
 msgctxt "field:quality.quantitative.test.line,internal_description:"
 msgid "Internal Description"
@@ -449,14 +209,6 @@ msgstr "Nom"
 msgctxt "field:quality.quantitative.test.line,proof:"
 msgid "Proof"
 msgstr "Prova"
-
-msgctxt "field:quality.quantitative.test.line,rec_name:"
-msgid "Record Name"
-msgstr "Nom"
-
-msgctxt "field:quality.quantitative.test.line,sequence:"
-msgid "Sequence"
-msgstr "Seqüència"
 
 msgctxt "field:quality.quantitative.test.line,success:"
 msgid "Success"
@@ -498,41 +250,17 @@ msgctxt "field:quality.quantitative.test.line,value:"
 msgid "Value"
 msgstr "Valor"
 
-msgctxt "field:quality.quantitative.test.line,write_date:"
-msgid "Write Date"
-msgstr "Data modificació"
-
-msgctxt "field:quality.quantitative.test.line,write_uid:"
-msgid "Write User"
-msgstr "Usuari modificació"
-
 msgctxt "field:quality.template,active:"
 msgid "Active"
 msgstr "Actiu"
 
 msgctxt "field:quality.template,company:"
 msgid "Company"
-msgstr "Companyia"
-
-msgctxt "field:quality.template,create_date:"
-msgid "Create Date"
-msgstr "Data creació"
-
-msgctxt "field:quality.template,create_uid:"
-msgid "Create User"
-msgstr "Usuari creació"
-
-msgctxt "field:quality.template,document:"
-msgid "Document"
-msgstr "Document"
+msgstr "Empresa"
 
 msgctxt "field:quality.template,external_description:"
 msgid "External Description"
 msgstr "Descripció externa"
-
-msgctxt "field:quality.template,id:"
-msgid "ID"
-msgstr "ID"
 
 msgctxt "field:quality.template,internal_description:"
 msgid "Internal Description"
@@ -554,37 +282,13 @@ msgctxt "field:quality.template,quantitative_lines:"
 msgid "Quantitative Lines"
 msgstr "Línia quantitativa"
 
-msgctxt "field:quality.template,rec_name:"
-msgid "Record Name"
-msgstr "Nom"
-
-msgctxt "field:quality.template,write_date:"
-msgid "Write Date"
-msgstr "Data modificació"
-
-msgctxt "field:quality.template,write_uid:"
-msgid "Write User"
-msgstr "Usuari modificació"
-
 msgctxt "field:quality.template.line,active:"
 msgid "Active"
 msgstr "Actiu"
 
-msgctxt "field:quality.template.line,create_date:"
-msgid "Create Date"
-msgstr "Data de creació"
-
-msgctxt "field:quality.template.line,create_uid:"
-msgid "Create User"
-msgstr "Usuari de creació"
-
 msgctxt "field:quality.template.line,external_description:"
 msgid "External Description"
 msgstr "Descripció externa"
-
-msgctxt "field:quality.template.line,id:"
-msgid "ID"
-msgstr "Identificador"
 
 msgctxt "field:quality.template.line,internal_description:"
 msgid "Internal Description"
@@ -610,14 +314,6 @@ msgctxt "field:quality.template.line,proof:"
 msgid "Proof"
 msgstr "Prova"
 
-msgctxt "field:quality.template.line,rec_name:"
-msgid "Record Name"
-msgstr "Nom"
-
-msgctxt "field:quality.template.line,sequence:"
-msgid "Sequence"
-msgstr "Seqüència"
-
 msgctxt "field:quality.template.line,template:"
 msgid "Template"
 msgstr "Plantilla"
@@ -638,33 +334,17 @@ msgctxt "field:quality.template.line,valid_value:"
 msgid "Valid Value"
 msgstr "Valor Vàlid"
 
-msgctxt "field:quality.template.line,write_date:"
-msgid "Write Date"
-msgstr "Data modificación"
-
-msgctxt "field:quality.template.line,write_uid:"
-msgid "Write User"
-msgstr "Usuari modificació"
-
 msgctxt "field:quality.test,active:"
 msgid "Active"
 msgstr "Actiu"
 
 msgctxt "field:quality.test,company:"
 msgid "Company"
-msgstr "Companyia"
+msgstr "Empresa"
 
 msgctxt "field:quality.test,confirmed_date:"
 msgid "Confirmed Date"
 msgstr "Data confirmació"
-
-msgctxt "field:quality.test,create_date:"
-msgid "Create Date"
-msgstr "Data creació"
-
-msgctxt "field:quality.test,create_uid:"
-msgid "Create User"
-msgstr "Usuari creació"
 
 msgctxt "field:quality.test,document:"
 msgid "Document"
@@ -673,10 +353,6 @@ msgstr "Document"
 msgctxt "field:quality.test,external_description:"
 msgid "External Description"
 msgstr "Descripció externa"
-
-msgctxt "field:quality.test,id:"
-msgid "ID"
-msgstr "ID"
 
 msgctxt "field:quality.test,internal_description:"
 msgid "Internal Description"
@@ -698,10 +374,6 @@ msgctxt "field:quality.test,quantitative_lines:"
 msgid "Quantitative Lines"
 msgstr "Línia quantitativa"
 
-msgctxt "field:quality.test,rec_name:"
-msgid "Record Name"
-msgstr "Nom"
-
 msgctxt "field:quality.test,state:"
 msgid "State"
 msgstr "Estat"
@@ -718,30 +390,6 @@ msgctxt "field:quality.test,test_date:"
 msgid "Date"
 msgstr "Data"
 
-msgctxt "field:quality.test,write_date:"
-msgid "Write Date"
-msgstr "Data modificació"
-
-msgctxt "field:quality.test,write_uid:"
-msgid "Write User"
-msgstr "Usuari modificació"
-
-msgctxt "field:quality.test-quality.template,create_date:"
-msgid "Create Date"
-msgstr "Data creació"
-
-msgctxt "field:quality.test-quality.template,create_uid:"
-msgid "Create User"
-msgstr "Usuari creació"
-
-msgctxt "field:quality.test-quality.template,id:"
-msgid "ID"
-msgstr "ID"
-
-msgctxt "field:quality.test-quality.template,rec_name:"
-msgid "Record Name"
-msgstr "Nom"
-
 msgctxt "field:quality.test-quality.template,template:"
 msgid "Quality Template"
 msgstr "Plantilla de qualitat"
@@ -750,29 +398,9 @@ msgctxt "field:quality.test-quality.template,test:"
 msgid "Test"
 msgstr "Test"
 
-msgctxt "field:quality.test-quality.template,write_date:"
-msgid "Write Date"
-msgstr "Data modificación"
-
-msgctxt "field:quality.test-quality.template,write_uid:"
-msgid "Write User"
-msgstr "Usuari modificació"
-
-msgctxt "field:quality.test.line,create_date:"
-msgid "Create Date"
-msgstr "Data de creació"
-
-msgctxt "field:quality.test.line,create_uid:"
-msgid "Create User"
-msgstr "Usuari de creació"
-
 msgctxt "field:quality.test.line,external_description:"
 msgid "External Description"
 msgstr "Descripció externa"
-
-msgctxt "field:quality.test.line,id:"
-msgid "ID"
-msgstr "Identificador"
 
 msgctxt "field:quality.test.line,internal_description:"
 msgid "Internal Description"
@@ -806,14 +434,6 @@ msgctxt "field:quality.test.line,quantitative_value:"
 msgid "Quantitative Value"
 msgstr "Valor quantiatiu"
 
-msgctxt "field:quality.test.line,rec_name:"
-msgid "Record Name"
-msgstr "Nom"
-
-msgctxt "field:quality.test.line,sequence:"
-msgid "Sequence"
-msgstr "Seqüència"
-
 msgctxt "field:quality.test.line,success:"
 msgid "Success"
 msgstr "Vàlid"
@@ -842,17 +462,9 @@ msgctxt "field:quality.test.line,value:"
 msgid "Value"
 msgstr "Valor"
 
-msgctxt "field:quality.test.line,write_date:"
-msgid "Write Date"
-msgstr "Data modificación"
-
-msgctxt "field:quality.test.line,write_uid:"
-msgid "Write User"
-msgstr "Usuari modificació"
-
-msgctxt "field:stock.lot,quality_tests:"
-msgid "Tests"
-msgstr "Tests"
+msgctxt "model:ir.action,name:act_qualitative_lines"
+msgid "Qualitative Lines"
+msgstr "Línies qualitatives"
 
 msgctxt "model:ir.action,name:act_quality_configuration"
 msgid "Quality Configuration"
@@ -897,6 +509,10 @@ msgstr "Plantilla de qualitat"
 msgctxt "model:ir.action,name:act_quality_test"
 msgid "Quality Test"
 msgstr "Test de qualitat"
+
+msgctxt "model:ir.action,name:act_quantitative_lines"
+msgid "Quantitative Lines"
+msgstr "Línia quantitativa"
 
 msgctxt "model:ir.model.button,confirm:quality_apply_templates_button"
 msgid ""
@@ -1181,3 +797,7 @@ msgstr "Quantitativa"
 msgctxt "view:quality.test:"
 msgid "Templates"
 msgstr "Plantilles"
+
+msgctxt "view:quality.test:"
+msgid "Test Time"
+msgstr "Temps del test"
