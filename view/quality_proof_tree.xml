@@ -4,6 +4,4 @@ contains the full copyright notices and license terms. -->
 <tree>
     <field name="name"/>
     <field name="type"/>
-    <field name="company"/>
-    <field name="active" tree_invisible="1"/>
 </tree>
