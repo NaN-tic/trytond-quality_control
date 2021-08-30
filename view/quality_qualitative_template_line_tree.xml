@@ -7,5 +7,4 @@ contains the full copyright notices and license terms. -->
     <field name="proof"/>
     <field name="method"/>
     <field name="valid_value"/>
-    <field name="active" tree_invisible="1"/>
 </tree>

@@ -7,5 +7,4 @@
     <field name="name"/>
     <field name="proof"/>
     <field name="method"/>
-    <field name="active" tree_invisible="1"/>
 </tree>

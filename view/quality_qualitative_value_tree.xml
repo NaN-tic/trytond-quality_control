@@ -4,5 +4,4 @@ contains the full copyright notices and license terms. -->
 <tree editable="1">
     <field name="method"/>
     <field name="name"/>
-    <field name="active" tree_invisible="1"/>
 </tree>

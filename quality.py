@@ -9,7 +9,8 @@ from trytond.pyson import Bool, Equal, Eval, If, Not
 from trytond.transaction import Transaction
 from trytond.pool import Pool
 
-__all__ = ['Proof', 'ProofMethod', 'QualitativeValue', 'Template',
+__all__ = ['Proof', 'ProofMethod',
+    'QualitativeValue', 'Template',
     'QualitativeTemplateLine', 'QuantitativeTemplateLine', 'TemplateLine',
     'QualityTest', 'QuantitativeTestLine', 'QualitativeTestLine', 'TestLine',
     'QualityTestQualityTemplate']
@@ -34,25 +35,23 @@ _DEPENDS = ['state']
 class Proof(ModelSQL, ModelView):
     'Quality Proof'
     __name__ = 'quality.proof'
-
-    name = fields.Char('Name', required=True, translate=True,
-        select=True)
+    name = fields.Char('Name', required=True, select=True, translate=True)
     active = fields.Boolean('Active', select=True)
-    company = fields.Many2One('company.company', 'Company', required=True,
-        select=True)
     type = fields.Selection(_PROOF_TYPES, 'Type', required=True)
-    methods = fields.One2Many('quality.proof.method', 'proof', 'Methods',
-        required=True)
+    methods = fields.One2Many('quality.proof.method', 'proof', 'Methods')
+
+    @classmethod
+    def __register__(cls, module_name):
+        table = cls.__table_handler__(module_name)
+
+        super(Proof, cls).__register__(module_name)
+        # Migration from 5.4: Drop company
+        if table.column_exist('company'):
+            table.drop_column('company')
 
     @staticmethod
     def default_active():
-        """ Return default value 'True' for active field """
         return True
-
-    @staticmethod
-    def default_company():
-        """ Return default company value, context setted for company field """
-        return Transaction().context.get('company')
 
 
 class ProofMethod(ModelSQL, ModelView):
@@ -415,6 +414,8 @@ class QualityTest(Workflow, ModelSQL, ModelView):
         ConfigLine = pool.get('quality.configuration.line')
         Model = pool.get('ir.model')
         for test in tests:
+            if test.number:
+                continue
             doc = str(test.document).split(',')[0]
             model, = Model.search([('model', '=', doc)])
             config = ConfigLine.search([('document', '=', model.id)])[0]
@@ -468,6 +469,7 @@ class QualityTest(Workflow, ModelSQL, ModelView):
     def copy(cls, tests, default=None):
         if default is None:
             default = {}
+        default.setdefault('number', None)
         if 'templates' not in default:
             default['templates'] = None
         return super(QualityTest, cls).copy(tests, default)
@@ -514,6 +516,11 @@ class QualitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
             ('method', '=', Eval('method')),
             ], depends=['method'])
     success = fields.Function(fields.Boolean('Success'), 'get_success')
+
+    @fields.depends('proof')
+    def on_change_proof(self):
+        if not self.proof:
+            self.method = None
 
     def get_success(self, name=None):
         if self.value == self.test_value:
@@ -604,6 +611,11 @@ class QuantitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
         for line in lines:
             res[line.id] = line.test.state
         return res
+
+    @fields.depends('proof')
+    def on_change_proof(self):
+        if not self.proof:
+            self.method = None
 
     @fields.depends('unit_range')
     def on_change_with_unit_range_digits(self, name=None):
