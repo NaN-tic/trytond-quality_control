@@ -3,7 +3,7 @@
 from collections import defaultdict
 import datetime
 from sql import Column, Literal
-from trytond.model import Workflow, ModelView, ModelSQL, fields
+from trytond.model import Workflow, ModelView, ModelSQL, DeactivableMixin, fields
 from trytond.model import Unique, UnionMixin, sequence_ordered
 from trytond.pyson import Bool, Equal, Eval, If, Not
 from trytond.transaction import Transaction
@@ -32,11 +32,10 @@ _STATES = {
 _DEPENDS = ['state']
 
 
-class Proof(ModelSQL, ModelView):
+class Proof(DeactivableMixin, ModelSQL, ModelView):
     'Quality Proof'
     __name__ = 'quality.proof'
     name = fields.Char('Name', required=True, select=True, translate=True)
-    active = fields.Boolean('Active', select=True)
     type = fields.Selection(_PROOF_TYPES, 'Type', required=True)
     methods = fields.One2Many('quality.proof.method', 'proof', 'Methods')
 
@@ -49,18 +48,13 @@ class Proof(ModelSQL, ModelView):
         if table.column_exist('company'):
             table.drop_column('company')
 
-    @staticmethod
-    def default_active():
-        return True
 
-
-class ProofMethod(ModelSQL, ModelView):
+class ProofMethod(DeactivableMixin, ModelSQL, ModelView):
     'Quality Proof Method'
     __name__ = 'quality.proof.method'
 
     name = fields.Char('Name', required=True, translate=True,
         select=True)
-    active = fields.Boolean('Active', select=True)
     proof = fields.Many2One('quality.proof', 'Proof', required=True)
     possible_values = fields.One2Many('quality.qualitative.value', 'method',
         'Possible Values',
@@ -71,32 +65,22 @@ class ProofMethod(ModelSQL, ModelView):
                 'qualitative'),
             }, depends=['proof'])
 
-    @staticmethod
-    def default_active():
-        return True
 
-
-class QualitativeValue(ModelSQL, ModelView):
+class QualitativeValue(DeactivableMixin, ModelSQL, ModelView):
     'Quality Value'
     __name__ = 'quality.qualitative.value'
 
     name = fields.Char('Name', required=True, translate=True,
         select=True)
-    active = fields.Boolean('Active', select=True)
     method = fields.Many2One('quality.proof.method', 'Method', required=True)
 
-    @staticmethod
-    def default_active():
-        return True
 
-
-class Template(ModelSQL, ModelView):
+class Template(DeactivableMixin, ModelSQL, ModelView):
     'Quality Template'
     __name__ = 'quality.template'
 
     name = fields.Char('Name', required=True, translate=True,
         select=True)
-    active = fields.Boolean('Active', select=True)
     company = fields.Many2One('company.company', 'Company', required=True,
         select=True)
     internal_description = fields.Text('Internal Description')
@@ -106,10 +90,6 @@ class Template(ModelSQL, ModelView):
     qualitative_lines = fields.One2Many('quality.qualitative.template.line',
         'template', 'Qualitative Lines')
     lines = fields.One2Many('quality.template.line', 'template', 'Lines')
-
-    @staticmethod
-    def default_active():
-        return True
 
     @staticmethod
     def default_company():
@@ -124,14 +104,13 @@ class Template(ModelSQL, ModelView):
         return super(Template, cls).copy(templates, default)
 
 
-class QualitativeTemplateLine(sequence_ordered(), ModelSQL, ModelView):
+class QualitativeTemplateLine(sequence_ordered(), DeactivableMixin, ModelSQL, ModelView):
     'Quality Qualitative Template Line'
     __name__ = 'quality.qualitative.template.line'
 
     template = fields.Many2One('quality.template', 'Template',
         ondelete='CASCADE', select=True, required=True)
     name = fields.Char('Name', required=True, translate=True, select=True)
-    active = fields.Boolean('Active', select=True)
     proof = fields.Many2One('quality.proof', 'Proof', required=True, domain=[
             ('type', '=', 'qualitative'),
             ])
@@ -146,11 +125,6 @@ class QualitativeTemplateLine(sequence_ordered(), ModelSQL, ModelView):
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
 
-    @staticmethod
-    def default_active():
-        """ Return default value 'True' for active field """
-        return True
-
     @fields.depends('proof')
     def on_change_proof(self):
         if not self.proof:
@@ -163,14 +137,13 @@ class QualitativeTemplateLine(sequence_ordered(), ModelSQL, ModelView):
             self.valid_value = None
 
 
-class QuantitativeTemplateLine(sequence_ordered(), ModelSQL, ModelView):
+class QuantitativeTemplateLine(sequence_ordered(), DeactivableMixin, ModelSQL, ModelView):
     'Quality Quantitative Template Line'
     __name__ = 'quality.quantitative.template.line'
 
     template = fields.Many2One('quality.template', 'Template',
         ondelete='CASCADE', select=True, required=True)
     name = fields.Char('Name', required=True, translate=True, select=True)
-    active = fields.Boolean('Active', select=True)
     proof = fields.Many2One('quality.proof', 'Proof', required=True, domain=[
             ('type', '=', 'quantitative'),
             ])
@@ -188,10 +161,6 @@ class QuantitativeTemplateLine(sequence_ordered(), ModelSQL, ModelView):
     unit_digits = fields.Function(fields.Integer('Unit Digits'),
         'on_change_with_unit_digits')
 
-    @staticmethod
-    def default_active():
-        return True
-
     @fields.depends('unit')
     def on_change_with_unit_digits(self, name=None):
         if not self.unit:
@@ -204,14 +173,13 @@ class QuantitativeTemplateLine(sequence_ordered(), ModelSQL, ModelView):
             self.method = None
 
 
-class TemplateLine(UnionMixin, sequence_ordered(), ModelSQL, ModelView):
+class TemplateLine(UnionMixin, sequence_ordered(), DeactivableMixin, ModelSQL, ModelView):
     'Quality Template Line'
     __name__ = 'quality.template.line'
 
     template = fields.Many2One('quality.template', 'Template', required=True)
     name = fields.Char('Name', required=True, translate=True, select=True)
     proof = fields.Many2One('quality.proof', 'Proof', required=True)
-    active = fields.Boolean('Active', select=True)
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
         domain=[
             ('proof', '=', Eval('proof')),
@@ -287,14 +255,13 @@ class TemplateLine(UnionMixin, sequence_ordered(), ModelSQL, ModelView):
             Model.delete(records)
 
 
-class QualityTest(Workflow, ModelSQL, ModelView):
+class QualityTest(DeactivableMixin, Workflow, ModelSQL, ModelView):
     'Quality Test'
     __name__ = 'quality.test'
     _rec_name = 'number'
 
     number = fields.Char('Number', readonly=True, select=True,
         states={'required': Not(Equal(Eval('state'), 'draft'))})
-    active = fields.Boolean('Active', select=True)
     company = fields.Many2One('company.company', 'Company', required=True,
         select=True, states=_STATES, depends=_DEPENDS)
     document = fields.Reference('Document', selection='get_model',
@@ -379,10 +346,6 @@ class QualityTest(Workflow, ModelSQL, ModelView):
     @staticmethod
     def default_state():
         return 'draft'
-
-    @staticmethod
-    def default_active():
-        return True
 
     @staticmethod
     def default_company():
