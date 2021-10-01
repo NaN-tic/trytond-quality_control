@@ -15,6 +15,7 @@ class Template(metaclass=PoolMeta):
 
 
 class CreateQualityLotTestsMixin(object):
+    __slots__ = ()
 
     @classmethod
     def create_lot_quality_tests(cls, documents, template):
