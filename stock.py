@@ -16,6 +16,7 @@ class Party(metaclass=PoolMeta):
 
 
 class CreateQualityModelTestsMixin(object):
+    __slots__ = ()
 
     @classmethod
     def create_model_test(cls, shipments, type_, party_field):
