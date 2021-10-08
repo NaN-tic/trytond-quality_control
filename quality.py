@@ -507,19 +507,22 @@ class QualitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
         'get_test_state')
     template_line = fields.Many2One('quality.qualitative.template.line',
         'Template Line')
-    name = fields.Char('Name', required=True, select=True)
+    name = fields.Char('Name', required=True, select=True,
+        states={
+            'readonly': Bool(Eval('template_line', 0)),
+            }, depends=['template_line'])
     proof = fields.Many2One('quality.proof', 'Proof', required=True, domain=[
             ('type', '=', 'qualitative'),
             ],
         states={
-            'readonly': Bool(Eval('template_line')),
+            'readonly': Bool(Eval('template_line', 0)),
             }, depends=['template_line'])
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
         domain=[
             ('proof', '=', Eval('proof')),
             ],
         states={
-            'readonly': Bool(Eval('template_line')),
+            'readonly': Bool(Eval('template_line', 0)),
             }, depends=['proof', 'template_line'])
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
@@ -528,7 +531,7 @@ class QualitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
             ('method', '=', Eval('method')),
             ],
         states={
-            'readonly': Bool(Eval('template_line')),
+            'readonly': Bool(Eval('template_line', 0)),
             }, depends=['method', 'template_line'])
     value = fields.Many2One('quality.qualitative.value', 'Value', domain=[
             ('method', '=', Eval('method')),
