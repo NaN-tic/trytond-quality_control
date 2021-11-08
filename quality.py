@@ -700,9 +700,8 @@ class TestLine(UnionMixin, sequence_ordered(), ModelSQL, ModelView):
     def write(cls, *args):
         pool = Pool()
         models_to_write = defaultdict(list)
-        # Check Permisions
-        super(TestLine, cls).write(*args)
         actions = iter(args)
+
         for models, values in zip(actions, actions):
             for model in models:
                 record = cls.union_unshard(model.id)
@@ -715,8 +714,7 @@ class TestLine(UnionMixin, sequence_ordered(), ModelSQL, ModelView):
     def delete(cls, lines):
         pool = Pool()
         models_to_delete = defaultdict(list)
-        # Check Permisions
-        super(TestLine, cls).delete(lines)
+
         for model in lines:
             record = cls.union_unshard(model.id)
             models_to_delete[record.__name__].append(record)
