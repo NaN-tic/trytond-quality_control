@@ -2,6 +2,14 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "field:party.party,shipment_in_quality_template:"
+msgid "Shipment In Quality Template"
+msgstr "Plantilla de calidad del albarán de proveedor"
+
+msgctxt "field:party.party,shipment_out_quality_template:"
+msgid "Shipment Out Quality Template"
+msgstr "Plantilla de calidad del albarán de cliente"
+
 msgctxt "field:quality.configuration,allowed_documents:"
 msgid "Documents with Quality Control"
 msgstr "Documentos"
