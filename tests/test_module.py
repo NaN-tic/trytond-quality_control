@@ -9,6 +9,7 @@ from trytond.tests.test_tryton import ModuleTestCase
 class QualityControlTestCase(CompanyTestMixin, ModuleTestCase):
     'Test QualityControl module'
     module = 'quality_control'
+    extras = ['stock', 'stock_lot_deactivatable', 'production']
 
 
 del ModuleTestCase
