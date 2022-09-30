@@ -167,6 +167,7 @@ Add three shipment lines of product 1::
     >>> move.from_location = supplier_loc
     >>> move.to_location = input_loc
     >>> move.unit_price = Decimal('1')
+    >>> move.currency = company.currency
     >>> shipment_in.save()
 
 Receive products::
