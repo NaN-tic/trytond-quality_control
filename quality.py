@@ -230,8 +230,7 @@ class TemplateLine(UnionMixin, sequence_ordered(), DeactivableMixin, ModelSQL, M
     def write(cls, *args):
         pool = Pool()
         models_to_write = defaultdict(list)
-        # Check Permisions
-        super(TemplateLine, cls).write(*args)
+        # Do not call super() as it would raise NotImplemented
         actions = iter(args)
         for models, values in zip(actions, actions):
             for model in models:
@@ -245,8 +244,7 @@ class TemplateLine(UnionMixin, sequence_ordered(), DeactivableMixin, ModelSQL, M
     def delete(cls, lines):
         pool = Pool()
         models_to_delete = defaultdict(list)
-        # Check Permisions
-        super(TemplateLine, cls).delete(lines)
+        # Do not call super() as it would raise NotImplemented
         for model in lines:
             record = cls.union_unshard(model.id)
             models_to_delete[record.__name__].append(record)
