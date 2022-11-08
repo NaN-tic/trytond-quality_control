@@ -35,7 +35,7 @@ _DEPENDS = ['state']
 class Proof(DeactivableMixin, ModelSQL, ModelView):
     'Quality Proof'
     __name__ = 'quality.proof'
-    name = fields.Char('Name', required=True, select=True, translate=True)
+    name = fields.Char('Name', required=True, translate=True)
     type = fields.Selection(_PROOF_TYPES, 'Type', required=True)
     methods = fields.One2Many('quality.proof.method', 'proof', 'Methods')
 
@@ -53,8 +53,7 @@ class ProofMethod(DeactivableMixin, ModelSQL, ModelView):
     'Quality Proof Method'
     __name__ = 'quality.proof.method'
 
-    name = fields.Char('Name', required=True, translate=True,
-        select=True)
+    name = fields.Char('Name', required=True, translate=True)
     proof = fields.Many2One('quality.proof', 'Proof', required=True)
     possible_values = fields.One2Many('quality.qualitative.value', 'method',
         'Possible Values',
@@ -70,8 +69,7 @@ class QualitativeValue(DeactivableMixin, ModelSQL, ModelView):
     'Quality Value'
     __name__ = 'quality.qualitative.value'
 
-    name = fields.Char('Name', required=True, translate=True,
-        select=True)
+    name = fields.Char('Name', required=True, translate=True)
     method = fields.Many2One('quality.proof.method', 'Method', required=True)
 
 
@@ -79,10 +77,8 @@ class Template(DeactivableMixin, ModelSQL, ModelView):
     'Quality Template'
     __name__ = 'quality.template'
 
-    name = fields.Char('Name', required=True, translate=True,
-        select=True)
-    company = fields.Many2One('company.company', 'Company', required=True,
-        select=True)
+    name = fields.Char('Name', required=True, translate=True)
+    company = fields.Many2One('company.company', 'Company', required=True)
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
     quantitative_lines = fields.One2Many('quality.quantitative.template.line',
@@ -109,8 +105,8 @@ class QualitativeTemplateLine(sequence_ordered(), DeactivableMixin, ModelSQL, Mo
     __name__ = 'quality.qualitative.template.line'
 
     template = fields.Many2One('quality.template', 'Template',
-        ondelete='CASCADE', select=True, required=True)
-    name = fields.Char('Name', required=True, translate=True, select=True)
+        ondelete='CASCADE', required=True)
+    name = fields.Char('Name', required=True, translate=True)
     proof = fields.Many2One('quality.proof', 'Proof', required=True, domain=[
             ('type', '=', 'qualitative'),
             ])
@@ -142,8 +138,8 @@ class QuantitativeTemplateLine(sequence_ordered(), DeactivableMixin, ModelSQL, M
     __name__ = 'quality.quantitative.template.line'
 
     template = fields.Many2One('quality.template', 'Template',
-        ondelete='CASCADE', select=True, required=True)
-    name = fields.Char('Name', required=True, translate=True, select=True)
+        ondelete='CASCADE', required=True)
+    name = fields.Char('Name', required=True, translate=True)
     proof = fields.Many2One('quality.proof', 'Proof', required=True, domain=[
             ('type', '=', 'quantitative'),
             ])
@@ -170,7 +166,7 @@ class TemplateLine(UnionMixin, sequence_ordered(), DeactivableMixin, ModelSQL, M
     __name__ = 'quality.template.line'
 
     template = fields.Many2One('quality.template', 'Template', required=True)
-    name = fields.Char('Name', required=True, translate=True, select=True)
+    name = fields.Char('Name', required=True, translate=True)
     proof = fields.Many2One('quality.proof', 'Proof', required=True)
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
         domain=[
@@ -240,10 +236,10 @@ class QualityTest(DeactivableMixin, Workflow, ModelSQL, ModelView):
     __name__ = 'quality.test'
     _rec_name = 'number'
 
-    number = fields.Char('Number', readonly=True, select=True,
+    number = fields.Char('Number', readonly=True,
         states={'required': Not(Equal(Eval('state'), 'draft'))})
     company = fields.Many2One('company.company', 'Company', required=True,
-        select=True, states=_STATES, depends=_DEPENDS)
+        states=_STATES, depends=_DEPENDS)
     document = fields.Reference('Document', selection='get_model',
         required=True, states=_STATES, depends=_DEPENDS)
     test_date = fields.DateTime('Date', states=_STATES, depends=_DEPENDS)
@@ -445,12 +441,12 @@ class QualitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
     __name__ = 'quality.qualitative.test.line'
 
     test = fields.Many2One('quality.test', 'Test',
-        ondelete='CASCADE', select=True)
+        ondelete='CASCADE')
     test_state = fields.Function(fields.Selection(_TEST_STATE, 'Test State'),
         'get_test_state')
     template_line = fields.Many2One('quality.qualitative.template.line',
         'Template Line')
-    name = fields.Char('Name', required=True, select=True,
+    name = fields.Char('Name', required=True,
         states={
             'readonly': Bool(Eval('template_line', 0)),
             }, depends=['template_line'])
@@ -510,12 +506,12 @@ class QuantitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
     __name__ = 'quality.quantitative.test.line'
 
     test = fields.Many2One('quality.test', 'Test',
-        ondelete='CASCADE', select=True, required=True)
+        ondelete='CASCADE', required=True)
     test_state = fields.Function(fields.Selection(_TEST_STATE, 'Test State'),
         'get_test_state')
     template_line = fields.Many2One('quality.quantitative.template.line',
         'Template Line', readonly=True)
-    name = fields.Char('Name', required=True, select=True,
+    name = fields.Char('Name', required=True,
         states={
             'readonly': Bool(Eval('template_line', 0)),
             }, depends=['template_line'])
@@ -625,7 +621,7 @@ class TestLine(UnionMixin, sequence_ordered(), ModelSQL, ModelView):
     __name__ = 'quality.test.line'
 
     test = fields.Many2One('quality.test', 'Test', required=True)
-    name = fields.Char('Name', required=True, translate=True, select=True)
+    name = fields.Char('Name', required=True, translate=True)
     proof = fields.Many2One('quality.proof', 'Proof', required=True)
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
         domain=[
@@ -726,9 +722,9 @@ class QualityTestQualityTemplate(ModelSQL):
     __name__ = 'quality.test-quality.template'
     _table = 'quality_test_quality_template_rel'
     test = fields.Many2One('quality.test', 'Test', ondelete='CASCADE',
-            required=True, select=True)
+            required=True)
     template = fields.Many2One('quality.template', 'Quality Template',
-        ondelete='CASCADE', required=True, select=True)
+        ondelete='CASCADE', required=True)
 
     @classmethod
     def __setup__(cls):

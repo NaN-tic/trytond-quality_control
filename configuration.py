@@ -17,8 +17,7 @@ class ConfigurationLine(ModelSQL, ModelView):
     'Quality Configuration Model'
     __name__ = 'quality.configuration.line'
 
-    company = fields.Many2One('company.company', 'Company', required=True,
-        select=True)
+    company = fields.Many2One('company.company', 'Company', required=True)
     quality_sequence = fields.Many2One('ir.sequence',
             'Quality Sequence',
             domain=[
