@@ -161,7 +161,7 @@ class QuantitativeTemplateLine(sequence_ordered(), DeactivableMixin, ModelSQL, M
             self.method = None
 
 
-class TemplateLine(UnionMixin, sequence_ordered(), DeactivableMixin, ModelSQL, ModelView):
+class TemplateLine(UnionMixin, ModelSQL, ModelView, DeactivableMixin, sequence_ordered()):
     'Quality Template Line'
     __name__ = 'quality.template.line'
 
@@ -184,8 +184,8 @@ class TemplateLine(UnionMixin, sequence_ordered(), DeactivableMixin, ModelSQL, M
     max_value = fields.Float('Max Value', digits='unit')
     unit = fields.Many2One('product.uom', 'Unit')
 
-    @staticmethod
-    def union_models():
+    @classmethod
+    def union_models(cls):
         return ['quality.qualitative.template.line',
             'quality.quantitative.template.line']
 
@@ -616,7 +616,7 @@ class QuantitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
         self.sequence = template_line.sequence
 
 
-class TestLine(UnionMixin, sequence_ordered(), ModelSQL, ModelView):
+class TestLine(UnionMixin, ModelSQL, ModelView, sequence_ordered()):
     'Quality Test Line'
     __name__ = 'quality.test.line'
 
