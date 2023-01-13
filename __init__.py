@@ -41,6 +41,7 @@ def register():
         module='quality_control', type_='model')
     Pool.register(
         production.Template,
+        production.Product,
         production.Production,
         depends=['production', 'stock_lot_deactivatable'],
         module='quality_control', type_='model')
