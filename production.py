@@ -11,6 +11,10 @@ class Template(metaclass=PoolMeta):
         'Production Quality Template')
 
 
+class Product(metaclass=PoolMeta):
+    __name__ = 'product.product'
+
+
 class Production(CreateQualityLotTestsMixin, metaclass=PoolMeta):
     __name__ = 'production'
 
