@@ -163,7 +163,7 @@ Make a production::
     >>> for move in production.outputs:
     ...   move.product = product
     ...   move.lot = lot
-    ...   move.uom = unit
+    ...   move.unit = unit
     ...   move.quantity = 1
     ...   move.from_location = production_loc
     ...   move.to_location = storage_loc

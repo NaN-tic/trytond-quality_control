@@ -161,7 +161,7 @@ Add three shipment lines of product 1::
     >>> lot.save()
     >>> move = shipment_in.incoming_moves.new()
     >>> move.product = product
-    >>> move.uom = unit
+    >>> move.unit = unit
     >>> move.quantity = 1
     >>> move.lot = lot
     >>> move.from_location = supplier_loc
@@ -201,7 +201,7 @@ Add shipment lines of product 1::
     >>> for move in shipment_out.outgoing_moves:
     ...   move.product = product
     ...   move.lot = lot
-    ...   move.uom = unit
+    ...   move.unit = unit
     ...   move.quantity = 1
     ...   move.from_location = output_loc
     ...   move.to_location = customer_loc

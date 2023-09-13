@@ -160,7 +160,7 @@ Add three shipment lines of product 1::
     >>> StockMove = Model.get('stock.move')
     >>> move = shipment_in.incoming_moves.new()
     >>> move.product = product
-    >>> move.uom = unit
+    >>> move.unit = unit
     >>> move.quantity = 1
     >>> move.from_location = supplier_loc
     >>> move.to_location = input_loc
@@ -195,7 +195,7 @@ Add three shipment lines of product 1::
     >>> StockMove = Model.get('stock.move')
     >>> move = shipment_out.outgoing_moves.new()
     >>> move.product = product
-    >>> move.uom = unit
+    >>> move.unit = unit
     >>> move.quantity = 1
     >>> move.from_location = supplier_loc
     >>> move.to_location = input_loc
