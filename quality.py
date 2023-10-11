@@ -491,7 +491,7 @@ class QualitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
             return True
         return False
 
-    def test_state(self):
+    def get_test_state(self):
         return self.test.state
 
     def set_template_line_vals(self, template_line):
