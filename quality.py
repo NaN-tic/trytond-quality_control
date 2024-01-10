@@ -62,7 +62,7 @@ class ProofMethod(DeactivableMixin, ModelSQL, ModelView):
                 'qualitative'),
             'required': Equal(Eval('_parent_proof', {}).get('type', ''),
                 'qualitative'),
-            }, depends=['proof'])
+            })
 
 
 class QualitativeValue(DeactivableMixin, ModelSQL, ModelView):
@@ -113,11 +113,11 @@ class QualitativeTemplateLine(sequence_ordered(), DeactivableMixin, ModelSQL, Mo
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
         domain=[
             ('proof', '=', Eval('proof')),
-            ], depends=['proof'])
+            ])
     valid_value = fields.Many2One('quality.qualitative.value', 'Valid Value',
         required=True, domain=[
             ('method', '=', Eval('method')),
-            ], depends=['method'])
+            ])
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
 
@@ -146,7 +146,7 @@ class QuantitativeTemplateLine(sequence_ordered(), DeactivableMixin, ModelSQL, M
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
         domain=[
             ('proof', '=', Eval('proof')),
-            ], depends=['proof'])
+            ])
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
     min_value = fields.Float('Min Value', digits='unit',
@@ -179,7 +179,7 @@ class TemplateLine(UnionMixin, ModelSQL, ModelView, DeactivableMixin, sequence_o
     valid_value = fields.Many2One('quality.qualitative.value', 'Valid Value',
         required=True, domain=[
             ('method', '=', Eval('method')),
-            ], depends=['method'])
+            ])
     min_value = fields.Float('Min Value', digits='unit')
     max_value = fields.Float('Max Value', digits='unit')
     unit = fields.Many2One('product.uom', 'Unit')
@@ -449,20 +449,20 @@ class QualitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
     name = fields.Char('Name', required=True,
         states={
             'readonly': Bool(Eval('template_line', 0)),
-            }, depends=['template_line'])
+            })
     proof = fields.Many2One('quality.proof', 'Proof', required=True, domain=[
             ('type', '=', 'qualitative'),
             ],
         states={
             'readonly': Bool(Eval('template_line', 0)),
-            }, depends=['template_line'])
+            })
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
         domain=[
             ('proof', '=', Eval('proof')),
             ],
         states={
             'readonly': Bool(Eval('template_line', 0)),
-            }, depends=['proof', 'template_line'])
+            })
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
     test_value = fields.Many2One('quality.qualitative.value', 'Test Value',
@@ -471,10 +471,10 @@ class QualitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
             ],
         states={
             'readonly': Bool(Eval('template_line', 0)),
-            }, depends=['method', 'template_line'])
+            })
     value = fields.Many2One('quality.qualitative.value', 'Value', domain=[
             ('method', '=', Eval('method')),
-            ], depends=['method'])
+            ])
     success = fields.Function(fields.Boolean('Success'), 'get_success')
 
     @fields.depends('proof')
@@ -514,26 +514,26 @@ class QuantitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
     name = fields.Char('Name', required=True,
         states={
             'readonly': Bool(Eval('template_line', 0)),
-            }, depends=['template_line'])
+            })
     proof = fields.Many2One('quality.proof', 'Proof', required=True, domain=[
             ('type', '=', 'quantitative'),
             ],
         states={
             'readonly': Bool(Eval('template_line', 0)),
-            }, depends=['template_line'])
+            })
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
         domain=[
             ('proof', '=', Eval('proof')),
             ],
         states={
             'readonly': Bool(Eval('template_line', 0)),
-            }, depends=['proof', 'template_line'])
+            })
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
     unit_range = fields.Many2One('product.uom', 'Unit Range', required=True,
         states={
             'readonly': Bool(Eval('template_line', 0)),
-            }, depends=['template_line'])
+            })
     unit_range_digits = fields.Function(fields.Integer('Unit Range Digits'),
         'on_change_with_unit_range_digits')
     unit_range_category = fields.Function(
@@ -641,7 +641,7 @@ class TestLine(UnionMixin, ModelSQL, ModelView, sequence_ordered()):
         'Qualitative Value',
         domain=[
             ('method', '=', Eval('method')),
-            ], depends=['method'])
+            ])
     quantitative_value = fields.Float('Quantitative Value', digits='unit')
     value = fields.Function(fields.Char('Value'), 'get_value')
     min_value = fields.Float('Min Value', digits='unit')
