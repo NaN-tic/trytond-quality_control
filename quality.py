@@ -171,8 +171,7 @@ class TemplateLine(UnionMixin, ModelSQL, ModelView, DeactivableMixin, sequence_o
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
         domain=[
             ('proof', '=', Eval('proof')),
-            ],
-        depends=['proof'])
+            ])
     type = fields.Selection('get_types', 'Type', required=True, readonly=True)
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
@@ -239,25 +238,24 @@ class QualityTest(DeactivableMixin, Workflow, ModelSQL, ModelView):
     number = fields.Char('Number', readonly=True,
         states={'required': Not(Equal(Eval('state'), 'draft'))})
     company = fields.Many2One('company.company', 'Company', required=True,
-        states=_STATES, depends=_DEPENDS)
+        states=_STATES)
     document = fields.Reference('Document', selection='get_model',
-        required=True, states=_STATES, depends=_DEPENDS)
-    test_date = fields.DateTime('Date', states=_STATES, depends=_DEPENDS)
+        required=True, states=_STATES)
+    test_date = fields.DateTime('Date', states=_STATES)
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
     quantitative_lines = fields.One2Many('quality.quantitative.test.line',
-        'test', 'Quantitative Lines', states=_STATES, depends=_DEPENDS)
+        'test', 'Quantitative Lines', states=_STATES)
     qualitative_lines = fields.One2Many('quality.qualitative.test.line',
-        'test', 'Qualitative Lines', states=_STATES, depends=_DEPENDS)
+        'test', 'Qualitative Lines', states=_STATES)
     lines = fields.One2Many('quality.test.line', 'test', 'Lines')
     templates = fields.Many2Many('quality.test-quality.template',
-        'test', 'template', 'Tests', states=_STATES, depends=_DEPENDS)
+        'test', 'template', 'Tests', states=_STATES)
     success = fields.Function(fields.Boolean('Success'), 'get_success')
     confirmed_date = fields.DateTime('Confirmed Date', readonly=True,
         states={
             'invisible': Eval('state') == 'draft',
-            },
-        depends=_DEPENDS)
+            })
     state = fields.Selection(_TEST_STATE, 'State',
         readonly=True, required=True)
 
@@ -544,15 +542,14 @@ class QuantitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
         states={
             'readonly': Bool(Eval('template_line', 0)),
             },
-        depends=['unit_range_digits', 'template_line'])
+        depends=['unit_range_digits'])
     max_value = fields.Float('Max Value',
         digits=(16, Eval('unit_range_digits', 2)), required=True,
         states={
             'readonly': Bool(Eval('template_line', 0)),
             },
-        depends=['unit_range_digits', 'template_line'])
-    value = fields.Float('Value', digits='unit',
-        depends=['test_state'])
+        depends=['unit_range_digits'])
+    value = fields.Float('Value', digits='unit')
     unit = fields.Many2One('product.uom', 'Unit',
         domain=[
             If(Bool(Eval('unit_range_category')),
@@ -561,8 +558,7 @@ class QuantitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
             ],
         states={
             'required': Bool(Eval('value')),
-        },
-        depends=['unit_range_category', 'value'])
+        })
     success = fields.Function(fields.Boolean('Success'), 'get_success')
 
     @classmethod
@@ -626,8 +622,7 @@ class TestLine(UnionMixin, ModelSQL, ModelView, sequence_ordered()):
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
         domain=[
             ('proof', '=', Eval('proof')),
-            ],
-        depends=['proof'])
+            ])
     type = fields.Selection('get_types', 'Type', required=True, readonly=True)
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
@@ -635,8 +630,7 @@ class TestLine(UnionMixin, ModelSQL, ModelView, sequence_ordered()):
         required=True, readonly=True,
         domain=[
             ('method', '=', Eval('method')),
-            ],
-        depends=['method'])
+            ])
     qualitative_value = fields.Many2One('quality.qualitative.value',
         'Qualitative Value',
         domain=[
