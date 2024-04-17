@@ -19,8 +19,8 @@ class Production(CreateQualityLotTestsMixin, metaclass=PoolMeta):
     __name__ = 'production'
 
     @classmethod
-    def done(cls, productions):
-        super().done(productions)
+    def do(cls, productions):
+        super().do(productions)
         cls.create_lot_quality_tests(productions, 'production')
 
     def lots_for_quality_tests(self):
