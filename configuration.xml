@@ -14,25 +14,21 @@
             <field name="name">Quality Configuration</field>
             <field name="res_model">quality.configuration</field>
         </record>
-        <record model="ir.action.act_window.view"
-            id="act_quality_configuration_view1">
+        <record model="ir.action.act_window.view" id="act_quality_configuration_view1">
             <field name="sequence" eval="10"/>
             <field name="view" ref="quality_configuration_form_view"/>
             <field name="act_window" ref="act_quality_configuration"/>
         </record>
 
         <record model="ir.model.access" id="access_quality_configuration">
-            <field name="model"
-                search="[('model', '=', 'quality.configuration')]"/>
+            <field name="model">quality.configuration</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
-        <record model="ir.model.access"
-            id="access_quality_configuration_admin">
-            <field name="model"
-                search="[('model', '=', 'quality.configuration')]"/>
+        <record model="ir.model.access" id="access_quality_configuration_admin">
+            <field name="model">quality.configuration</field>
             <field name="group" ref="group_quality_control_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -72,17 +68,14 @@
         </record>
 
         <record model="ir.model.access" id="access_quality_configuration_line">
-            <field name="model"
-                search="[('model', '=', 'quality.configuration.line')]"/>
+            <field name="model">quality.configuration.line</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
-        <record model="ir.model.access"
-            id="access_quality_configuration_line_admin">
-            <field name="model"
-                search="[('model', '=', 'quality.configuration.line')]"/>
+        <record model="ir.model.access" id="access_quality_configuration_line_admin">
+            <field name="model">quality.configuration.line</field>
             <field name="group" ref="group_quality_control_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
