@@ -173,7 +173,7 @@ Make a production::
     >>> production.click('wait')
     >>> a = production.click('assign_try')
     >>> production.click('run')
-    >>> production.click('done')
+    >>> production.click('do')
 
 Check the created Quality Tests::
 
