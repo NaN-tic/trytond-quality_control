@@ -22,7 +22,7 @@
         <!-- rules -->
         <record model="ir.rule.group" id="rule_group_quality">
             <field name="name">User in company</field>
-            <field name="model" search="[('model', '=', 'quality.configuration.line')]"/>
+            <field name="model">quality.configuration.line</field>
             <field name="global_p" eval="True"/>
         </record>
         <record model="ir.rule" id="rule_quality">
@@ -34,7 +34,7 @@
 
         <record model="ir.rule.group" id="rule_group_quality_template">
             <field name="name">User in company</field>
-            <field name="model" search="[('model', '=', 'quality.template')]"/>
+            <field name="model">quality.template</field>
             <field name="global_p" eval="True"/>
         </record>
         <record model="ir.rule" id="rule_quality_template">
@@ -46,7 +46,7 @@
 
         <record model="ir.rule.group" id="rule_group_quality_test">
             <field name="name">User in company</field>
-            <field name="model" search="[('model', '=', 'quality.test')]"/>
+            <field name="model">quality.test</field>
             <field name="global_p" eval="True"/>
         </record>
         <record model="ir.rule" id="rule_quality_test">
@@ -86,14 +86,14 @@
         </record>
 
         <record model="ir.model.access" id="access_quality_proof">
-            <field name="model" search="[('model', '=', 'quality.proof')]"/>
+            <field name="model">quality.proof</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
         <record model="ir.model.access" id="access_quality_proof_admin">
-            <field name="model" search="[('model', '=', 'quality.proof')]"/>
+            <field name="model">quality.proof</field>
             <field name="group" ref="group_quality_control_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -131,14 +131,14 @@
         </record>
 
         <record model="ir.model.access" id="access_quality_proof_method">
-            <field name="model" search="[('model', '=', 'quality.proof.method')]"/>
+            <field name="model">quality.proof.method</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
         <record model="ir.model.access" id="access_quality_proof_method_admin">
-            <field name="model" search="[('model', '=', 'quality.proof.method')]"/>
+            <field name="model">quality.proof.method</field>
             <field name="group" ref="group_quality_control_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -177,14 +177,14 @@
         </record>
 
         <record model="ir.model.access" id="access_quality_qualitative_value">
-            <field name="model" search="[('model', '=', 'quality.qualitative.value')]"/>
+            <field name="model">quality.qualitative.value</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
         <record model="ir.model.access" id="access_quality_qualitative_value_admin">
-            <field name="model" search="[('model', '=', 'quality.qualitative.value')]"/>
+            <field name="model">quality.qualitative.value</field>
             <field name="group" ref="group_quality_control_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -222,14 +222,14 @@
         </record>
 
         <record model="ir.model.access" id="access_quality_template">
-            <field name="model" search="[('model', '=', 'quality.template')]"/>
+            <field name="model">quality.template</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
         <record model="ir.model.access" id="access_quality_template_admin">
-            <field name="model" search="[('model', '=', 'quality.template')]"/>
+            <field name="model">quality.template</field>
             <field name="group" ref="group_quality_control_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -267,14 +267,14 @@
         </record>
 
         <record model="ir.model.access" id="access_quality_qualitative_template_line">
-            <field name="model" search="[('model', '=', 'quality.qualitative.template.line')]"/>
+            <field name="model">quality.qualitative.template.line</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
         <record model="ir.model.access" id="access_quality_qualitative_template_line_admin">
-            <field name="model" search="[('model', '=', 'quality.qualitative.template.line')]"/>
+            <field name="model">quality.qualitative.template.line</field>
             <field name="group" ref="group_quality_control_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -312,14 +312,14 @@
         </record>
 
         <record model="ir.model.access" id="access_quality_quantitative_template_line">
-            <field name="model" search="[('model', '=', 'quality.quantitative.template.line')]"/>
+            <field name="model">quality.quantitative.template.line</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
         <record model="ir.model.access" id="access_quality_quantitative_template_line_admin">
-            <field name="model" search="[('model', '=', 'quality.quantitative.template.line')]"/>
+            <field name="model">quality.quantitative.template.line</field>
             <field name="group" ref="group_quality_control_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -369,14 +369,14 @@
         </record>
 
         <record model="ir.model.access" id="access_quality_test">
-            <field name="model" search="[('model', '=', 'quality.test')]"/>
+            <field name="model">quality.test</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
         <record model="ir.model.access" id="access_quality_test_quality">
-            <field name="model" search="[('model', '=', 'quality.test')]"/>
+            <field name="model">quality.test</field>
             <field name="group" ref="group_quality_control"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -384,7 +384,7 @@
             <field name="perm_delete" eval="False"/>
         </record>
         <record model="ir.model.access" id="access_quality_test_admin">
-            <field name="model" search="[('model', '=', 'quality.test')]"/>
+            <field name="model">quality.test</field>
             <field name="group" ref="group_quality_control_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -444,14 +444,14 @@
         </record>
 
         <record model="ir.model.access" id="access_quality_qualitative_test_line">
-            <field name="model" search="[('model', '=', 'quality.qualitative.test.line')]"/>
+            <field name="model">quality.qualitative.test.line</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
         <record model="ir.model.access" id="access_quality_qualitative_test_line_quality">
-            <field name="model" search="[('model', '=', 'quality.qualitative.test.line')]"/>
+            <field name="model">quality.qualitative.test.line</field>
             <field name="group" ref="group_quality_control"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -459,7 +459,7 @@
             <field name="perm_delete" eval="False"/>
         </record>
         <record model="ir.model.access" id="access_quality_qualitative_test_line_admin">
-            <field name="model" search="[('model', '=', 'quality.qualitative.test.line')]"/>
+            <field name="model">quality.qualitative.test.line</field>
             <field name="group" ref="group_quality_control_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -497,14 +497,14 @@
         </record>
 
         <record model="ir.model.access" id="access_quality_quantitative_test_line">
-            <field name="model" search="[('model', '=', 'quality.quantitative.test.line')]"/>
+            <field name="model">quality.quantitative.test.line</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
         <record model="ir.model.access" id="access_quality_quantitative_test_line_quality">
-            <field name="model" search="[('model', '=', 'quality.quantitative.test.line')]"/>
+            <field name="model">quality.quantitative.test.line</field>
             <field name="group" ref="group_quality_control"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -512,7 +512,7 @@
             <field name="perm_delete" eval="False"/>
         </record>
         <record model="ir.model.access" id="access_quality_quantitative_test_line_admin">
-            <field name="model" search="[('model', '=', 'quality.quantitative.test.line')]"/>
+            <field name="model">quality.quantitative.test.line</field>
             <field name="group" ref="group_quality_control_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -557,7 +557,7 @@
         <record model="ir.model.button" id="quality_draft_button">
             <field name="name">draft</field>
             <field name="string">Reset to Draft</field>
-            <field name="model" search="[('model', '=', 'quality.test')]"/>
+            <field name="model">quality.test</field>
         </record>
         <record model="ir.model.button-res.group"
             id="quality_draft_button_group_quality_admin">
@@ -568,7 +568,7 @@
         <record model="ir.model.button" id="quality_confirm_button">
             <field name="name">confirmed</field>
             <field name="string">Confirm</field>
-            <field name="model" search="[('model', '=', 'quality.test')]"/>
+            <field name="model">quality.test</field>
         </record>
         <record model="ir.model.button-res.group"
             id="quality_confirm_button_group_quality">
@@ -579,7 +579,7 @@
         <record model="ir.model.button" id="quality_manager_validate_button">
             <field name="name">manager_validate</field>
             <field name="string">Validate</field>
-            <field name="model" search="[('model', '=', 'quality.test')]"/>
+            <field name="model">quality.test</field>
         </record>
         <record model="ir.model.button-res.group"
             id="quality_manager_validate_button_group_quality_admin">
@@ -589,7 +589,7 @@
 
         <record model="ir.model.button" id="quality_cancel_button">
             <field name="name">cancel</field>
-            <field name="model" search="[('model', '=', 'quality.test')]"/>
+            <field name="model">quality.test</field>
         </record>
         <record model="ir.model.button-res.group"
             id="quality_cancel_button_group_quality">
@@ -601,7 +601,7 @@
             <field name="name">apply_templates</field>
             <field name="string">Apply Templates</field>
             <field name="confirm">Applying templates will remove any data already introduced in the test. Are you sure you want to apply templates?</field>
-            <field name="model" search="[('model', '=', 'quality.test')]"/>
+            <field name="model">quality.test</field>
         </record>
         <record model="ir.model.button-res.group"
             id="quality_apply_templates_button_group_quality_admin">
