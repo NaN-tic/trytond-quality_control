@@ -443,7 +443,7 @@ class QualitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
     test = fields.Many2One('quality.test', 'Test',
         ondelete='CASCADE')
     test_state = fields.Function(fields.Selection(_TEST_STATE, 'Test State'),
-        'get_test_state')
+        'on_change_with_test_state')
     template_line = fields.Many2One('quality.qualitative.template.line',
         'Template Line')
     name = fields.Char('Name', required=True,
@@ -487,8 +487,9 @@ class QualitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
             return True
         return False
 
-    def get_test_state(self):
-        return self.test.state
+    @fields.depends('test', '_parent_test.state')
+    def on_change_with_test_state(self, name=None):
+        return self.test and self.test.state or 'draft'
 
     def set_template_line_vals(self, template_line):
         self.template_line = template_line
@@ -508,7 +509,7 @@ class QuantitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
     test = fields.Many2One('quality.test', 'Test',
         ondelete='CASCADE', required=True)
     test_state = fields.Function(fields.Selection(_TEST_STATE, 'Test State'),
-        'get_test_state')
+        'on_change_with_test_state')
     template_line = fields.Many2One('quality.quantitative.template.line',
         'Template Line', readonly=True)
     name = fields.Char('Name', required=True,
@@ -565,12 +566,9 @@ class QuantitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
         depends=['unit_range_category', 'value'])
     success = fields.Function(fields.Boolean('Success'), 'get_success')
 
-    @classmethod
-    def get_test_state(self, lines, name):
-        res = {}
-        for line in lines:
-            res[line.id] = line.test.state
-        return res
+    @fields.depends('test', '_parent_test.state')
+    def on_change_with_test_state(self, name=None):
+        return self.test and self.test.state or 'draft'
 
     @fields.depends('proof')
     def on_change_proof(self):
