@@ -6,8 +6,6 @@ contains the full copyright notices and license terms. -->
     <field name="name"/>
     <label name="active"/>
     <field name="active"/>
-    <label name="company"/>
-    <field name="company"/>
     <notebook colspan="4">
         <page name="qualitative_lines">
             <field name="qualitative_lines" colspan="4"/>
