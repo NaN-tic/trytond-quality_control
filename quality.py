@@ -81,8 +81,6 @@ class Template(DeactivableMixin, ModelSQL, ModelView):
 
     name = fields.Char('Name', required=True, translate=True,
         select=True)
-    company = fields.Many2One('company.company', 'Company', required=True,
-        select=True)
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
     quantitative_lines = fields.One2Many('quality.quantitative.template.line',
@@ -90,6 +88,14 @@ class Template(DeactivableMixin, ModelSQL, ModelView):
     qualitative_lines = fields.One2Many('quality.qualitative.template.line',
         'template', 'Qualitative Lines')
     lines = fields.One2Many('quality.template.line', 'template', 'Lines')
+
+    @classmethod
+    def __register__(cls, module_name):
+        table = cls.__table_handler__(module_name)
+        super().__register__(module_name)
+        # Migration from 6.4: Drop company
+        if table.column_exist('company'):
+            table.drop_column('company')
 
     @staticmethod
     def default_company():
