@@ -22,7 +22,7 @@
         <!-- rules -->
         <record model="ir.rule.group" id="rule_group_quality">
             <field name="name">User in company</field>
-            <field name="model" search="[('model', '=', 'quality.configuration.line')]"/>
+            <field name="model">quality.configuration.line</field>
             <field name="global_p" eval="True"/>
         </record>
         <record model="ir.rule" id="rule_quality">
