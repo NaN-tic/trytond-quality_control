@@ -97,10 +97,6 @@ class Template(DeactivableMixin, ModelSQL, ModelView):
         if table.column_exist('company'):
             table.drop_column('company')
 
-    @staticmethod
-    def default_company():
-        return Transaction().context.get('company')
-
     @classmethod
     def copy(cls, templates, default=None):
         if default is None:
