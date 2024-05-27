@@ -20,6 +20,16 @@
         </record>
 
         <!-- rules -->
+        <record model="ir.rule.group" id="rule_group_quality">
+            <field name="name">User in company</field>
+            <field name="model" search="[('model', '=', 'quality.configuration.line')]"/>
+            <field name="global_p" eval="True"/>
+        </record>
+        <record model="ir.rule" id="rule_quality">
+            <field name="domain" eval="[('company', 'in', Eval('companies', []))]" pyson="1"/>
+            <field name="rule_group" ref="rule_group_quality"/>
+        </record>
+
         <record model="ir.rule.group" id="rule_group_quality_test">
             <field name="name">User in company</field>
             <field name="model" search="[('model', '=', 'quality.test')]"/>
