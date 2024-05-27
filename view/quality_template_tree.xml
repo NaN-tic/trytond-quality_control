@@ -3,5 +3,4 @@
 contains the full copyright notices and license terms. -->
 <tree>
     <field name="name"/>
-    <field name="company"/>
 </tree>
