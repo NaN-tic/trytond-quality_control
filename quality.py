@@ -115,11 +115,11 @@ class QualitativeTemplateLine(sequence_ordered(), DeactivableMixin, ModelSQL, Mo
             ])
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
         domain=[
-            ('proof', '=', Eval('proof')),
+            ('proof', '=', Eval('proof', -1)),
             ])
     valid_value = fields.Many2One('quality.qualitative.value', 'Valid Value',
         required=True, domain=[
-            ('method', '=', Eval('method')),
+            ('method', '=', Eval('method', -1)),
             ])
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
@@ -148,7 +148,7 @@ class QuantitativeTemplateLine(sequence_ordered(), DeactivableMixin, ModelSQL, M
             ])
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
         domain=[
-            ('proof', '=', Eval('proof')),
+            ('proof', '=', Eval('proof', -1)),
             ])
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
@@ -173,14 +173,14 @@ class TemplateLine(UnionMixin, ModelSQL, ModelView, DeactivableMixin, sequence_o
     proof = fields.Many2One('quality.proof', 'Proof', required=True)
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
         domain=[
-            ('proof', '=', Eval('proof')),
+            ('proof', '=', Eval('proof', -1)),
             ])
     type = fields.Selection('get_types', 'Type', required=True, readonly=True)
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
     valid_value = fields.Many2One('quality.qualitative.value', 'Valid Value',
         required=True, domain=[
-            ('method', '=', Eval('method')),
+            ('method', '=', Eval('method', -1)),
             ])
     min_value = fields.Float('Min Value', digits='unit')
     max_value = fields.Float('Max Value', digits='unit')
@@ -459,7 +459,7 @@ class QualitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
             })
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
         domain=[
-            ('proof', '=', Eval('proof')),
+            ('proof', '=', Eval('proof', -1)),
             ],
         states={
             'readonly': Bool(Eval('template_line', 0)),
@@ -468,13 +468,13 @@ class QualitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
     external_description = fields.Text('External Description')
     test_value = fields.Many2One('quality.qualitative.value', 'Test Value',
         required=True, domain=[
-            ('method', '=', Eval('method')),
+            ('method', '=', Eval('method', -1)),
             ],
         states={
             'readonly': Bool(Eval('template_line', 0)),
             })
     value = fields.Many2One('quality.qualitative.value', 'Value', domain=[
-            ('method', '=', Eval('method')),
+            ('method', '=', Eval('method', -1)),
             ])
     success = fields.Function(fields.Boolean('Success'), 'get_success')
 
@@ -525,7 +525,7 @@ class QuantitativeTestLine(sequence_ordered(), ModelSQL, ModelView):
             })
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
         domain=[
-            ('proof', '=', Eval('proof')),
+            ('proof', '=', Eval('proof', -1)),
             ],
         states={
             'readonly': Bool(Eval('template_line', 0)),
@@ -622,7 +622,7 @@ class TestLine(UnionMixin, ModelSQL, ModelView, sequence_ordered()):
     proof = fields.Many2One('quality.proof', 'Proof', required=True)
     method = fields.Many2One('quality.proof.method', 'Method', required=True,
         domain=[
-            ('proof', '=', Eval('proof')),
+            ('proof', '=', Eval('proof', -1)),
             ])
     type = fields.Selection('get_types', 'Type', required=True, readonly=True)
     internal_description = fields.Text('Internal Description')
@@ -630,12 +630,12 @@ class TestLine(UnionMixin, ModelSQL, ModelView, sequence_ordered()):
     test_value = fields.Many2One('quality.qualitative.value', 'Test Value',
         required=True, readonly=True,
         domain=[
-            ('method', '=', Eval('method')),
+            ('method', '=', Eval('method', -1)),
             ])
     qualitative_value = fields.Many2One('quality.qualitative.value',
         'Qualitative Value',
         domain=[
-            ('method', '=', Eval('method')),
+            ('method', '=', Eval('method', -1)),
             ])
     quantitative_value = fields.Float('Quantitative Value', digits='unit')
     value = fields.Function(fields.Char('Value'), 'get_value')
