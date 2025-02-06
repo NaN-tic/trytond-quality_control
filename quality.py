@@ -198,7 +198,7 @@ class TemplateLine(UnionMixin, ModelSQL, ModelView, DeactivableMixin, sequence_o
         models = Model.search([
                 ('name', 'in', models),
                 ])
-        return [(m.model, m.name) for m in models]
+        return [(m.name, m.string) for m in models]
 
     @classmethod
     def union_column(cls, name, field, table, Model):
@@ -656,7 +656,7 @@ class TestLine(UnionMixin, ModelSQL, ModelView, sequence_ordered()):
         models = Model.search([
                 ('name', 'in', models),
                 ])
-        return [(m.model, m.name) for m in models]
+        return [(m.name, m.string) for m in models]
 
     @classmethod
     def union_column(cls, name, field, table, Model):
