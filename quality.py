@@ -196,7 +196,7 @@ class TemplateLine(UnionMixin, ModelSQL, ModelView, DeactivableMixin, sequence_o
         Model = Pool().get('ir.model')
         models = cls.union_models()
         models = Model.search([
-                ('model', 'in', models),
+                ('name', 'in', models),
                 ])
         return [(m.model, m.name) for m in models]
 
@@ -375,7 +375,7 @@ class QualityTest(DeactivableMixin, Workflow, ModelSQL, ModelView):
             if test.number:
                 continue
             doc = str(test.document).split(',')[0]
-            model, = Model.search([('model', '=', doc)])
+            model, = Model.search([('name', '=', doc)])
             config = ConfigLine.search([('document', '=', model.id)])[0]
             test.number = config.quality_sequence.get()
             test.save()
@@ -654,7 +654,7 @@ class TestLine(UnionMixin, ModelSQL, ModelView, sequence_ordered()):
         Model = Pool().get('ir.model')
         models = cls.union_models()
         models = Model.search([
-                ('model', 'in', models),
+                ('name', 'in', models),
                 ])
         return [(m.model, m.name) for m in models]
 
