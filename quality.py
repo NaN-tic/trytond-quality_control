@@ -270,7 +270,7 @@ class QualityTest(DeactivableMixin, Workflow, ModelSQL, ModelView):
         lines = ConfigLines.search([])
         res = [('', '')]
         for line in lines:
-            res.append((line.document.model, line.document.name))
+            res.append((line.document.name, line.document.string))
         return res
 
     def get_success(self, name):
