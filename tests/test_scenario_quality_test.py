@@ -45,7 +45,7 @@ class Test(unittest.TestCase):
         configuration = Configuration(1)
         config_line = configuration.allowed_documents.new()
         config_line.quality_sequence = sequence
-        allowed_doc, = IrModel.find([('model', '=', 'product.product')])
+        allowed_doc, = IrModel.find([('name', '=', 'product.product')])
         config_line.document = allowed_doc
         configuration.save()
 

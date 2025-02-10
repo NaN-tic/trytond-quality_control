@@ -56,11 +56,11 @@ class Test(unittest.TestCase):
         configuration = Configuration(1)
         config_line = configuration.allowed_documents.new()
         config_line.quality_sequence = sequence
-        allowed_doc, = IrModel.find([('model', '=', 'stock.shipment.in')])
+        allowed_doc, = IrModel.find([('name', '=', 'stock.shipment.in')])
         config_line.document = allowed_doc
         config_line = configuration.allowed_documents.new()
         config_line.quality_sequence = sequence
-        allowed_doc2, = IrModel.find([('model', '=', 'stock.shipment.out')])
+        allowed_doc2, = IrModel.find([('name', '=', 'stock.shipment.out')])
         config_line.document = allowed_doc2
         configuration.save()
 
