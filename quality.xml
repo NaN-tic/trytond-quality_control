@@ -353,6 +353,26 @@
             <field name="view" ref="quality_test_form_view"/>
             <field name="act_window" ref="act_quality_test"/>
         </record>
+        <record model="ir.action.act_window.domain" id="act_quality_test_domain_draft">
+            <field name="name">Draft</field>
+            <field name="sequence" eval="10"/>
+            <field name="domain" eval="[('state', '=', 'draft')]" pyson="1"/>
+            <field name="count" eval="True"/>
+            <field name="act_window" ref="act_quality_test"/>
+        </record>
+        <record model="ir.action.act_window.domain" id="act_quality_test_domain_confirmed">
+            <field name="name">Confirmed</field>
+            <field name="sequence" eval="20"/>
+            <field name="domain" eval="[('state', '=', 'confirmed')]" pyson="1"/>
+            <field name="count" eval="True"/>
+            <field name="act_window" ref="act_quality_test"/>
+        </record>
+        <record model="ir.action.act_window.domain" id="act_quality_test_domain_all">
+            <field name="name">All</field>
+            <field name="sequence" eval="100"/>
+            <field name="domain" eval="[]" pyson="1"/>
+            <field name="act_window" ref="act_quality_test"/>
+        </record>
 
         <record model="ir.model.access" id="access_quality_test">
             <field name="model">quality.test</field>
