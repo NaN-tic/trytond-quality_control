@@ -1,6 +1,17 @@
 #
+# albert, 2025.
 msgid ""
-msgstr "Content-Type: text/plain; charset=utf-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: albert\n"
+"PO-Revision-Date: 2025-06-23 11:27+0200\n"
+"Project-Id-Version: \n"
+"Language-Team: Catalan <>\n"
+"Language: ca_ES\n"
+"Content-Transfer-Encoding: 8bit\n"
+"MIME-Version: 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 msgctxt "field:party.party,shipment_in_quality_template:"
 msgid "Shipment In Quality Template"
@@ -9,6 +20,30 @@ msgstr "Plantilla de qualitat de l'albarà de proveïdor"
 msgctxt "field:party.party,shipment_out_quality_template:"
 msgid "Shipment Out Quality Template"
 msgstr "Plantilla de qualitat de l'albarà de client"
+
+msgctxt "field:product.product,production_quality_template:"
+msgid "Production Quality Template"
+msgstr "Plantilla de qualitat de producció"
+
+msgctxt "field:product.product,shipment_in_quality_template:"
+msgid "Shipment In Quality Template"
+msgstr "Plantilla de qualitat d'albarà de proveïdor"
+
+msgctxt "field:product.product,shipment_out_quality_template:"
+msgid "Shipment Out Quality Template"
+msgstr "Plantilla de qualitat d'albarà de client"
+
+msgctxt "field:product.template,production_quality_template:"
+msgid "Production Quality Template"
+msgstr "Plantilla de qualitat de producció"
+
+msgctxt "field:product.template,shipment_in_quality_template:"
+msgid "Shipment In Quality Template"
+msgstr "d'enviament "
+
+msgctxt "field:product.template,shipment_out_quality_template:"
+msgid "Shipment Out Quality Template"
+msgstr "Plantilla de qualitat d'albarà de client"
 
 msgctxt "field:quality.configuration,allowed_documents:"
 msgid "Documents with Quality Control"
@@ -30,14 +65,6 @@ msgctxt "field:quality.configuration.line,quality_sequence:"
 msgid "Quality Sequence"
 msgstr "Seqüència de qualitat"
 
-msgctxt "field:quality.proof,active:"
-msgid "Active"
-msgstr "Actiu"
-
-msgctxt "field:quality.proof,company:"
-msgid "Company"
-msgstr "Empresa"
-
 msgctxt "field:quality.proof,methods:"
 msgid "Methods"
 msgstr "Mètodes"
@@ -50,10 +77,6 @@ msgctxt "field:quality.proof,type:"
 msgid "Type"
 msgstr "Tipus"
 
-msgctxt "field:quality.proof.method,active:"
-msgid "Active"
-msgstr "Actiu"
-
 msgctxt "field:quality.proof.method,name:"
 msgid "Name"
 msgstr "Nom"
@@ -65,10 +88,6 @@ msgstr "Valors possibles"
 msgctxt "field:quality.proof.method,proof:"
 msgid "Proof"
 msgstr "Prova"
-
-msgctxt "field:quality.qualitative.template.line,active:"
-msgid "Active"
-msgstr "Actiu"
 
 msgctxt "field:quality.qualitative.template.line,external_description:"
 msgid "External Description"
@@ -130,6 +149,10 @@ msgctxt "field:quality.qualitative.test.line,test:"
 msgid "Test"
 msgstr "Test"
 
+msgctxt "field:quality.qualitative.test.line,test_state:"
+msgid "Test State"
+msgstr "Estat del test"
+
 msgctxt "field:quality.qualitative.test.line,test_value:"
 msgid "Test Value"
 msgstr "Valor del test"
@@ -138,10 +161,6 @@ msgctxt "field:quality.qualitative.test.line,value:"
 msgid "Value"
 msgstr "Valor"
 
-msgctxt "field:quality.qualitative.value,active:"
-msgid "Active"
-msgstr "Actiu"
-
 msgctxt "field:quality.qualitative.value,method:"
 msgid "Method"
 msgstr "Mètode"
@@ -149,10 +168,6 @@ msgstr "Mètode"
 msgctxt "field:quality.qualitative.value,name:"
 msgid "Name"
 msgstr "Nom"
-
-msgctxt "field:quality.quantitative.template.line,active:"
-msgid "Active"
-msgstr "Actiu"
 
 msgctxt "field:quality.quantitative.template.line,external_description:"
 msgid "External Description"
@@ -254,14 +269,6 @@ msgctxt "field:quality.quantitative.test.line,value:"
 msgid "Value"
 msgstr "Valor"
 
-msgctxt "field:quality.template,active:"
-msgid "Active"
-msgstr "Actiu"
-
-msgctxt "field:quality.template,company:"
-msgid "Company"
-msgstr "Empresa"
-
 msgctxt "field:quality.template,external_description:"
 msgid "External Description"
 msgstr "Descripció externa"
@@ -285,10 +292,6 @@ msgstr "Línies qualitatives"
 msgctxt "field:quality.template,quantitative_lines:"
 msgid "Quantitative Lines"
 msgstr "Línia quantitativa"
-
-msgctxt "field:quality.template.line,active:"
-msgid "Active"
-msgstr "Actiu"
 
 msgctxt "field:quality.template.line,external_description:"
 msgid "External Description"
@@ -333,10 +336,6 @@ msgstr "Unitat"
 msgctxt "field:quality.template.line,valid_value:"
 msgid "Valid Value"
 msgstr "Valor Vàlid"
-
-msgctxt "field:quality.test,active:"
-msgid "Active"
-msgstr "Actiu"
 
 msgctxt "field:quality.test,company:"
 msgid "Company"
@@ -458,6 +457,14 @@ msgctxt "field:quality.test.line,value:"
 msgid "Value"
 msgstr "Valor"
 
+msgctxt "field:stock.lot,quality_tests:"
+msgid "Tests"
+msgstr "Tests"
+
+msgctxt "model:ir.action,name:act_qualitative_lines"
+msgid "Qualitative Lines"
+msgstr "Línies qualitatives"
+
 msgctxt "model:ir.action,name:act_quality_configuration"
 msgid "Quality Configuration"
 msgstr "Configuració de qualitat"
@@ -502,6 +509,23 @@ msgctxt "model:ir.action,name:act_quality_test"
 msgid "Quality Test"
 msgstr "Test de qualitat"
 
+msgctxt "model:ir.action,name:act_quantitative_lines"
+msgid "Quantitative Lines"
+msgstr "Línies quantitatives"
+
+msgctxt "model:ir.action.act_window.domain,name:act_qualityt_test_domain_all"
+msgid "All"
+msgstr "Tots"
+
+msgctxt ""
+"model:ir.action.act_window.domain,name:act_qualityt_test_domain_confirmed"
+msgid "Confirmed"
+msgstr "Confirmats"
+
+msgctxt "model:ir.action.act_window.domain,name:act_qualityt_test_domain_draft"
+msgid "Draft"
+msgstr "Esborrany"
+
 msgctxt "model:ir.model.button,confirm:quality_apply_templates_button"
 msgid ""
 "Applying templates will remove any data already introduced in the test. Are "
@@ -526,11 +550,11 @@ msgctxt "model:ir.model.button,string:quality_manager_validate_button"
 msgid "Validate"
 msgstr "Valida"
 
-msgctxt "model:ir.rule.group,name:rule_group_quality"
+msgctxt "model:ir.rule.group,name:"
 msgid "User in company"
 msgstr "Usuari a l'empresa"
 
-msgctxt "model:ir.rule.group,name:rule_group_quality_template"
+msgctxt "model:ir.rule.group,name:rule_group_quality"
 msgid "User in company"
 msgstr "Usuari a l'empresa"
 
@@ -662,6 +686,22 @@ msgctxt "selection:quality.proof,type:"
 msgid "Quantitative"
 msgstr "Quantitativa"
 
+msgctxt "selection:quality.qualitative.test.line,test_state:"
+msgid "Confirmed"
+msgstr "Confirmat"
+
+msgctxt "selection:quality.qualitative.test.line,test_state:"
+msgid "Draft"
+msgstr "Esborrany"
+
+msgctxt "selection:quality.qualitative.test.line,test_state:"
+msgid "Failed"
+msgstr "Fallit"
+
+msgctxt "selection:quality.qualitative.test.line,test_state:"
+msgid "Successful"
+msgstr "Èxit"
+
 msgctxt "selection:quality.quantitative.test.line,test_state:"
 msgid "Confirmed"
 msgstr "Confirmat"
@@ -697,6 +737,10 @@ msgstr "Correcte"
 msgctxt "view:party.party:"
 msgid "Quality Test"
 msgstr "Test de qualitat"
+
+msgctxt "view:product.template:"
+msgid "Lot Quality Control"
+msgstr "Control de qualitat del lot"
 
 msgctxt "view:quality.configuration.line:"
 msgid "Quality Document"
