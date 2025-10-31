@@ -372,7 +372,7 @@ class QualityTest(DeactivableMixin, Workflow, ModelSQL, ModelView):
         ConfigLine = pool.get('quality.configuration.line')
         Model = pool.get('ir.model')
         for test in tests:
-            if test.number:
+            if test.number or not test.document:
                 continue
             doc = str(test.document).split(',')[0]
             model, = Model.search([('name', '=', doc)])
