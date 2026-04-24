@@ -189,9 +189,11 @@ class Test(unittest.TestCase):
         move.currency = company.currency
         shipment_out.save()
 
-        # Receive products
+        # Move through the shipment workflow before packing.
         shipment_out.click('wait')
+        shipment_out.click('assign_force')
         shipment_out.reload()
+        shipment_out.click('pick')
         shipment_out.click('pack')
 
         # Check the created Quality Tests
