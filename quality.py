@@ -255,9 +255,21 @@ class QualityTest(DeactivableMixin, Workflow, ModelSQL, ModelView):
     templates = fields.Many2Many('quality.test-quality.template',
         'test', 'template', 'Tests', states=_STATES)
     success = fields.Function(fields.Boolean('Success'), 'get_success')
+    confirmed_by = fields.Many2One('res.user', 'Confirmed By', readonly=True,
+        states={
+            'invisible': Eval('state') == 'draft',
+            })
     confirmed_date = fields.DateTime('Confirmed Date', readonly=True,
         states={
             'invisible': Eval('state') == 'draft',
+            })
+    validated_by = fields.Many2One('res.user', 'Validated By', readonly=True,
+        states={
+            'invisible': Eval('state').in_(['draft', 'confirmed']),
+            })
+    validated_date = fields.DateTime('Validated Date', readonly=True,
+        states={
+            'invisible': Eval('state').in_(['draft', 'confirmed']),
             })
     state = fields.Selection(_TEST_STATE, 'State',
         readonly=True, required=True)
@@ -338,14 +350,22 @@ class QualityTest(DeactivableMixin, Workflow, ModelSQL, ModelView):
     @ModelView.button
     @Workflow.transition('draft')
     def draft(cls, tests):
-        cls.write(tests, {'confirmed_date': None})
+        cls.write(tests, {
+                'confirmed_by': None,
+                'confirmed_date': None,
+                'validated_by': None,
+                'validated_date': None,
+                })
 
     @classmethod
     @ModelView.button
     @Workflow.transition('confirmed')
     def confirmed(cls, tests):
         cls.set_number(tests)
-        cls.write(tests, {'confirmed_date': datetime.datetime.now()})
+        cls.write(tests, {
+                'confirmed_by': Transaction().user,
+                'confirmed_date': datetime.datetime.now(),
+                })
 
     @classmethod
     @Workflow.transition('successful')
@@ -360,6 +380,10 @@ class QualityTest(DeactivableMixin, Workflow, ModelSQL, ModelView):
     @classmethod
     @ModelView.button
     def manager_validate(cls, tests):
+        cls.write(tests, {
+                'validated_by': Transaction().user,
+                'validated_date': datetime.datetime.now(),
+                })
         for test in tests:
             if test.success:
                 cls.successful(tests)
