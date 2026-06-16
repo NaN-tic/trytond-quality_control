@@ -30,16 +30,26 @@ contains the full copyright notices and license terms. -->
             <field name="external_description" colspan="2"/>
             <field name="internal_description" colspan="2"/>
         </page>
-        <page string="Templates" id="templates">
+            <page string="Templates" id="templates">
             <field name="templates" colspan="4"/>
             <button name="apply_templates" colspan="4"/>
         </page>
+        <page string="Information" id="information">
+            <label name="confirmed_by"/>
+            <field name="confirmed_by"/>
+            <label name="confirmed_date"/>
+            <field name="confirmed_date"/>
+            <label name="validated_by"/>
+            <field name="validated_by"/>
+            <label name="validated_date"/>
+            <field name="validated_date"/>
+        </page>
+
     </notebook>
     <group col="7" colspan="4" id="state">
         <label name="state"/>
         <field name="state"/>
-        <label name="confirmed_date"/>
-        <field name="confirmed_date"/>
+
         <label name="success"/>
         <field name="success"/>
         <group col="3" id="buttons">

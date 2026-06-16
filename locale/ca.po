@@ -341,6 +341,10 @@ msgctxt "field:quality.test,company:"
 msgid "Company"
 msgstr "Empresa"
 
+msgctxt "field:quality.test,confirmed_by:"
+msgid "Confirmed By"
+msgstr "Confirmat per"
+
 msgctxt "field:quality.test,confirmed_date:"
 msgid "Confirmed Date"
 msgstr "Data confirmació"
@@ -380,6 +384,14 @@ msgstr "Estat"
 msgctxt "field:quality.test,success:"
 msgid "Success"
 msgstr "Vàlid"
+
+msgctxt "field:quality.test,validated_by:"
+msgid "Validated By"
+msgstr "Validat per"
+
+msgctxt "field:quality.test,validated_date:"
+msgid "Validated Date"
+msgstr "Data de validació"
 
 msgctxt "field:quality.test,templates:"
 msgid "Tests"
