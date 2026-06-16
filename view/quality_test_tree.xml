@@ -8,7 +8,8 @@ contains the full copyright notices and license terms. -->
     <field name="state"/>
     <field name="confirmed_by"/>
     <field name="validated_by"/>
-    <field name="validated_date"/>
+    <field name="validated_date" widget="date"/>
+    <field name="validated_date" widget="time" string="Test Time"/>
     <field name="test_date" widget="date"/>
     <field name="test_date" widget="time" string="Test Time"/>
 </tree>
