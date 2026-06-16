@@ -136,16 +136,24 @@ class Test(unittest.TestCase):
         Test.confirmed([test.id], config.context)
         test.reload()
         self.assertEqual(test.state, 'confirmed')
+        self.assertIsNotNone(test.confirmed_by)
+        self.assertIsNotNone(test.confirmed_date)
 
         # Validate "successful" Test
         Test.manager_validate([test.id], config.context)
         test.reload()
         self.assertEqual(test.state, 'successful')
+        self.assertIsNotNone(test.validated_by)
+        self.assertIsNotNone(test.validated_date)
 
         # Set To Draft Test
         Test.draft([test.id], config.context)
         test.reload()
         self.assertEqual(test.state, 'draft')
+        self.assertIsNone(test.confirmed_by)
+        self.assertIsNone(test.confirmed_date)
+        self.assertIsNone(test.validated_by)
+        self.assertIsNone(test.validated_date)
 
         # Modify test to check failed test
         test.quantitative_lines[0].value = Decimal('12')
@@ -154,3 +162,6 @@ class Test(unittest.TestCase):
         Test.manager_validate([test.id], config.context)
         test.reload()
         self.assertEqual(test.state, 'failed')
+        self.assertIsNotNone(test.confirmed_by)
+        self.assertIsNotNone(test.validated_by)
+        self.assertIsNotNone(test.validated_date)
