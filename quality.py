@@ -5,15 +5,16 @@ import datetime
 from sql import Column, Literal
 from trytond.model import Workflow, ModelView, ModelSQL, DeactivableMixin, fields
 from trytond.model import Unique, UnionMixin, sequence_ordered
-from trytond.pyson import Bool, Equal, Eval, If, Not
-from trytond.transaction import Transaction
-from trytond.pool import Pool
+from trytond.pyson import Bool, Equal, Eval, If, Not, PYSONEncoder
+from trytond.transaction import Transaction, inactive_records
+from trytond.pool import Pool, PoolMeta
 
 __all__ = ['Proof', 'ProofMethod',
     'QualitativeValue', 'Template',
     'QualitativeTemplateLine', 'QuantitativeTemplateLine', 'TemplateLine',
     'QualityTest', 'QuantitativeTestLine', 'QualitativeTestLine', 'TestLine',
-    'QualityTestQualityTemplate']
+    'QualityTestQualityTemplate', 'TemplateTag',
+    'TemplateTemplateTag', 'UIMenu', 'ActionActWindow']
 
 _PROOF_TYPES = [
     ('qualitative', 'Qualitative'),
@@ -78,6 +79,8 @@ class Template(DeactivableMixin, ModelSQL, ModelView):
     __name__ = 'quality.template'
 
     name = fields.Char('Name', required=True, translate=True)
+    tags = fields.Many2Many(
+        'quality.template-quality.template.tag', 'template', 'tag', 'Tags')
     internal_description = fields.Text('Internal Description')
     external_description = fields.Text('External Description')
     quantitative_lines = fields.One2Many('quality.quantitative.template.line',
@@ -101,6 +104,123 @@ class Template(DeactivableMixin, ModelSQL, ModelView):
         if 'lines' not in default:
             default['lines'] = None
         return super(Template, cls).copy(templates, default)
+
+
+class TemplateTag(DeactivableMixin, ModelSQL, ModelView):
+    'Quality Template Tag'
+    __name__ = 'quality.template.tag'
+
+    name = fields.Char('Name', required=True, translate=True)
+    templates = fields.Many2Many(
+        'quality.template-quality.template.tag', 'tag', 'template',
+        'Templates')
+
+    @classmethod
+    def create(cls, vlist):
+        tags = super().create(vlist)
+        cls.sync_menus()
+        return tags
+
+    @classmethod
+    def write(cls, *args):
+        super().write(*args)
+        cls.sync_menus()
+
+    @classmethod
+    def delete(cls, tags):
+        pool = Pool()
+        Menu = pool.get('ir.ui.menu')
+        Action = pool.get('ir.action.act_window')
+        menus = Menu.search([
+                ('quality_template_tag', 'in', [tag.id for tag in tags]),
+                ])
+        actions = Action.search([
+                ('quality_template_tag', 'in', [tag.id for tag in tags]),
+                ])
+        if menus:
+            Menu.delete(menus)
+        if actions:
+            Action.delete(actions)
+        super().delete(tags)
+        cls.sync_menus()
+
+    @classmethod
+    def sync_menus(cls):
+        pool = Pool()
+        Menu = pool.get('ir.ui.menu')
+        Action = pool.get('ir.action.act_window')
+        ModelData = pool.get('ir.model.data')
+
+        parent_menu = Menu(ModelData.get_id(
+                'quality_control', 'menu_quality_template'))
+        base_action = Action(ModelData.get_id(
+                'quality_control', 'act_quality_template'))
+        encoder = PYSONEncoder()
+
+        with inactive_records():
+            tags = cls.search([], order=[('name', 'ASC'), ('id', 'ASC')])
+        for sequence, tag in enumerate(tags, start=1):
+            menus = Menu.search([
+                    ('quality_template_tag', '=', tag.id),
+                    ])
+            actions = Action.search([
+                    ('quality_template_tag', '=', tag.id),
+                    ])
+            if not tag.active:
+                if menus:
+                    Menu.delete(menus)
+                if actions:
+                    Action.delete(actions)
+                continue
+            domain = encoder.encode([('tags', 'in', [tag.id])])
+            context = encoder.encode({'default_tags': [tag.id]})
+            menu = menus[0] if menus else None
+            action = actions[0] if actions else None
+            if len(menus) > 1:
+                Menu.delete(menus[1:])
+            if len(actions) > 1:
+                Action.delete(actions[1:])
+            if action:
+                Action.write([action], {
+                        'name': tag.name,
+                        'domain': domain,
+                        'context': context,
+                        'active': True,
+                        })
+            else:
+                action, = Action.copy([base_action], {
+                        'domain': domain,
+                        'context': context,
+                        'quality_template_tag': tag.id,
+                        })
+                Action.write([action], {
+                        'name': tag.name,
+                        'active': True,
+                        })
+            values = {
+                'name': tag.name,
+                'parent': parent_menu.id,
+                'action': str(action),
+                'sequence': sequence,
+                'icon': 'tryton-list',
+                'active': True,
+                'quality_template_tag': tag.id,
+                }
+            if menu:
+                Menu.write([menu], values)
+            else:
+                menu, = Menu.copy([parent_menu])
+                Menu.write([menu], values)
+
+
+class TemplateTemplateTag(ModelSQL):
+    'Quality Template - Quality Template Tag'
+    __name__ = 'quality.template-quality.template.tag'
+
+    template = fields.Many2One(
+        'quality.template', 'Template', required=True, ondelete='CASCADE')
+    tag = fields.Many2One(
+        'quality.template.tag', 'Tag', required=True, ondelete='CASCADE')
 
 
 class QualitativeTemplateLine(sequence_ordered(), DeactivableMixin, ModelSQL, ModelView):
@@ -753,3 +873,17 @@ class QualityTestQualityTemplate(ModelSQL):
             ('quality_test_uniq', Unique(t, t.test),
                 'Quality Test can only be related with one template.'),
             ]
+
+
+class UIMenu(metaclass=PoolMeta):
+    __name__ = 'ir.ui.menu'
+
+    quality_template_tag = fields.Many2One(
+        'quality.template.tag', 'Quality Template Tag', ondelete='CASCADE')
+
+
+class ActionActWindow(metaclass=PoolMeta):
+    __name__ = 'ir.action.act_window'
+
+    quality_template_tag = fields.Many2One(
+        'quality.template.tag', 'Quality Template Tag', ondelete='CASCADE')
