@@ -16,6 +16,8 @@ def register():
         quality.ProofMethod,
         quality.QualitativeValue,
         quality.Template,
+        quality.TemplateTag,
+        quality.TemplateTemplateTag,
         quality.QuantitativeTemplateLine,
         quality.QualitativeTemplateLine,
         quality.TemplateLine,
@@ -24,6 +26,8 @@ def register():
         quality.QuantitativeTestLine,
         quality.TestLine,
         quality.QualityTestQualityTemplate,
+        quality.UIMenu,
+        quality.ActionActWindow,
         module='quality_control', type_='model')
     Pool.register(
         stock_lot.Template,
