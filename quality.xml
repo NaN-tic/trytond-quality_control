@@ -223,6 +223,51 @@
             <field name="perm_delete" eval="True"/>
         </record>
 
+        <record model="ir.ui.view" id="quality_template_tag_form_view">
+            <field name="model">quality.template.tag</field>
+            <field name="type">form</field>
+            <field name="name">quality_template_tag_form</field>
+        </record>
+        <record model="ir.ui.view" id="quality_template_tag_tree_view">
+            <field name="model">quality.template.tag</field>
+            <field name="type">tree</field>
+            <field name="name">quality_template_tag_tree</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_quality_template_tag">
+            <field name="name">Quality Template Tags</field>
+            <field name="res_model">quality.template.tag</field>
+            <field name="search_value"></field>
+        </record>
+        <record model="ir.action.act_window.view"
+            id="act_quality_template_tag_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="quality_template_tag_tree_view"/>
+            <field name="act_window" ref="act_quality_template_tag"/>
+        </record>
+        <record model="ir.action.act_window.view"
+            id="act_quality_template_tag_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="quality_template_tag_form_view"/>
+            <field name="act_window" ref="act_quality_template_tag"/>
+        </record>
+
+        <record model="ir.model.access" id="access_quality_template_tag">
+            <field name="model">quality.template.tag</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_quality_template_tag_admin">
+            <field name="model">quality.template.tag</field>
+            <field name="group" ref="group_quality_control_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+
         <!-- quality.qualitative.template.line -->
         <record model="ir.ui.view" id="quality_qualitative_template_line_form_view">
             <field name="model">quality.qualitative.template.line</field>
@@ -634,9 +679,20 @@
         <menuitem action="act_quality_proof_method"
             id="menu_quality_proof_method"
             parent="menu_quality_proof" sequence="1" name="Methods"/>
+        <menuitem action="act_quality_template_tag"
+            id="menu_quality_template_tag"
+            parent="menu_configuration" sequence="2"
+            name="Template Tags"/>
 
-        <menuitem action="act_quality_template" id="menu_quality_template"
+        <menuitem id="menu_quality_template"
             parent="menu_quality_control" sequence="1" name="Templates"/>
+        <record model="ir.ui.menu" id="menu_quality_template">
+            <field name="action" eval="None"/>
+        </record>
+        <menuitem action="act_quality_template"
+            id="menu_quality_template_all"
+            parent="menu_quality_template" sequence="0"
+            name="All Templates"/>
         <menuitem action="act_quality_qualitative_template_line"
             id="menu_quality_qualitative_template_line"
             parent="menu_quality_template" sequence="1"

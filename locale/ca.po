@@ -285,6 +285,10 @@ msgctxt "field:quality.template,name:"
 msgid "Name"
 msgstr "Nom"
 
+msgctxt "field:quality.template,tags:"
+msgid "Tags"
+msgstr "Etiquetes"
+
 msgctxt "field:quality.template,qualitative_lines:"
 msgid "Qualitative Lines"
 msgstr "Línies qualitatives"
@@ -336,6 +340,26 @@ msgstr "Unitat"
 msgctxt "field:quality.template.line,valid_value:"
 msgid "Valid Value"
 msgstr "Valor Vàlid"
+
+msgctxt "field:quality.template.tag,active:"
+msgid "Active"
+msgstr "Actiu"
+
+msgctxt "field:quality.template.tag,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:quality.template.tag,templates:"
+msgid "Templates"
+msgstr "Plantilles"
+
+msgctxt "field:quality.template-quality.template.tag,tag:"
+msgid "Tag"
+msgstr "Etiqueta"
+
+msgctxt "field:quality.template-quality.template.tag,template:"
+msgid "Template"
+msgstr "Plantilla"
 
 msgctxt "field:quality.test,company:"
 msgid "Company"
@@ -517,6 +541,10 @@ msgctxt "model:ir.action,name:act_quality_template"
 msgid "Quality Template"
 msgstr "Plantilla de qualitat"
 
+msgctxt "model:ir.action,name:act_quality_template_tag"
+msgid "Quality Template Tags"
+msgstr "Etiquetes de plantilles de qualitat"
+
 msgctxt "model:ir.action,name:act_quality_test"
 msgid "Quality Test"
 msgstr "Test de qualitat"
@@ -622,6 +650,14 @@ msgctxt "model:ir.ui.menu,name:menu_quality_template"
 msgid "Templates"
 msgstr "Plantilles"
 
+msgctxt "model:ir.ui.menu,name:menu_quality_template_all"
+msgid "All Templates"
+msgstr "Totes les plantilles"
+
+msgctxt "model:ir.ui.menu,name:menu_quality_template_tag"
+msgid "Template Tags"
+msgstr "Etiquetes de plantilla"
+
 msgctxt "model:ir.ui.menu,name:menu_quality_test"
 msgid "Tests"
 msgstr "Tests"
@@ -669,6 +705,14 @@ msgstr "Plantilla de qualitat"
 msgctxt "model:quality.template.line,name:"
 msgid "Quality Template Line"
 msgstr "Línia de plantilla de qualitat"
+
+msgctxt "model:quality.template.tag,name:"
+msgid "Quality Template Tag"
+msgstr "Etiqueta de plantilla de qualitat"
+
+msgctxt "model:quality.template-quality.template.tag,name:"
+msgid "Quality Template - Quality Template Tag"
+msgstr "Plantilla de qualitat - Etiqueta de plantilla de qualitat"
 
 msgctxt "model:quality.test,name:"
 msgid "Quality Test"
