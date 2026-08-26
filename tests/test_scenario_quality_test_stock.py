@@ -183,8 +183,8 @@ class Test(unittest.TestCase):
         move.product = product
         move.unit = unit
         move.quantity = 1
-        move.from_location = supplier_loc
-        move.to_location = input_loc
+        move.from_location = output_loc
+        move.to_location = customer_loc
         move.unit_price = Decimal('1')
         move.currency = company.currency
         shipment_out.save()
