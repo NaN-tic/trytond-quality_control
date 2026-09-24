@@ -7,16 +7,8 @@
         <record model="res.group" id="group_quality_control_admin">
             <field name="name">Quality Control Administration</field>
         </record>
-        <record model="res.user-res.group" id="user_admin_group_quality_control_admin">
-            <field name="user" ref="res.user_admin"/>
-            <field name="group" ref="group_quality_control_admin"/>
-        </record>
         <record model="res.group" id="group_quality_control">
             <field name="name">Quality Control</field>
-        </record>
-        <record model="res.user-res.group" id="user_admin_group_quality_control">
-            <field name="user" ref="res.user_admin"/>
-            <field name="group" ref="group_quality_control"/>
         </record>
 
         <!-- rules -->
@@ -588,11 +580,6 @@
             <field name="name">Quality Control</field>
         </record>
 
-        <record model="ir.sequence.type-res.group"
-            id="sequence_type_quality_group_admin">
-            <field name="sequence_type" ref="sequence_type_quality"/>
-            <field name="group" ref="res.group_admin"/>
-        </record>
         <record model="ir.sequence.type-res.group"
             id="sequence_type_quality_group_quality_admin">
             <field name="sequence_type" ref="sequence_type_quality"/>
